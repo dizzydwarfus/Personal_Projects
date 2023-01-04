@@ -18,7 +18,7 @@ st.set_page_config(page_title="Investment Dashboard",
                    layout="wide")
 
 page_placeholder = st.sidebar.selectbox('What do you want to see?', [
-                                        'Financial Statements', 'Dashboard', 'Charts'])
+                                        'Financial Statements', 'DCF Calculator', 'Charts'])
 
 ticker_list_box = st.sidebar.selectbox(
     "Select a ticker symbol:", tickers, key="ticker_list")
@@ -68,9 +68,22 @@ if page_placeholder == 'Financial Statements':
 
 #####################################################
 
-# Dashboard Page
+# DCF Calculator
 
 #####################################################
+if page_placeholder == 'DCF Calculator':
+    st.title("DCF Calculator")
+
+    st.write("""
+
+    - show current growth rates (considering past 5 years)
+    - show current stock price
+    - use input fields for discount rate, growth rate, and terminal multiple
+    - discount rate: use WACC, or expected return rate, or 10Y treasury yield
+    - choose either growth on dividend (for slow growth), eps, or free cash flow
+    - terminal multiple: what is the projected PE ratio 10 years from now?
+
+    """)
 
 
 #####################################################
@@ -110,7 +123,7 @@ top right
         eps_df = pd.DataFrame.from_dict(
             eps_dict, orient='index', columns=['epsdiluted'])
 
-        st.line_chart(eps_df)
+        st.bar_chart(eps_df)
         eps_df
 
         """
@@ -118,3 +131,41 @@ top right
                                     symbols belonging to an industry
                                     use the selectbox to select the lists.
         """
+
+    st.write("""
+
+         Metrics to be shown (margin of safety):
+         ---
+
+         1. revenue
+         2. gross margin%
+         3. operating income
+         4. operating margin%
+         5. net income
+         6. earnings per share
+         7. dividends
+         8. payout ratio%
+         9. shares oustanding
+         10. book value per share
+         11. operating cash flow
+         12. cap spending
+         13. free cash flow
+         14. free cash flow per share
+         15. working capital
+         16. 
+
+         Keypoint
+         : range of value: not exactly, value is adequate, approximate measure of intrinsic value may be sufficient(e.g. elon's twitter acquisition, "order of magnitude more valuable than current even if he is overpaying now").
+
+         """)
+    todos = [
+        'net present value',
+        'private market value - conservative historical value',
+        'personal value - how much you would pay personally based on assets for the business',
+        'liquidation value - best for unprofitable businesses trading below book value',
+        'Stock market value - compare similar businesses (potential spin-off)',
+        'Reflexivity - how rising stock prices influence underlying values (raising capital when stock prices are high)'
+    ]
+
+    for items in todos:
+        st.checkbox(f"{items}")
