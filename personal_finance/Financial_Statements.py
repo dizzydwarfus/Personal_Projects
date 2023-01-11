@@ -3,7 +3,9 @@ import streamlit as st
 import json
 from tickerlist import tickers
 import string
-import plotly.express as px
+# import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import numpy as np
 
 # """
@@ -134,15 +136,44 @@ def generate_plots(dataframe, arrangement: tuple):
             if m >= len(cols):
                 m = 0
             else:
-                fig = px.line(dataframe[f'{n}'], title=f"{n.capitalize()}")
+
+                # Define growth rates Y-o-Y
+                growth = dataframe[f'{n}'].pct_change(
+                    periods=1).fillna(0)
+                fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+                # Add traces (graphs)
+                fig.add_trace(
+                    go.Scatter(
+                        x=dataframe.index, y=dataframe[f'{n}'], mode="lines+markers", name=f"{n.capitalize()}"),
+                    secondary_y=False,
+                )
+
+                fig.add_trace(
+                    go.Bar(
+                        x=dataframe.index, y=growth, text=[i for i in growth], marker=dict({'color': 'darkorange'}), texttemplate="%{value:.1%}", textposition="inside", name="Growth Y-o-Y"),
+                    secondary_y=True,
+                )
+
+                # Update figure title, legend, axes
                 fig.update_layout(showlegend=False,
                                   xaxis_title='Year', yaxis_title=f'{n}')
+                fig.update_yaxes(
+                    title_text=f"<b>{n.capitalize()}</b>", secondary_y=False)
+                fig.update_yaxes(
+                    title_text="Growth Y-o-Y", secondary_y=True)
+
+                # # Add horizontal lines to show max and min values
                 fig.add_hline(y=dataframe[f'{n}'].max(
                 ), line_color='green', line_dash='dash')
                 fig.add_hline(y=dataframe[f'{n}'].min(
                 ), line_color='red', line_dash='dash')
+
+                # Plot the chart in its respective column based on loop
                 cols[m].plotly_chart(
                     fig, use_container_width=True,)
+
+                # Add 1 to column so next graph will be plotted on next column
                 m += 1
 
 #####################################################
@@ -180,10 +211,16 @@ if page_placeholder == 'Financial Statements':
                         value=False,
                         key=f'use_container_width_{x}_{i}')
 
-            st.dataframe(pd.DataFrame.from_records(
+            df_financial_statements = pd.DataFrame.from_records(
                 tab_statement[year_list[0]:year_list[-1]+1],
-                index=[tab_statement[i]['calendarYear'] for i in year_list]).T,
-                use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
+                index=[tab_statement[i]['calendarYear'] for i in year_list]).T
+
+            for cols in df_financial_statements.columns:
+                if type(cols) == float:
+                    df_financial_statements.style.format({f"cols": "{:,d}"})
+
+            st.dataframe(df_financial_statements,
+                         use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
 
     # for i, x in enumerate(company_statements):
     #     if st.checkbox(f'Show {x}'):
@@ -266,7 +303,7 @@ if page_placeholder == 'Charts':
     key_metrics_table = generate_key_metrics(
         statement, terms_interested.values())
 
-    generate_plots(key_metrics_table, [1, 1, 1, 1, 1, 1])
+    generate_plots(key_metrics_table, [1, 1, 1])
     key_metrics_table
 
     """
