@@ -60,7 +60,7 @@ page_placeholder = st.sidebar.selectbox('What do you want to see?', [
                                         'Financial Statements', 'DCF Calculator', 'Charts'])
 
 ticker_list_box = st.sidebar.selectbox(
-    "Select a ticker symbol:", list(set(tickers)), key="ticker_list")
+    "Select a ticker symbol:", sorted(list(set(tickers))), key="ticker_list")
 
 company_statements = ['income-statement',
                       'cash-flow-statement', 'balance-sheet-statement']
@@ -87,8 +87,8 @@ terms_interested = {'Revenue': 'revenue',
                     'Gross margin%': 'grossProfitRatio',
                     'Operating Income': 'operatingIncome',
                     'Operating Margin %': 'operatingIncomeRatio',
-                    'Net Income': 'netincome',
-                    'Net Income Margin': 'netincomeRatio',
+                    'Net Income': 'netIncome',
+                    'Net Income Margin': 'netIncomeRatio',
                     'Earnings per Share': 'epsdiluted',
                     'Shares Oustanding (diluted)': 'weightedAverageShsOutDil',
                     'Dividends': 'dividendsPaid',
@@ -100,6 +100,11 @@ terms_interested = {'Revenue': 'revenue',
                     'Net Debt': 'netDebt'
                     }
 
+def read_statement(filepath, mode: list(['r','w','r+','w+'])):
+    with open(filepath, f'{mode}') as f:
+        statement = json.load(f)
+
+        return statement
 
 def generate_key_metrics(financial_statement, list_of_metrics):
     l = []
@@ -119,9 +124,9 @@ def generate_key_metrics(financial_statement, list_of_metrics):
             pass
 
     df = pd.DataFrame.from_records(
-        l, index=[items for items in list_of_metrics if items in columns]).T
+        l, index=[items for items in list_of_metrics if items in columns])
 
-    df.style.format({f"{df['revenue']}": "{:,}"})
+    # df.style.format({f"{df}": "{:,}"})
 
     return df
 
@@ -130,7 +135,7 @@ def generate_plots(dataframe, arrangement: tuple):
 
     # create columns to place charts based on arrangement specified (columns in each row)
     cols = st.columns(arrangement)
-
+    dataframe = dataframe.T
     m = 0
 
     for i, n in enumerate(terms_interested.values()):
@@ -193,8 +198,8 @@ if page_placeholder == 'Financial Statements':
 
     """)
 
-    income_tab, cash_tab, balance_tab = st.tabs(
-        ["Income Statement", "Cash Flow", "Balance Sheet"], )
+    income_tab, cash_tab, balance_tab, key_metrics_tab = st.tabs(
+        ["Income Statement", "Cash Flow", "Balance Sheet", "Key Metrics"], )
 
     for i, x in enumerate([income_tab, cash_tab, balance_tab]):
         with x:
@@ -220,38 +225,29 @@ if page_placeholder == 'Financial Statements':
             st.dataframe(df_financial_statements,
                          use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
 
-    # for i, x in enumerate(company_statements):
-    #     if st.checkbox(f'Show {x}'):
-    #         st.header(f'{x.capitalize()}')
-    #         with open(f'D:\lianz\Desktop\Python\data_science_discovery\personal_finance\{x}\{ticker_list_box}.json', 'r') as f:
-    #             statement = json.load(f)
+    with key_metrics_tab:
+        master_table = pd.concat([generate_key_metrics(read_statement(f'D:\lianz\Desktop\Python\data_science_discovery\personal_finance\{x}\{ticker_list_box}.json','r'), terms_interested.values()) for x in company_statements],axis=0).drop_duplicates()
+        mt_growth = master_table.T.pct_change(periods=1)
+        # mt_growth.apply(lambda x: "{:.0%}".format(x))
 
-    #         # year_selection = st.selectbox(
-    #         #     "Select year:", range(len(statement)), format_func=lambda a: f"{statement[a]['calendarYear']}", key=f"year_selection{x}")
+        st.dataframe(mt_growth)
 
-    #         year_range = st.slider('Select year range (past n years):',
-    #                                min_value=1,
-    #                                max_value=int(
-    #                                    statement[0]['calendarYear'])-int(statement[-1]['calendarYear'])+1,
-    #                                key=f'{ticker_list_box}_{x}_{i}')
+        # Container to show some key metrics from table
+        metric_container = st.container()
+        metric_columns = st.columns([1,1,1,1,1])
 
-    #         year_list = list(range(year_range))
+        st.metric(label=f'{mt_growth.columns[0]}', value=mt_growth.iloc[:,0].mean(skipna=True)/len(mt_growth.index), delta=mt_growth.iloc[-1,0])
 
-    #         st.checkbox("Use container width",
-    #                     value=False,
-    #                     key=f'use_container_width_{i}')
+        # To create the master key metrics table compiled from statements
+        st.dataframe(master_table.drop_duplicates())
 
-    #         st.dataframe(pd.DataFrame.from_records(
-    #             statement[year_list[0]:year_list[-1]+1],
-    #             index=[statement[i]['calendarYear'] for i in year_list]).T,
-    #             use_container_width=bool(f'st.session_state.use_container_width_{x}'))
-
+        
+# TODO: create function to combine all three statements so generate_key_metrics can be used on a single object instead of multiple filepaths
 
 #####################################################
 
 # DCF Calculator
-
-#####################################################
+ ############################################
 
 if page_placeholder == 'DCF Calculator':
     st.title("DCF Calculator")
@@ -284,7 +280,8 @@ if page_placeholder == 'Charts':
     #     "Select:", company_statements, format_func=lambda a: string.capwords(a.replace("-", " ")))
 
     with open(f'D:\lianz\Desktop\Python\data_science_discovery\personal_finance\{company_statements[0]}\{ticker_list_box}.json', 'r') as f:
-        statement = json.load(f)
+        income = json.load(f)
+
 
     st.title(f"""
 
@@ -294,12 +291,12 @@ if page_placeholder == 'Charts':
 
     st.write(f"""
 
-        # Financials Growth (last {len(statement)} years)
+        # Financials Growth (last {len(income)} years)
 
         """)
 
     key_metrics_table = generate_key_metrics(
-        statement, terms_interested.values())
+        income, terms_interested.values())
 
     generate_plots(key_metrics_table, [1,1,1,1,1,1])
     key_metrics_table

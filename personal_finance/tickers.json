@@ -54,7 +54,9 @@
   "PKI",
   "QCOM",
   "SHEL",
+  "SHEL",
   "SLB",
+  "SMSN",
   "SMSN",
   "T",
   "TGT",
@@ -65,5 +67,6 @@
   "V",
   "WBD",
   "WMT",
-  "XOM"
+  "XOM",
+  "BYD"
 ]
