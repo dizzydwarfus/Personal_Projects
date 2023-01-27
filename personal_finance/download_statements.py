@@ -12,11 +12,16 @@ client = MongoClient(cluster)
 # print(client.list_database_names())
 
 db = client.FinanceApp
-
-print(db.list_collection_names())
+balance_sheet_collection = db.Statements
+print(balance_sheet_collection)
 
 arr = os.listdir(r"D:\\lianz\Desktop\\Python\\data_science_discovery\\personal_finance\\balance-sheet-statement")
 
 print(arr)
 
 #TODO: store downloaded statements in mongodb and retrieve them via mongodb
+
+for i in arr:
+    with open(f"D:\\lianz\Desktop\\Python\\data_science_discovery\\personal_finance\\balance-sheet-statement\\{i}") as f:
+        file_data = json.load(f)
+    
