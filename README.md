@@ -3,7 +3,7 @@ Personal data science exploration using python (pandas, numpy, sklearn, scipy, m
 
 My journey in:
 
-1. exploring data science through working with common ML models on UCSI datasets.
+1. Exploring data science through working with common ML models on UCSI datasets.
 
 2. Developing numerical simulations for engineering problems 
       - Finite Difference Analysis on 1D and 2D Heat Transfer (wip)
