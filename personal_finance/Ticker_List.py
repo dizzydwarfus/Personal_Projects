@@ -24,7 +24,7 @@ st.set_page_config(page_title="Investment Dashboard",
 
 #####################################################
 st.markdown(
-"""
+    """
 
 # Generate Ticker List
 
@@ -34,26 +34,29 @@ st.markdown(
 
 """)
 
-col1, col2 = st.columns([1,1])
+col1, col2 = st.columns([1, 1])
 
-etoro_list = col1.file_uploader("Upload your file here :file_folder:",key='uploaded_file', label_visibility="hidden")
+etoro_list = col1.file_uploader(
+    "Upload your file here :file_folder:", key='uploaded_file', label_visibility="hidden")
 
-manual_list = col2.text_area("Type your tickers here:", label_visibility="visible")
+manual_list = col2.text_area(
+    "Type your tickers here:", label_visibility="visible")
 
 tickers = []
 
 cont1 = st.container()
-col3, col4, col5 = cont1.columns([3,2.5,6])
+col3, col4, col5 = cont1.columns([3, 2.5, 6])
 
 cont2 = st.container()
 
 # Append etoro tickers to list: tickers
 if etoro_list is not None:
 
-    investment_history = pd.read_excel(etoro_list, sheet_name='Account Activity')
-    
+    investment_history = pd.read_excel(
+        etoro_list, sheet_name='Account Activity')
+
     tickers.extend(list(investment_history[investment_history['Asset type']
-                                == 'Stocks']['Details'].str.split('/', expand=True)[0].unique()))
+                                           == 'Stocks']['Details'].str.split('/', expand=True)[0].unique()))
     # col1.write(tickers)
 
 # Append manual entries to list: tickers
@@ -62,13 +65,17 @@ if manual_list != "" and manual_list not in tickers:
     # col2.write(tickers)
 
 # Load saved ticker file
-def is_non_zero_file(fpath):  
+
+
+def is_non_zero_file(fpath):
     return os.path.isfile(fpath) and os.path.getsize(fpath) > 0
+
 
 def no_file(fpath):
     return not os.path.isfile(fpath) or os.path.getsize(fpath) == 0
 
-file = r'D:\\lianz\Desktop\\Python\data_science_discovery\\personal_finance\\tickers.json' 
+
+file = r'D:\\lianz\Desktop\\Python\\personal_projects\\personal_finance\\tickers.json'
 
 # st.write(st.session_state)
 
@@ -77,7 +84,7 @@ if no_file(file):
     with open(file, 'w') as f:
         json.dump(tickers, f, indent=2)
 
-balance_sheet_filepath = 'D:\lianz\Desktop\Python\data_science_discovery\personal_finance\\balance-sheet-statement'
+balance_sheet_filepath = 'D:\lianz\Desktop\Python\personal_projects\personal_finance\\balance-sheet-statement'
 list_tickers = [i.split('.')[0] for i in os.listdir(balance_sheet_filepath)]
 
 if st.button("Show Scanned Ticker List", key='scan_tickers'):
@@ -86,7 +93,7 @@ if st.button("Show Scanned Ticker List", key='scan_tickers'):
 
 if is_non_zero_file(file):
     ticker_file_read = open(file, 'r+')
-    
+
     # scan file directories for current list of tickers
 
     with ticker_file_read as s:
@@ -96,7 +103,6 @@ if is_non_zero_file(file):
     if col3.button("Show Saved Tickers", key="show_tickers"):
         cont1.write("###### *Current Session List:*")
         cont1.write(saved)
-
 
     # Append new tickers to the list if not in list
     if col4.button("Save tickers list", key="save_tickers") and len(tickers) > 0:
@@ -109,7 +115,6 @@ if is_non_zero_file(file):
     if col5.button("Overwrite tickers list", key="overwrite_tickers"):
         with open(file, 'w+') as d:
             json.dump(list_tickers, d, indent=2)
-
 
 
 #####################################################
@@ -126,18 +131,21 @@ def selectquote(ticker, statement):
     return r
 
 # Save the read file to json
-def save_to_json(ticker_symbol,statement):
-    
-    file = selectquote(ticker_symbol,statement)
 
-    with open(f'D:\lianz\Desktop\Python\data_science_discovery\personal_finance\{statement}/{ticker_symbol}.json', 'w+') as p:
+
+def save_to_json(ticker_symbol, statement):
+
+    file = selectquote(ticker_symbol, statement)
+
+    with open(f'D:\lianz\Desktop\Python\personal_projects\personal_finance\{statement}/{ticker_symbol}.json', 'w+') as p:
         json.dump(file, p, indent=4)
+
 
 possible_statements = ['income-statement',
                        'balance-sheet-statement', 'cash-flow-statement']
 
 st.write(
-"""
+    """
 
 ---
 
@@ -146,16 +154,17 @@ st.write(
 """)
 
 if st.button("Download Statements :ledger:"):
-    
-    progress_bar = st.progress(0) # reset progress bar to 0
+
+    progress_bar = st.progress(0)  # reset progress bar to 0
     step = round(100/len(saved))
     current = 0
 
     for x in saved:
         for y in possible_statements:
-            
+
             # Check if json file already exists
-            file = pathlib.Path(f'D:\lianz\Desktop\Python\data_science_discovery\personal_finance\{y}/{x}.json')
+            file = pathlib.Path(
+                f'D:\lianz\Desktop\Python\personal_projects\personal_finance\{y}/{x}.json')
 
             # If file exists (TODO: update to append new entries instead of pass)
             if file.exists():
@@ -164,14 +173,14 @@ if st.button("Download Statements :ledger:"):
             # If file does not exist
             else:
                 save_to_json(x, y)
-    
+
         current += step
 
         progress_bar.progress(current)
 
         if file.exists():
             st.success(f"{x} statements already exists", icon="✅")
-        
+
         else:
             st.success(f"{x} statements download complete")
 

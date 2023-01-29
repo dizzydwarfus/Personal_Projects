@@ -1,7 +1,7 @@
 # data_science_discovery
 Personal data science exploration using python (pandas, numpy, sklearn, scipy, matplotlib)
 
-My journey in:
+#### My journey in:
 
 1. Exploring data science through working with common ML models on UCSI datasets.
 
