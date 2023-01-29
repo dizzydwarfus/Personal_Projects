@@ -24,4 +24,5 @@ print(arr)
 
 for i in arr:
     with open(f"D:\\lianz\Desktop\\Python\\data_science_discovery\\personal_finance\\balance-sheet-statement\\{i}") as f:
+
         file_data = json.load(f)
