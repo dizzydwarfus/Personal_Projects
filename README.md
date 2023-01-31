@@ -1,4 +1,4 @@
-# data_science_discovery
+# Personal Projects
 Personal data science exploration using python (pandas, numpy, sklearn, scipy, matplotlib)
 
 #### My journey in:
