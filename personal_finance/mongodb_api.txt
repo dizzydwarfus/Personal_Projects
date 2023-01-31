@@ -1,0 +1,1 @@
+'mongodb+srv://dizzydwarfus:981128@cluster0.yxzbors.mongodb.net/FinanceApp?retryWrites=true&w=majority'

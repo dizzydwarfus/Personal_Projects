@@ -84,8 +84,8 @@ if no_file(file):
     with open(file, 'w') as f:
         json.dump(tickers, f, indent=2)
 
-balance_sheet_filepath = 'D:\lianz\Desktop\Python\personal_projects\personal_finance\\balance-sheet-statement'
-list_tickers = [i.split('.')[0] for i in os.listdir(balance_sheet_filepath)]
+income_filepath = 'D:\\lianz\\Desktop\\Python\\personal_projects\\personal_finance\\income-statement'
+list_tickers = sorted(list(set([i.split('.')[0] for i in os.listdir(income_filepath)])))
 
 if st.button("Show Scanned Ticker List", key='scan_tickers'):
     cont2.write("###### *Scanned Ticker List:*")
@@ -155,11 +155,13 @@ st.write(
 
 if st.button("Download Statements :ledger:"):
 
-    progress_bar = st.progress(0)  # reset progress bar to 0
-    step = round(100/len(saved))
-    current = 0
+    # progress_bar = st.progress(0)  # reset progress bar to 0
+    # step = round(100/len(saved))
+    # current = 0
 
-    for x in saved:
+    for i,x in enumerate(saved):
+        
+        
         for y in possible_statements:
 
             # Check if json file already exists
@@ -168,15 +170,22 @@ if st.button("Download Statements :ledger:"):
 
             # If file exists (TODO: update to append new entries instead of pass)
             if file.exists():
-                pass
 
+                # new_download = selectquote(x, y)
+
+                # with open(file, 'w+') as f:
+                #     loaded = json.load(f)
+                
+                # loaded = 
+                pass
+            
             # If file does not exist
             else:
                 save_to_json(x, y)
 
-        current += step
+        # current += step
 
-        progress_bar.progress(current)
+        # progress_bar.progress(current)
 
         if file.exists():
             st.success(f"{x} statements already exists", icon="✅")
@@ -184,5 +193,8 @@ if st.button("Download Statements :ledger:"):
         else:
             st.success(f"{x} statements download complete")
 
+        if i == len(saved)-1:
+            st.success(f"All downloads are completed.", icon="💯")
+        
 
 # improvement: append to existing json file instead of rewriting to it with past 5 years, so longer term data can be acquired
