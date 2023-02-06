@@ -2,11 +2,23 @@ import pandas as pd
 import streamlit as st
 import json
 import string
-# import plotly.express as px
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 import numpy as np
+from pymongo import MongoClient
+from bson.objectid import ObjectId
 
+
+with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\mongodb_api.txt','r') as f:
+    cluster = f.readlines()[0]
+    
+client = MongoClient(cluster)
+
+# print(client.list_database_names())
+
+db = client.FinanceApp
+
+balance_sheet_collection = db.balance_sheet
+income_collection = db.income_statement
+cash_collection = db.cash_flow_statement
 
 #####################################################
 
@@ -14,11 +26,10 @@ import numpy as np
 
 #####################################################
 
-with open(r'D:\\lianz\Desktop\\Python\\personal_projects\\personal_finance\\tickers.json', 'r') as f:
-    tickers = json.load(f)
+tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
 
 ticker_list_box = st.sidebar.selectbox(
-    "Select a ticker symbol:", sorted(list(set(tickers))), key="ticker_list")
+    "Select a ticker symbol:", sorted(tickers), key="ticker_list")
 
 company_statements = ['income-statement',
                       'cash-flow-statement', 'balance-sheet-statement']
@@ -88,58 +99,6 @@ def generate_key_metrics(financial_statement, list_of_metrics):
 
     return df
 
-
-def generate_plots(dataframe, arrangement: tuple):
-
-    # create columns to place charts based on arrangement specified (columns in each row)
-    cols = st.columns(arrangement)
-    dataframe = dataframe.T
-    m = 0
-
-    for i, n in enumerate(terms_interested.values()):
-        if n in dataframe.columns:
-            if m >= len(cols):
-                m = 0
-            else:
-
-                # Define growth rates Y-o-Y
-                growth = dataframe[f'{n}'].pct_change(
-                    periods=1).fillna(0)
-                fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-                # Add traces (graphs)
-                fig.add_trace(
-                    go.Scatter(
-                        x=dataframe.index, y=dataframe[f'{n}'], mode="lines+markers", name=f"{n.capitalize()}"),
-                    secondary_y=False,
-                )
-
-                fig.add_trace(
-                    go.Bar(
-                        x=dataframe.index, y=growth, text=[i for i in growth], marker=dict({'color': 'darkorange'}), texttemplate="%{value:.1%}", textposition="inside", name="Growth Y-o-Y"),
-                    secondary_y=True,
-                )
-
-                # Update figure title, legend, axes
-                fig.update_layout(showlegend=False,
-                                  xaxis_title='Year', yaxis_title=f'{n}')
-                fig.update_yaxes(
-                    title_text=f"<b>{n.capitalize()}</b>", secondary_y=False)
-                fig.update_yaxes(
-                    title_text="Growth Y-o-Y", secondary_y=True)
-
-                # # Add horizontal lines to show max and min values
-                fig.add_hline(y=dataframe[f'{n}'].max(
-                ), line_color='green', line_dash='dash')
-                fig.add_hline(y=dataframe[f'{n}'].min(
-                ), line_color='red', line_dash='dash')
-
-                # Plot the chart in its respective column based on loop
-                cols[m].plotly_chart(
-                    fig, use_container_width=True,)
-
-                # Add 1 to column so next graph will be plotted on next column
-                m += 1
 
 #####################################################
 
@@ -235,15 +194,5 @@ with key_metrics_tab:
 # for items in todos:
 #     st.checkbox(f"{items}")
 
-# """
-# Session state and how to utilize it
-# -> if "photo" not in st.session_state:
-#     st.session_state['photo'] = 'not done'
-
-# def change_photo_state():
-#     st.session_state['photo'] = 'done'
-
-# a streamlit function (on_change=change_photo_state)
-# """
 
 st.markdown("***Data provided by Financial Modeling Prep***")

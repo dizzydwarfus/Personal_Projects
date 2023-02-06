@@ -10,7 +10,8 @@ import json
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-
+import requests
+from pymongo import MongoClient
 
 # """
 # plotly colors:
@@ -51,7 +52,20 @@ from plotly.subplots import make_subplots
 #     yellowgreen
 # """
 
+with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\mongodb_api.txt','r') as f:
+    cluster = f.readlines()[0]
+with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\\fmp_api.txt','r') as f:
+    fmp_api = f.readlines()[0]
+    
+client = MongoClient(cluster)
 
+# print(client.list_database_names())
+
+db = client.FinanceApp
+
+balance_sheet_collection = db.balance_sheet
+income_collection = db.income_statement
+cash_collection = db.cash_flow_statement
 
 def delete_page(main_script_path_str, page_name):
 
@@ -125,6 +139,65 @@ def generate_key_metrics(financial_statement, list_of_metrics):
 
     return df
 
+def select_quote(ticker, statement):
+    r = requests.get(
+        f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?limit=120&apikey={fmp_api}")
+    r = r.json()
+    return r
+
+def select_profile(ticker, statement):
+    r = requests.get(
+        f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?apikey={fmp_api}")
+
+def save_to_json(ticker_symbol, statement):
+
+    file = select_quote(ticker_symbol, statement)
+
+    with open(f'D:\lianz\Desktop\Python\personal_projects\personal_finance\{statement}/{ticker_symbol}.json', 'w+') as p:
+        json.dump(file, p, indent=4)
+        
+
+def define_id(json_file):
+    for i in json_file:
+        i['index_id'] = f"{i['symbol']}_{i['date']}"
+
+def access_entry(collection_name, entry_name, entry_value, return_value):
+    data = collection_name.find({entry_name:entry_value})
+
+    data = [i[return_value] for i in data]
+
+    return data
+
+def insert_to_mongoDB(collection, ticker, statement, second_key):
+    if statement == 'profile':
+        file = select_profile(ticker, statement)
+        file[0]['index_id'] = f"{file[0]['symbol']}_{file[0][second_key]}"
+        
+        if profile_update:
+            collection.delete_one({'symbol':ticker})
+        try:
+            collection.insert_one(file[0])
+            return st.success(f"{x} {statement} updated!", icon="✅")
+        except:
+            return st.error(f"{ticker} {statement} already exists", icon="🚨")
+    else:
+        file = select_quote(ticker, statement)
+        
+        if len(file) <= 1:
+            pass
+        else:
+            for i in file:
+                i['index_id'] = f"{i['symbol']}_{i[second_key]}"
+            
+            ids = [i['index_id'] for i in file if i['index_id'] not in access_entry(collection,'symbol',ticker,'index_id')]
+
+            try:
+                collection.insert_many([i for i in file if i['index_id'] in ids])
+                return st.success(f"{x} {statement} updated!", icon="✅")
+            except:
+                return st.error(f"{ticker} {statement} already exists", icon="🚨")
+
+            
 
 def generate_plots(dataframe, arrangement: tuple):
 
@@ -171,3 +244,4 @@ def generate_plots(dataframe, arrangement: tuple):
                 # Plot the chart in its respective column based on loop
                 cols[m].plotly_chart(
                     fig, use_container_width=True,)
+
