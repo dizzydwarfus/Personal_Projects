@@ -3,7 +3,7 @@ import streamlit as st
 import json
 import string
 import numpy as np
-from pymongo import MongoClient
+from pymongo import MongoClient,ASCENDING, DESCENDING
 from bson.objectid import ObjectId
 
 
@@ -19,6 +19,7 @@ db = client.FinanceApp
 balance_sheet_collection = db.balance_sheet
 income_collection = db.income_statement
 cash_collection = db.cash_flow_statement
+company_collection = db.company_profile
 
 #####################################################
 
@@ -31,18 +32,13 @@ tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
 ticker_list_box = st.sidebar.selectbox(
     "Select a ticker symbol:", sorted(tickers), key="ticker_list")
 
-company_statements = ['income-statement',
-                      'cash-flow-statement', 'balance-sheet-statement']
+company_statements = [income_collection,
+                      cash_collection, balance_sheet_collection]
 
-if tickers != None:   
-    with open(f'D:\lianz\Desktop\Python\\personal_projects\personal_finance\{company_statements[0]}\{ticker_list_box}.json', 'r') as f:
-        income_statement = json.load(f)
-
-    with open(f'D:\lianz\Desktop\Python\\personal_projects\personal_finance\{company_statements[1]}\{ticker_list_box}.json', 'r') as f:
-        cash_flow_statement = json.load(f)
-
-    with open(f'D:\lianz\Desktop\Python\\personal_projects\personal_finance\{company_statements[2]}\{ticker_list_box}.json', 'r') as f:
-        balance_sheet = json.load(f)
+if tickers != None:
+    income_statement = [i for i in income_collection.find({'symbol':ticker_list_box}).sort('date', DESCENDING)]
+    cash_flow_statement = [i for i in cash_collection.find({'symbol':ticker_list_box}).sort('date', DESCENDING)]
+    balance_sheet = [i for i in balance_sheet_collection.find({'symbol':ticker_list_box}).sort('date', DESCENDING)]
 
 
 #####################################################
@@ -69,9 +65,9 @@ terms_interested = {'Revenue': 'revenue',
                     'Net Debt': 'netDebt'
                     }
 
-def read_statement(filepath, mode: list(['r','w','r+','w+'])):
-    with open(filepath, f'{mode}') as f:
-        statement = json.load(f)
+def read_statement(collection, ticker):
+    
+        statement = [i for i in collection.find({'symbol':ticker}).sort('date', DESCENDING)]
 
         return statement
 
@@ -111,13 +107,34 @@ st.write(f"""
 
 """)
 
+def make_pretty(styler, use_on):
+    # styler.set_caption("Weather Conditions")
+    # styler.format(rain_condition)
+    # styler.format_index(lambda v: v.strftime("%A"))
+    # styler.background_gradient(axis=None, vmin=1, vmax=5, cmap="YlGnBu")
+    styler.applymap(lambda x: 'color:red;' if (x < 0 if type(x) != str else None) else None)
+    # styler.highlight_min(color='indianred', axis=0)
+    # styler.highlight_max(color='green', axis=0)
+    if use_on == 'statements':
+        styler.format(precision=0, na_rep='MISSING', thousands=' ',formatter={'grossProfitRatio': "{:.0%}",
+                                                                                  'ebitdaratio': "{:.0%}",
+                                                                                  'netIncomeRatio': "{:.0%}",
+                                                                                  'operatingIncomeRatio': "{:.0%}",
+                                                                                  'incomeBeforeTaxRatio': "{:.0%}",
+                                                                                  'eps': "{:.2f}",
+                                                                                  'epsdiluted': "{:.2f}"
+                                                                                 })
+    else:
+        styler.format(na_rep='-',formatter='{:.0%}')
+
+    return styler
+
 income_tab, cash_tab, balance_tab, key_metrics_tab = st.tabs(
     ["Income Statement", "Cash Flow", "Balance Sheet", "Key Metrics"], )
 
 for i, x in enumerate([income_tab, cash_tab, balance_tab]):
     with x:
-        with open(f'D:\lianz\Desktop\Python\\personal_projects\personal_finance\{company_statements[i]}\{ticker_list_box}.json', 'r') as f:
-            tab_statement = json.load(f)
+        tab_statement = [j for j in company_statements[i].find({'symbol':ticker_list_box}).sort('date', DESCENDING)]
 
         year_range = st.slider('Select year range (past n years):',
                                 min_value=1,
@@ -133,14 +150,17 @@ for i, x in enumerate([income_tab, cash_tab, balance_tab]):
 
         df_financial_statements = pd.DataFrame.from_records(
             tab_statement[year_list[0]:year_list[-1]+1],
-            index=[tab_statement[i]['calendarYear'] for i in year_list]).T
+            index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::-1,1:]
+        df_financial_statements = df_financial_statements.style.pipe(make_pretty, use_on='statements')
+                                                                      
 
         st.dataframe(df_financial_statements,
                         use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
 
 with key_metrics_tab:
-    master_table = pd.concat([generate_key_metrics(read_statement(f'D:\lianz\Desktop\Python\\personal_projects\personal_finance\{x}\{ticker_list_box}.json','r'), terms_interested.values()) for x in company_statements],axis=0).drop_duplicates()
-    mt_growth = master_table.T.pct_change(periods=1)
+    master_table = pd.concat([generate_key_metrics(read_statement(x,ticker_list_box), terms_interested.values()) for x in company_statements],axis=0).drop_duplicates()
+    master_table = master_table.loc[~master_table.index.duplicated(keep='first'),:]
+    mt_growth = master_table.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
     # mt_growth.apply(lambda x: "{:.0%}".format(x))
 
     st.dataframe(mt_growth)

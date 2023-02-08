@@ -168,6 +168,7 @@ def access_entry(collection_name, entry_name, entry_value, return_value):
 
     return data
 
+# Function to insert file to database
 def insert_to_mongoDB(collection, ticker, statement, second_key):
     if statement == 'profile':
         file = select_profile(ticker, statement)
@@ -181,6 +182,9 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
     else:
+        if manual_update:
+            collection.delete_many({})
+        
         file = select_quote(ticker, statement)
         
         if len(file) <= 1:

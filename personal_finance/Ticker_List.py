@@ -7,7 +7,7 @@ import requests
 import pathlib
 import time
 import os
-from pymongo import MongoClient
+from pymongo import MongoClient,ASCENDING, DESCENDING
 from bson.objectid import ObjectId
 
 
@@ -279,8 +279,10 @@ if st.button("Download Statements :ledger:"):
 
     elif profile_update:
         for i,x in enumerate(eval(list_tickers)):
-
             insert_to_mongoDB(company_profile, x, 'profile', 'ipoDate')
+    
+        if i == len(eval(list_tickers))-1:
+            st.success(f"All downloads are completed.", icon="💯")
 
     else:
         for i,x in enumerate(missing_tickers):
