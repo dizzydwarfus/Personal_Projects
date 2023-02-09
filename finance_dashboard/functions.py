@@ -57,7 +57,6 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 
-@st.cache(ttl=600)
 def get_data():
     client = init_connection()
     db = client.FinanceApp
