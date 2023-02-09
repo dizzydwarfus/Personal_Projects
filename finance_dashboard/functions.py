@@ -1,4 +1,3 @@
-from pathlib import Path
 from streamlit.source_util import (
     page_icon_and_name, 
     calc_md5, 
@@ -52,16 +51,23 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 #     yellowgreen
 # """
 
-with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\mongodb_api.txt','r') as f:
-    cluster = f.readlines()[0]
-with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\fmp_api.txt','r') as f:
-    fmp_api = f.readlines()[0]
+# Initialize connection.
+# Uses st.experimental_singleton to only run once.
+@st.experimental_singleton
+def init_connection():
+    return MongoClient(**st.secrets["mongo"])
+
+client = init_connection()
+db = client.FinanceApp
+
+# with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\mongodb_api.txt','r') as f:
+#     cluster = f.readlines()[0]
+# with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\fmp_api.txt','r') as f:
+#     fmp_api = f.readlines()[0]
     
-client = MongoClient(cluster)
+# client = MongoClient(cluster)
 
 # print(client.list_database_names())
-
-db = client.FinanceApp
 
 balance_sheet_collection = db.balance_sheet
 income_collection = db.income_statement
@@ -83,11 +89,6 @@ def delete_page(main_script_path_str, page_name):
 
 delete_page("D:\lianz\Desktop\Python\personal_projects\personal_finance\Ticker_List.py", "classes")
 
-
-
-with open(r'D:\\lianz\Desktop\\Python\\personal_projects\\personal_finance\\tickers.json', 'r') as f:
-    tickers = json.load(f)
-
 company_statements = [income_collection,
                       cash_collection, balance_sheet_collection]
 
@@ -105,7 +106,7 @@ terms_interested = {'Revenue': 'revenue',
                     'Operating Cash Flow': 'operatingCashFlow',
                     'Cap Spending': 'capitalExpenditure',
                     'Free Cash Flow': 'freeCashFlow',
-                    'Free Cash Flow per Share': 'freeCashFlow',
+                    'Free Cash Flow per Share': 'freeCashFlowpershare',
                     'Working Capital': 'totalCurrentAssets - totalCurrentLiabilities',
                     'Net Debt': 'netDebt'
                     }
