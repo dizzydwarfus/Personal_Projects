@@ -1,3 +1,7 @@
+st.set_page_config(page_title="Investment Dashboard",
+                   page_icon=":moneybag:",
+                   layout="wide")
+
 import pandas as pd
 import json
 import streamlit as st
@@ -17,9 +21,6 @@ fmp_api = 'eb29218df82acef0486b5c014ccec868'
 
 #####################################################
 
-st.set_page_config(page_title="Investment Dashboard",
-                   page_icon=":moneybag:",
-                   layout="wide")
 
 #####################################################
 
