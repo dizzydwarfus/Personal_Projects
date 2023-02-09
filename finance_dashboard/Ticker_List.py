@@ -4,7 +4,7 @@ import json
 import streamlit as st
 import requests
 from pymongo import MongoClient,ASCENDING, DESCENDING
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile
 
 #####################################################
 
