@@ -53,7 +53,7 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
-@st.experimental_singleton
+@st.cache_resource
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 

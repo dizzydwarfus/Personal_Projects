@@ -1,6 +1,3 @@
-st.set_page_config(page_title="Investment Dashboard",
-                   page_icon=":moneybag:",
-                   layout="wide")
 
 import pandas as pd
 import json
@@ -9,17 +6,23 @@ import requests
 from pymongo import MongoClient,ASCENDING, DESCENDING
 from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page
 
+#####################################################
+
+# Set page config
+
+#####################################################
+st.set_page_config(page_title="Investment Dashboard",
+                   page_icon=":moneybag:",
+                   layout="wide")
+
+
+
 # replace filepath with fmp API link
 # with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\fmp_api.txt','r') as f:
 #     fmp_api = f.readlines()[0]
 
 fmp_api = 'eb29218df82acef0486b5c014ccec868'
 
-#####################################################
-
-# Set page config
-
-#####################################################
 
 
 #####################################################
