@@ -53,12 +53,21 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
-@st.cache_resource
+@st.cache
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 
-client = init_connection()
-db = client.FinanceApp
+@st.cache(ttl=600)
+def get_data():
+    client = init_connection()
+    db = client.FinanceApp
+    balance_sheet_collection = db.balance_sheet
+    income_collection = db.income_statement
+    cash_collection = db.cash_flow_statement
+    company_profile = db.company_profile
+    return balance_sheet_collection,income_collection,cash_collection,company_profile
+
+balance_sheet_collection,income_collection,cash_collection,company_profile = get_data()
 
 # with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\mongodb_api.txt','r') as f:
 #     cluster = f.readlines()[0]
@@ -69,10 +78,6 @@ db = client.FinanceApp
 
 # print(client.list_database_names())
 
-balance_sheet_collection = db.balance_sheet
-income_collection = db.income_statement
-cash_collection = db.cash_flow_statement
-company_profile = db.company_profile
 
 # def delete_page(main_script_path_str, page_name):
 
