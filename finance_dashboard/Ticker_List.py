@@ -10,9 +10,11 @@ import os
 from pymongo import MongoClient,ASCENDING, DESCENDING
 from bson.objectid import ObjectId
 
-
+# replace filepath with mongodb database link with username and password
 with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\\mongodb_api.txt','r') as f:
     cluster = f.readlines()[0]
+
+# replace filepath with fmp API link
 with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\\fmp_api.txt','r') as f:
     fmp_api = f.readlines()[0]
     
@@ -113,9 +115,6 @@ st.session_state['cash_list'] = cash_list
 st.session_state['company_list'] = company_list
 st.session_state['tickers'] = tickers
 st.session_state['missing_tickers'] = missing_tickers
-
-if 'manual_download' not in st.session_state:
-    st.session_state['manual_download'] = False
 
 # Show tickers in database
 if col4.button("Show Scanned Ticker List", key='show_scanned'):
@@ -223,9 +222,8 @@ cont3 = st.container()
 col10, col11, col12, col13 = cont3.columns([0.3,0.3,0.3,1.5])
 
 
-manual_download = col10.checkbox("Enable manual download", key='manual_download')
-profile_update = col11.checkbox("Enable company profile update", key='profile_update')
-manual_update = col12.checkbox("Enable manual update of all statements", key='update_list')
+profile_update = col10.checkbox("Enable company profile update", key='profile_update')
+manual_download = col11.checkbox("Enable manual download of all statements", key='update_list')
 
 # Function to insert file to database
 def insert_to_mongoDB(collection, ticker, statement, second_key):
@@ -237,12 +235,10 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
             collection.delete_one({'symbol':ticker})
         try:
             collection.insert_one(file[0])
-            return st.success(f"{x} {statement} updated!", icon="✅")
+            return st.success(f"{ticker} {statement} updated!", icon="✅")
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
     else:
-        if manual_update:
-            collection.delete_many({})
         
         file = select_quote(ticker, statement)
         
@@ -256,13 +252,13 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
 
             try:
                 collection.insert_many([i for i in file if i['index_id'] in ids])
-                return st.success(f"{x} {statement} updated!", icon="✅")
+                return st.success(f"{ticker} {statement} updated!", icon="✅")
             except:
                 return st.error(f"{ticker} {statement} already exists", icon="🚨")
 
 
 if st.button("Download Statements :ledger:"):
-    if manual_update:
+    if manual_download:
         for i,x in enumerate(eval(list_tickers)):
             
             insert_to_mongoDB(income_collection, x, 'income-statement', 'date')

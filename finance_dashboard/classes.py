@@ -11,7 +11,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import requests
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING, DESCENDING
 
 # """
 # plotly colors:
@@ -66,6 +66,7 @@ db = client.FinanceApp
 balance_sheet_collection = db.balance_sheet
 income_collection = db.income_statement
 cash_collection = db.cash_flow_statement
+company_collection = db.company_profile
 
 def delete_page(main_script_path_str, page_name):
 
@@ -87,8 +88,10 @@ delete_page("D:\lianz\Desktop\Python\personal_projects\personal_finance\Ticker_L
 with open(r'D:\\lianz\Desktop\\Python\\personal_projects\\personal_finance\\tickers.json', 'r') as f:
     tickers = json.load(f)
 
-company_statements = ['income-statement',
-                      'cash-flow-statement', 'balance-sheet-statement']
+company_statements = [income_collection,
+                      cash_collection, balance_sheet_collection]
+
+statements_type = ['Income Statement', 'Cash Flow Statement', 'Balance Sheet']
 
 terms_interested = {'Revenue': 'revenue',
                     'Gross margin%': 'grossProfitRatio',
@@ -108,10 +111,9 @@ terms_interested = {'Revenue': 'revenue',
                     }
 
 
-
-def read_statement(filepath, mode: list(['r','w','r+','w+'])):
-    with open(filepath, f'{mode}') as f:
-        statement = json.load(f)
+def read_statement(collection, ticker):
+    
+        statement = [i for i in collection.find({'symbol':ticker}).sort('date', DESCENDING)]
 
         return statement
 
@@ -178,7 +180,7 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
             collection.delete_one({'symbol':ticker})
         try:
             collection.insert_one(file[0])
-            return st.success(f"{x} {statement} updated!", icon="✅")
+            return st.success(f"{ticker} {statement} updated!", icon="✅")
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
     else:
@@ -197,7 +199,7 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
 
             try:
                 collection.insert_many([i for i in file if i['index_id'] in ids])
-                return st.success(f"{x} {statement} updated!", icon="✅")
+                return st.success(f"{ticker} {statement} updated!", icon="✅")
             except:
                 return st.error(f"{ticker} {statement} already exists", icon="🚨")
 
@@ -249,3 +251,124 @@ def generate_plots(dataframe, arrangement: tuple):
                 cols[m].plotly_chart(
                     fig, use_container_width=True,)
 
+def make_pretty(styler, use_on):
+    # styler.set_caption("Weather Conditions")
+    # styler.format(rain_condition)
+    # styler.format_index(lambda v: v.strftime("%A"))
+    # styler.background_gradient(axis=None, vmin=1, vmax=5, cmap="YlGnBu")
+    styler.applymap(lambda x: 'color:red;' if (x < 0 if type(x) != str else None) else None)
+    # styler.highlight_min(color='indianred', axis=0)
+    # styler.highlight_max(color='green', axis=0)
+    if use_on == 'statements':
+        styler.format(precision=0, na_rep='MISSING', thousands=' ',formatter={'grossProfitRatio': "{:.0%}",
+                                                                                  'ebitdaratio': "{:.0%}",
+                                                                                  'netIncomeRatio': "{:.0%}",
+                                                                                  'operatingIncomeRatio': "{:.0%}",
+                                                                                  'incomeBeforeTaxRatio': "{:.0%}",
+                                                                                  'eps': "{:.2f}",
+                                                                                  'epsdiluted': "{:.2f}"
+                                                                                 })
+    else:
+        styler.format(na_rep='-',formatter='{:.0%}')
+
+    return styler
+
+def create_financial_page(ticker,company_profile_info,col1,col2,col3,p: list):
+
+    col1.markdown(f"""
+    
+    ![Logo]({company_profile_info['image']} "Company Logo")
+    
+    """)
+
+    col2.markdown(f"""
+
+
+    # {ticker} 
+    ---
+    ### Company Profile
+
+    {company_profile_info['description']}
+
+    *<span style="font-size:1em;">Visit [{company_profile_info['website']}]({company_profile_info['website']}) to learn more.</span>*
+
+    """, unsafe_allow_html=True)
+
+    p[0].markdown(
+    f"""<span style='font-size:1.5em;'>CEO</span>  
+    :green[{company_profile_info['ceo']}]
+
+    """, unsafe_allow_html=True)
+
+    p[1].markdown(
+    f"""<span style='font-size:1.5em;'>Exchange</span>  
+    :green[{company_profile_info['exchangeShortName']}]
+
+    """, unsafe_allow_html=True)
+
+    p[2].markdown(
+    f"""<span style='font-size:1.5em;'>Industry</span>  
+    :green[{company_profile_info['industry']}]
+
+    """, unsafe_allow_html=True)
+
+    p[0].markdown(
+    f"""<span style='font-size:1.5em;'>Country</span>  
+    :green[{company_profile_info['country']}]
+
+    """, unsafe_allow_html=True)
+
+    p[1].markdown(
+    f"""<span style='font-size:1.5em;'>Number of Employees</span>  
+    :green[{int(company_profile_info['fullTimeEmployees']):,}]
+
+    """, unsafe_allow_html=True)
+
+    p[2].markdown(
+    f"""<span style='font-size:1.5em;'>Sector</span>  
+    :green[{company_profile_info['sector']}]
+
+    """, unsafe_allow_html=True)
+
+
+
+    income_tab, cash_tab, balance_tab, key_metrics_tab = col3.tabs(
+        ["Income Statement", "Cash Flow", "Balance Sheet", "Key Metrics"], )
+
+
+    for i, x in enumerate([income_tab, cash_tab, balance_tab]):
+        with x:
+            col3.write(f"### {statements_type[i]}")
+            tab_statement = [j for j in company_statements[i].find({'symbol':ticker}).sort('date', DESCENDING)]
+
+            year_range = col3.slider('Select year range (past n years):',
+                                    min_value=1,
+                                    max_value=int(
+                                        tab_statement[0]['calendarYear'])-int(tab_statement[-1]['calendarYear'])+1,
+                                    key=f'{ticker}_{x}_{i}')
+
+            year_list = list(range(year_range))
+
+            # col3.checkbox("Use container width",
+            #             value=False,
+            #             key=f'use_container_width_{x}_{i}')
+
+            df_financial_statements = pd.DataFrame.from_records(
+                tab_statement[year_list[0]:year_list[-1]+1],
+                index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::-1,1:]
+            df_financial_statements = df_financial_statements.style.pipe(make_pretty, use_on='statements')
+
+            col3.dataframe(df_financial_statements,
+                            use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
+
+    with key_metrics_tab:
+        master_table = pd.concat([generate_key_metrics(read_statement(x,ticker), terms_interested.values()) for x in company_statements],axis=0).drop_duplicates()
+        master_table = master_table.loc[~master_table.index.duplicated(keep='first'),:]
+        mt_growth = master_table.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
+
+        col3.dataframe(mt_growth)
+
+        # st.metric(label=f'{mt_growth.columns[0]}', value=mt_growth.iloc[:,0].mean(skipna=True)/len(mt_growth.index), delta=mt_growth.iloc[-1,0])
+
+        # To create the master key metrics table compiled from statements
+        col3.dataframe(master_table)

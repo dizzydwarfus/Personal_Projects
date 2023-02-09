@@ -1,7 +1,8 @@
 *.txt
 *.json
-personal_finance/balance-sheet-statement/
-personal_finance/income-statement/
-personal_finance/cash_flow_statement/
+finance_dashboard/balance-sheet-statement/
+finance_dashboard/income-statement/
+finance_dashboard/cash-flow-statement/
 power_consumption/
 expenses.csv
+finance_dashboard/__pycache__
