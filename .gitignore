@@ -6,3 +6,4 @@ finance_dashboard/cash-flow-statement/
 power_consumption/
 expenses.csv
 finance_dashboard/__pycache__
+finance_dashboard/.streamlit

@@ -1,33 +1,14 @@
 import pandas as pd
-import openpyxl
 import json
 import streamlit as st
-from io import StringIO
 import requests
-import pathlib
-import time
-import os
 from pymongo import MongoClient,ASCENDING, DESCENDING
-from bson.objectid import ObjectId
-
-# replace filepath with mongodb database link with username and password
-with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\\mongodb_api.txt','r') as f:
-    cluster = f.readlines()[0]
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page
 
 # replace filepath with fmp API link
-with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\\fmp_api.txt','r') as f:
+with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\fmp_api.txt','r') as f:
     fmp_api = f.readlines()[0]
-    
-client = MongoClient(cluster)
 
-# print(client.list_database_names())
-
-db = client.FinanceApp
-
-balance_sheet_collection = db.balance_sheet
-income_collection = db.income_statement
-cash_collection = db.cash_flow_statement
-company_profile = db.company_profile
 
 #####################################################
 

@@ -52,9 +52,9 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 #     yellowgreen
 # """
 
-with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\mongodb_api.txt','r') as f:
+with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\mongodb_api.txt','r') as f:
     cluster = f.readlines()[0]
-with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\\fmp_api.txt','r') as f:
+with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\fmp_api.txt','r') as f:
     fmp_api = f.readlines()[0]
     
 client = MongoClient(cluster)
@@ -66,7 +66,7 @@ db = client.FinanceApp
 balance_sheet_collection = db.balance_sheet
 income_collection = db.income_statement
 cash_collection = db.cash_flow_statement
-company_collection = db.company_profile
+company_profile = db.company_profile
 
 def delete_page(main_script_path_str, page_name):
 

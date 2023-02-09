@@ -1,19 +1,14 @@
 import pandas as pd
 import streamlit as st
-import json
 # import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import numpy as np
-from classes import tickers, company_statements, terms_interested, generate_key_metrics, generate_plots
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, generate_plots
 
+tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
 
 ticker_list_box = st.sidebar.selectbox(
     "Select a ticker symbol:", sorted(list(set(tickers))), key="ticker_list")
-
-
-with open(f'D:\lianz\Desktop\Python\\personal_projects\personal_finance\{company_statements[0]}\{ticker_list_box}.json', 'r') as f:
-    income = json.load(f)
 
 
 st.title(f"""
@@ -24,12 +19,11 @@ st.title(f"""
 
 st.write(f"""
 
-    # Financials Growth (last {len(income)} years)
+    # Financials Growth (last {len(read_statement(income_collection,ticker_list_box))} years)
 
     """)
 
-key_metrics_table = generate_key_metrics(
-    income, terms_interested.values())
+key_metrics_table = generate_key_metrics(read_statement(income_collection,ticker_list_box), terms_interested.values())
 
 generate_plots(key_metrics_table, [1])
 key_metrics_table

@@ -1,26 +1,8 @@
 import pandas as pd
 import streamlit as st
-import json
-import string
 import numpy as np
-from pymongo import MongoClient,ASCENDING, DESCENDING
-from bson.objectid import ObjectId
-from classes import company_collection, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page
-
-# replace filepath with mongodb database link with username and password
-with open('D:\lianz\Desktop\Python\personal_projects\personal_finance\mongodb_api.txt','r') as f:
-    cluster = f.readlines()[0]
-    
-client = MongoClient(cluster)
-
-# print(client.list_database_names())
-
-db = client.FinanceApp
-
-balance_sheet_collection = db.balance_sheet
-income_collection = db.income_statement
-cash_collection = db.cash_flow_statement
-company_collection = db.company_profile
+from pymongo import ASCENDING, DESCENDING
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page
 
 #####################################################
 
@@ -34,13 +16,13 @@ tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
 ticker_list_box = st.sidebar.selectbox(
     "Select a ticker symbol:", sorted(tickers), key="ticker_list")
 
-companyA_info = read_statement(company_collection, ticker_list_box)[0]
+companyA_info = read_statement(company_profile, ticker_list_box)[0]
 
-same_sector = sorted([i for i in tickers if read_statement(company_collection, i)[0]['sector'] == companyA_info['sector']])
+same_sector = sorted([i for i in tickers if read_statement(company_profile, i)[0]['sector'] == companyA_info['sector']])
 
 ticker_compare = st.sidebar.selectbox("Select a ticker symbol to compare:", same_sector, key="ticker_compare")
 
-companyB_info = read_statement(company_collection, ticker_compare)[0]
+companyB_info = read_statement(company_profile, ticker_compare)[0]
 
 compare_companies = st.sidebar.checkbox('Compare', key='compare_companies')
 
