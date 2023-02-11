@@ -1,5 +1,5 @@
 # Personal Projects
-Personal data science exploration using python (pandas, numpy, sklearn, scipy, matplotlib)
+Data science exploration using python (pandas, numpy, sklearn, scipy, matplotlib)
 
 #### My journey in:
 
