@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from pymongo import ASCENDING, DESCENDING
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page, make_pretty
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page, make_pretty, read_profile, statements_type
 
 #####################################################
 
@@ -16,13 +16,13 @@ tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
 ticker_list_box = st.sidebar.selectbox(
     "Select a ticker symbol:", sorted(tickers), key="ticker_list")
 
-companyA_info = read_statement(company_profile, ticker_list_box)[0]
+companyA_info = read_profile(ticker_list_box)[0]
 
-same_sector = sorted([i for i in tickers if read_statement(company_profile, i)[0]['sector'] == companyA_info['sector']])
+same_sector = sorted([i for i in tickers if read_profile(i)[0]['sector'] == companyA_info['sector']])
 
 ticker_compare = st.sidebar.selectbox("Select a ticker symbol to compare:", same_sector, key="ticker_compare")
 
-companyB_info = read_statement(company_profile, ticker_compare)[0]
+companyB_info = read_profile(ticker_compare)[0]
 
 compare_companies = st.sidebar.checkbox('Compare', key='compare_companies')
 
@@ -101,7 +101,7 @@ else:
 
     for i, x in enumerate([income_tab, cash_tab, balance_tab]):
         with x:
-            tab_statement = [j for j in company_statements[i].find({'symbol':ticker_list_box}).sort('date', DESCENDING)]
+            tab_statement = read_statement(statements_type[i], ticker_list_box)
 
             year_range = st.slider('Select year range (past n years):',
                                     min_value=1,
@@ -125,7 +125,7 @@ else:
                             use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
 
     with key_metrics_tab:
-        master_table = pd.concat([generate_key_metrics(read_statement(x,ticker_list_box), terms_interested.values()) for x in company_statements],axis=0).drop_duplicates()
+        master_table = pd.concat([generate_key_metrics(read_statement(x,ticker_list_box), terms_interested.values()) for x in statements_type],axis=0).drop_duplicates()
         master_table = master_table.loc[~master_table.index.duplicated(keep='first'),:]
         mt_growth = master_table.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
 

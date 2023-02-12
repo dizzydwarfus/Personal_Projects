@@ -54,11 +54,11 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
-st.cache_resource
+@st.cache_resource
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 
-@st.cache_resource(ttl=600)
+@st.cache_resource(ttl=86400) # only refresh after 24h
 def get_data():
     client = init_connection()
     db = client.FinanceApp
@@ -122,19 +122,34 @@ def generate_terms():
 
 terms_interested = generate_terms()
 
-def read_statement(collection, ticker):
+@st.cache_data
+def read_profile(ticker):
     
-        statement = [i for i in collection.find({'symbol':ticker}).sort('date', DESCENDING)]
+        statement = [i for i in company_profile.find({'symbol':ticker}).sort('date', DESCENDING)]
+
+        return statement
+
+@st.cache_data
+def read_statement(type_statement, ticker):
+
+        if type_statement == 'Income Statement':
+            statement = [i for i in income_collection.find({'symbol':ticker}).sort('date', DESCENDING)]
+        
+        elif type_statement == 'Cash Flow Statement':
+            statement = [i for i in cash_collection.find({'symbol':ticker}).sort('date', DESCENDING)]
+
+        else:
+            statement = [i for i in balance_sheet_collection.find({'symbol':ticker}).sort('date', DESCENDING)]
 
         return statement
 
 
-def generate_key_metrics(financial_statement, list_of_metrics):
+def generate_key_metrics(financial_statement, _list_of_metrics):
     l = []
     dict_holder = {}
     columns = financial_statement[0].keys()
 
-    for n in list_of_metrics: # loop over the list of interested columns (metrics)
+    for n in _list_of_metrics: # loop over the list of interested columns (metrics)
 
         if n in columns: # check if columns in interested list can be found in columns of financial statement
             for i, x in enumerate(financial_statement[::-1]): # loop over the range of years
@@ -147,7 +162,7 @@ def generate_key_metrics(financial_statement, list_of_metrics):
             pass
 
     df = pd.DataFrame.from_records(
-        l, index=[items for items in list_of_metrics if items in columns])
+        l, index=[items for items in _list_of_metrics if items in columns])
 
     # df.style.format({f"{df}": "{:,}"})
 
@@ -175,7 +190,6 @@ def define_id(json_file):
     for i in json_file:
         i['index_id'] = f"{i['symbol']}_{i['date']}"
 
-@st.cache_data
 def access_entry(_collection_name, entry_name, entry_value, return_value):
     data = _collection_name.find({entry_name:entry_value})
 
@@ -353,7 +367,7 @@ def create_financial_page(ticker,company_profile_info,col1,col2,col3,p: list):
     for i, x in enumerate([income_tab, cash_tab, balance_tab]):
         with x:
             col3.write(f"### {statements_type[i]}")
-            tab_statement = [j for j in company_statements[i].find({'symbol':ticker}).sort('date', DESCENDING)]
+            tab_statement = read_statement(statements_type[i], ticker)
 
             year_range = col3.slider('Select year range (past n years):',
                                     min_value=1,
@@ -376,7 +390,7 @@ def create_financial_page(ticker,company_profile_info,col1,col2,col3,p: list):
                             use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
 
     with key_metrics_tab:
-        master_table = pd.concat([generate_key_metrics(read_statement(x,ticker), terms_interested.values()) for x in company_statements],axis=0).drop_duplicates()
+        master_table = pd.concat([generate_key_metrics(read_statement(x,ticker), terms_interested.values()) for x in statements_type],axis=0).drop_duplicates()
         master_table = master_table.loc[~master_table.index.duplicated(keep='first'),:]
         mt_growth = master_table.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
 

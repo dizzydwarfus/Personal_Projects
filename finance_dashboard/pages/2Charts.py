@@ -3,7 +3,7 @@ import streamlit as st
 # import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, generate_plots
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, generate_plots, create_financial_page, make_pretty, read_profile, statements_type
 
 tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
 
@@ -19,11 +19,11 @@ st.title(f"""
 
 st.write(f"""
 
-    # Financials Growth (last {len(read_statement(income_collection,ticker_list_box))} years)
+    # Financials Growth (last {len(read_statement(statements_type[0],ticker_list_box))} years)
 
     """)
 
-key_metrics_table = generate_key_metrics(read_statement(income_collection,ticker_list_box), terms_interested.values())
+key_metrics_table = generate_key_metrics(read_statement(statements_type[0],ticker_list_box), terms_interested.values())
 
 chart_select = st.multiselect('*Select charts to show:*', terms_interested.keys())
 
