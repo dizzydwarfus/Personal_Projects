@@ -25,6 +25,10 @@ st.write(f"""
 
 key_metrics_table = generate_key_metrics(read_statement(income_collection,ticker_list_box), terms_interested.values())
 
+chart_select = st.multiselect('*Select charts to show:*', terms_interested.keys())
+
+
+
 generate_plots(key_metrics_table, [1])
 key_metrics_table
 

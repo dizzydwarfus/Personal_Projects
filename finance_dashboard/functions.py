@@ -54,21 +54,21 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
-# @st.experimental_singleton
+st.cache_resource
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 
-# @st.experimental_singleton(ttl=600)
-# def get_data():
-client = init_connection()
-db = client.FinanceApp
-balance_sheet_collection = db.balance_sheet
-income_collection = db.income_statement
-cash_collection = db.cash_flow_statement
-company_profile = db.company_profile
-    # return balance_sheet_collection,income_collection,cash_collection,company_profile
+@st.cache_resource(ttl=600)
+def get_data():
+    client = init_connection()
+    db = client.FinanceApp
+    balance_sheet_collection = db.balance_sheet
+    income_collection = db.income_statement
+    cash_collection = db.cash_flow_statement
+    company_profile = db.company_profile
+    return balance_sheet_collection,income_collection,cash_collection,company_profile
 
-# balance_sheet_collection,income_collection,cash_collection,company_profile = get_data()
+balance_sheet_collection,income_collection,cash_collection,company_profile = get_data()
 
 # with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\mongodb_api.txt','r') as f:
 #     cluster = f.readlines()[0]
@@ -100,22 +100,27 @@ company_statements = [income_collection,
 
 statements_type = ['Income Statement', 'Cash Flow Statement', 'Balance Sheet']
 
-terms_interested = {'Revenue': 'revenue',
-                    'Gross margin%': 'grossProfitRatio',
-                    'Operating Income': 'operatingIncome',
-                    'Operating Margin %': 'operatingIncomeRatio',
-                    'Net Income': 'netIncome',
-                    'Net Income Margin': 'netIncomeRatio',
-                    'Earnings per Share': 'epsdiluted',
-                    'Shares Oustanding (diluted)': 'weightedAverageShsOutDil',
-                    'Dividends': 'dividendsPaid',
-                    'Operating Cash Flow': 'operatingCashFlow',
-                    'Cap Spending': 'capitalExpenditure',
-                    'Free Cash Flow': 'freeCashFlow',
-                    'Free Cash Flow per Share': 'freeCashFlowpershare',
-                    'Working Capital': 'totalCurrentAssets - totalCurrentLiabilities',
-                    'Net Debt': 'netDebt'
-                    }
+@st.cache_data
+def generate_terms():
+    terms_interested = {'Revenue': 'revenue',
+                        'Gross margin%': 'grossProfitRatio',
+                        'Operating Income': 'operatingIncome',
+                        'Operating Margin %': 'operatingIncomeRatio',
+                        'Net Income': 'netIncome',
+                        'Net Income Margin': 'netIncomeRatio',
+                        'Earnings per Share': 'epsdiluted',
+                        'Shares Oustanding (diluted)': 'weightedAverageShsOutDil',
+                        'Dividends': 'dividendsPaid',
+                        'Operating Cash Flow': 'operatingCashFlow',
+                        'Cap Spending': 'capitalExpenditure',
+                        'Free Cash Flow': 'freeCashFlow',
+                        'Free Cash Flow per Share': 'freeCashFlowpershare',
+                        'Working Capital': 'totalCurrentAssets - totalCurrentLiabilities',
+                        'Net Debt': 'netDebt'
+                        }
+    return terms_interested
+
+terms_interested = generate_terms()
 
 def read_statement(collection, ticker):
     
@@ -123,15 +128,16 @@ def read_statement(collection, ticker):
 
         return statement
 
+
 def generate_key_metrics(financial_statement, list_of_metrics):
     l = []
     dict_holder = {}
     columns = financial_statement[0].keys()
 
-    for n in list_of_metrics:
+    for n in list_of_metrics: # loop over the list of interested columns (metrics)
 
-        if n in columns:
-            for i, x in enumerate(financial_statement[::-1]):
+        if n in columns: # check if columns in interested list can be found in columns of financial statement
+            for i, x in enumerate(financial_statement[::-1]): # loop over the range of years
                 dict_holder[x['calendarYear']] = x[f'{n}']
 
             l.append(dict_holder)
@@ -169,8 +175,9 @@ def define_id(json_file):
     for i in json_file:
         i['index_id'] = f"{i['symbol']}_{i['date']}"
 
-def access_entry(collection_name, entry_name, entry_value, return_value):
-    data = collection_name.find({entry_name:entry_value})
+@st.cache_data
+def access_entry(_collection_name, entry_name, entry_value, return_value):
+    data = _collection_name.find({entry_name:entry_value})
 
     data = [i[return_value] for i in data]
 
@@ -210,7 +217,7 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
                 return st.error(f"{ticker} {statement} already exists", icon="🚨")
 
             
-
+@st.cache_data
 def generate_plots(dataframe, arrangement: tuple):
 
     # create columns to place charts based on arrangement specified (columns in each row)
@@ -278,6 +285,7 @@ def make_pretty(styler, use_on):
         styler.format(na_rep='-',formatter='{:.0%}')
 
     return styler
+
 
 def create_financial_page(ticker,company_profile_info,col1,col2,col3,p: list):
 

@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from pymongo import ASCENDING, DESCENDING
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page, make_pretty
 
 #####################################################
 
@@ -25,36 +25,6 @@ ticker_compare = st.sidebar.selectbox("Select a ticker symbol to compare:", same
 companyB_info = read_statement(company_profile, ticker_compare)[0]
 
 compare_companies = st.sidebar.checkbox('Compare', key='compare_companies')
-
-#####################################################
-
-# Define functions to create dictionaries for
-# historical data
-
-#####################################################
-
-# Format table function
-def make_pretty(styler, use_on):
-    # styler.set_caption("Weather Conditions")
-    # styler.format(rain_condition)
-    # styler.format_index(lambda v: v.strftime("%A"))
-    # styler.background_gradient(axis=None, vmin=1, vmax=5, cmap="YlGnBu")
-    styler.applymap(lambda x: 'color:red;' if (x < 0 if type(x) != str else None) else None)
-    # styler.highlight_min(color='indianred', axis=0)
-    # styler.highlight_max(color='green', axis=0)
-    if use_on == 'statements':
-        styler.format(precision=0, na_rep='MISSING', thousands=' ',formatter={'grossProfitRatio': "{:.0%}",
-                                                                                  'ebitdaratio': "{:.0%}",
-                                                                                  'netIncomeRatio': "{:.0%}",
-                                                                                  'operatingIncomeRatio': "{:.0%}",
-                                                                                  'incomeBeforeTaxRatio': "{:.0%}",
-                                                                                  'eps': "{:.2f}",
-                                                                                  'epsdiluted': "{:.2f}"
-                                                                                 })
-    else:
-        styler.format(na_rep='-',formatter='{:.0%}')
-
-    return styler
 
 #####################################################
 
