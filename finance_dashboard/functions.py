@@ -13,45 +13,6 @@ from plotly.subplots import make_subplots
 import requests
 from pymongo import MongoClient, ASCENDING, DESCENDING
 
-# """
-# plotly colors:
-#     aliceblue, antiquewhite, aqua, aquamarine, azure,
-#     beige, bisque, black, blanchedalmond, blue,
-#     blueviolet, brown, burlywood, cadetblue,
-#     chartreuse, chocolate, coral, cornflowerblue,
-#     cornsilk, crimson, cyan, darkblue, darkcyan,
-#     darkgoldenrod, darkgray, darkgrey, darkgreen,
-#     darkkhaki, darkmagenta, darkolivegreen, darkorange,
-#     darkorchid, darkred, darksalmon, darkseagreen,
-#     darkslateblue, darkslategray, darkslategrey,
-#     darkturquoise, darkviolet, deeppink, deepskyblue,
-#     dimgray, dimgrey, dodgerblue, firebrick,
-#     floralwhite, forestgreen, fuchsia, gainsboro,
-#     ghostwhite, gold, goldenrod, gray, grey, green,
-#     greenyellow, honeydew, hotpink, indianred, indigo,
-#     ivory, khaki, lavender, lavenderblush, lawngreen,
-#     lemonchiffon, lightblue, lightcoral, lightcyan,
-#     lightgoldenrodyellow, lightgray, lightgrey,
-#     lightgreen, lightpink, lightsalmon, lightseagreen,
-#     lightskyblue, lightslategray, lightslategrey,
-#     lightsteelblue, lightyellow, lime, limegreen,
-#     linen, magenta, maroon, mediumaquamarine,
-#     mediumblue, mediumorchid, mediumpurple,
-#     mediumseagreen, mediumslateblue, mediumspringgreen,
-#     mediumturquoise, mediumvioletred, midnightblue,
-#     mintcream, mistyrose, moccasin, navajowhite, navy,
-#     oldlace, olive, olivedrab, orange, orangered,
-#     orchid, palegoldenrod, palegreen, paleturquoise,
-#     palevioletred, papayawhip, peachpuff, peru, pink,
-#     plum, powderblue, purple, red, rosybrown,
-#     royalblue, saddlebrown, salmon, sandybrown,
-#     seagreen, seashell, sienna, silver, skyblue,
-#     slateblue, slategray, slategrey, snow, springgreen,
-#     steelblue, tan, teal, thistle, tomato, turquoise,
-#     violet, wheat, white, whitesmoke, yellow,
-#     yellowgreen
-# """
-
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
 @st.cache_resource
@@ -263,11 +224,19 @@ def generate_plots(dataframe, arrangement: tuple, metric):
 
                 # Update figure title, legend, axes
                 fig.update_layout(showlegend=False,
-                                  xaxis_title='Year', yaxis_title=f'{n}')
+                                #   template='plotly_dark',
+                                  paper_bgcolor='#1c2541',
+                                  plot_bgcolor="#0b132b",
+                                  xaxis_title='Year', 
+                                #   yaxis_title=f'{n}', 
+                                  title={'text': f'<b>{n.capitalize()}</b> (last {len(dataframe)} years)',
+                                         'x':0.5,
+                                         'xanchor':'center',
+                                         'font':{'size':25}},
+                                  font={'size':15})
+                fig.update_yaxes(showgrid=False, zeroline=True, secondary_y=False)
                 fig.update_yaxes(
-                    title_text=f"<b>{n.capitalize()}</b>", secondary_y=False)
-                fig.update_yaxes(
-                    title_text="Growth Y-o-Y", secondary_y=True)
+                    title_text="Growth Y-o-Y", secondary_y=True, showgrid=False, zeroline=False)
 
                 # # Add horizontal lines to show max and min values
                 # fig.add_hline(y=dataframe[f'{n}'].max(
