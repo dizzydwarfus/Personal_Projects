@@ -47,7 +47,8 @@ if compare_companies:
     t0.markdown(f"""
 
 
-    # {ticker_list_box} 
+    # {companyA_info['companyName']}
+    ###### *Ticker symbol*: {ticker_list_box} 
     ---
     ### Company Profile
 
@@ -66,7 +67,8 @@ if compare_companies:
     t1.markdown(f"""
 
 
-    # {ticker_compare} 
+    # {companyB_info['companyName']}
+    ###### *Ticker symbol*: {ticker_compare}
     ---
     ### Company Profile
 
@@ -89,7 +91,8 @@ else:
     st.markdown(f"""
 
 
-    # {ticker_list_box} 
+    # {companyA_info['companyName']}
+    ###### *Ticker symbol*: {ticker_list_box}
     ---
     ### Company Profile
 
