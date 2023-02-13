@@ -339,7 +339,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
             df_financial_statements = pd.DataFrame.from_records(
                 tab_statement[year_list[0]:year_list[-1]+1],
-                index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::-1,1:]
+                index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::-1,9:]
             df_financial_statements = df_financial_statements.style.pipe(make_pretty, use_on='statements')
 
             col3.dataframe(df_financial_statements,
