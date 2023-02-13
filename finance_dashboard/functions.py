@@ -232,14 +232,15 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
 
             
 @st.cache_data
-def generate_plots(dataframe, arrangement: tuple):
+def generate_plots(dataframe, arrangement: tuple, metric):
 
     # create columns to place charts based on arrangement specified (columns in each row)
     cols = st.columns(arrangement)
     dataframe = dataframe.T
+    metric = [terms_interested[i] for i in metric]
     m = 0
 
-    for i, n in enumerate(terms_interested.values()):
+    for i, n in enumerate(metric):
         if n in dataframe.columns:
 
                 # Define growth rates Y-o-Y
@@ -389,4 +390,4 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
     
     with charts_tab:
         chart_select = st.multiselect('*Select charts to show:*', terms_interested.keys(), key=f'{ticker}_multiselect')
-        generate_plots(master_table_unformatted, [1])
+        generate_plots(master_table_unformatted, [1], chart_select)
