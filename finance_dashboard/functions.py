@@ -198,10 +198,10 @@ def generate_plots(dataframe, arrangement: tuple, metric):
     # create columns to place charts based on arrangement specified (columns in each row)
     cols = st.columns(arrangement)
     dataframe = dataframe.T
-    metric = [terms_interested[i] for i in metric]
+    metric2 = [terms_interested[i] for i in metric]
     m = 0
 
-    for i, n in enumerate(metric):
+    for i, n in enumerate(metric2):
         if n in dataframe.columns:
 
                 # Define growth rates Y-o-Y
@@ -229,7 +229,7 @@ def generate_plots(dataframe, arrangement: tuple, metric):
                                   plot_bgcolor="#0b132b",
                                   xaxis_title='Year', 
                                 #   yaxis_title=f'{n}', 
-                                  title={'text': f'<b>{n.capitalize()}</b> (last {len(dataframe)} years)',
+                                  title={'text': f'<b>{metric[i].capitalize()}</b> (last {len(dataframe)} years)',
                                          'x':0.5,
                                          'xanchor':'center',
                                          'font':{'size':25}},
