@@ -306,26 +306,7 @@ def make_pretty(styler, use_on=None):
     return styler
 
 
-def create_financial_page(ticker,company_profile_info,col1,col2,col3,p: list):
-
-    col1.markdown(f"""
-    
-    ![Logo]({company_profile_info['image']} "Company Logo")
-    
-    """)
-
-    col2.markdown(f"""
-
-
-    # {ticker} 
-    ---
-    ### Company Profile
-
-    {company_profile_info['description']}
-
-    *<span style="font-size:1em;">Visit [{company_profile_info['website']}]({company_profile_info['website']}) to learn more.</span>*
-
-    """, unsafe_allow_html=True)
+def create_financial_page(ticker, company_profile_info, col3, p: list):
 
     p[0].markdown(
     f"""<span style='font-size:1.5em;'>CEO</span>  

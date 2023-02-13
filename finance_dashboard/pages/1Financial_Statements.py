@@ -38,13 +38,70 @@ if compare_companies:
     p1, p2, p3, p4, p5, p6 = st.columns([1, 1, 1, 1, 1, 1])
     c1, c2 = st.columns([1,1])
 
-    create_financial_page(ticker_list_box, companyA_info, l0, t0, c1, [p1,p2,p3])
-    create_financial_page(ticker_compare, companyB_info, l1, t1, c2, [p4,p5,p6])
+    l0.markdown(f"""
+    
+    ![Logo]({companyA_info['image']} "Company Logo")
+    
+    """)
+
+    t0.markdown(f"""
+
+
+    # {ticker_list_box} 
+    ---
+    ### Company Profile
+
+    {companyA_info['description']}
+
+    *<span style="font-size:1em;">Visit [{companyA_info['website']}]({companyA_info['website']}) to learn more.</span>*
+
+    """, unsafe_allow_html=True)
+
+    l1.markdown(f"""
+    
+    ![Logo]({companyB_info['image']} "Company Logo")
+    
+    """)
+
+    t1.markdown(f"""
+
+
+    # {ticker_compare} 
+    ---
+    ### Company Profile
+
+    {companyB_info['description']}
+
+    *<span style="font-size:1em;">Visit [{companyB_info['website']}]({companyB_info['website']}) to learn more.</span>*
+
+    """, unsafe_allow_html=True)
+
+    create_financial_page(ticker_list_box, companyA_info, c1, [p1,p2,p3])
+    create_financial_page(ticker_compare, companyB_info, c2, [p4,p5,p6])
 
 else:
+    st.markdown(f"""
+
+    ![Logo]({companyA_info['image']} "Company Logo")
+    
+    """)
+
+    st.markdown(f"""
+
+
+    # {ticker_list_box} 
+    ---
+    ### Company Profile
+
+    {companyA_info['description']}
+
+    *<span style="font-size:1em;">Visit [{companyA_info['website']}]({companyA_info['website']}) to learn more.</span>*
+
+    """, unsafe_allow_html=True)
+
     p1, p2, p3 = st.columns([1, 1, 1])
 
-    create_financial_page(ticker_list_box, companyA_info, st, st, st, [p1,p2,p3])
+    create_financial_page(ticker_list_box, companyA_info, st, [p1,p2,p3])
 
 
 st.markdown("***Data provided by Financial Modeling Prep***")
