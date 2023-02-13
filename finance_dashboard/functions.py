@@ -284,9 +284,9 @@ def make_pretty(styler, use_on=None):
     # styler.format_index(lambda v: v.strftime("%A"))
     # styler.background_gradient(axis=None, vmin=1, vmax=5, cmap="YlGnBu")
     if use_on == None:
-        styler.format(precision=2, na_rep='MISSING', thousands=' ', subset=pd.IndexSlice[['grossProfitRatio','netIncomeRatio', 'operatingIncomeRatio', 'epsdiluted'],:])
         styler.format(precision=0, na_rep='MISSING', thousands=' ', subset=pd.IndexSlice[['revenue', 'operatingIncome', 'netIncome', 'weightedAverageShsOutDil', 'operatingCashFlow', 'netDebt', 'capitalExpenditure', 'freeCashFlow', 'dividendsPaid'],:])
         styler.format(precision=0, na_rep='MISSING', thousands=' ')
+        styler.format(precision=2, na_rep='MISSING', thousands=' ', subset=pd.IndexSlice[['grossProfitRatio','netIncomeRatio', 'operatingIncomeRatio', 'epsdiluted'],:])
         styler.applymap(lambda x: 'color:red;' if (x < 0 if type(x) != str else None) else None)
     # styler.highlight_min(color='indianred', axis=0)
     # styler.highlight_max(color='green', axis=0)
@@ -346,8 +346,8 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
 
 
-    income_tab, cash_tab, balance_tab, key_metrics_tab = col3.tabs(
-        ["Income Statement", "Cash Flow", "Balance Sheet", "Key Metrics"], )
+    income_tab, cash_tab, balance_tab, key_metrics_tab, charts_tab = col3.tabs(
+        ["Income Statement", "Cash Flow", "Balance Sheet", "Key Metrics", "Charts"], )
 
 
     for i, x in enumerate([income_tab, cash_tab, balance_tab]):
@@ -376,13 +376,17 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
                             use_container_width=bool(f'st.session_state.use_container_width_income_tab'))
 
     with key_metrics_tab:
-        master_table = pd.concat([generate_key_metrics(read_statement(x,ticker), terms_interested.values()) for x in statements_type],axis=0).drop_duplicates()
-        master_table = master_table.loc[~master_table.index.duplicated(keep='first'),:]
-        mt_growth = master_table.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
-        master_table = master_table.style.pipe(make_pretty)
+        master_table_unformatted = pd.concat([generate_key_metrics(read_statement(x,ticker), terms_interested.values()) for x in statements_type],axis=0).drop_duplicates()
+        master_table_unformatted = master_table_unformatted.loc[~master_table_unformatted.index.duplicated(keep='first'),:]
+        mt_growth = master_table_unformatted.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
+        master_table_formatted = master_table_unformatted.style.pipe(make_pretty)
         col3.dataframe(mt_growth)
 
         # st.metric(label=f'{mt_growth.columns[0]}', value=mt_growth.iloc[:,0].mean(skipna=True)/len(mt_growth.index), delta=mt_growth.iloc[-1,0])
 
         # To create the master key metrics table compiled from statements
-        col3.dataframe(master_table)
+        col3.dataframe(master_table_formatted)
+    
+    with charts_tab:
+        chart_select = st.multiselect('*Select charts to show:*', terms_interested.keys(), key=f'{ticker}_multiselect')
+        generate_plots(master_table_unformatted, [1])
