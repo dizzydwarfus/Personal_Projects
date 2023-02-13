@@ -348,14 +348,15 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
     with key_metrics_tab:
         master_table_unformatted = pd.concat([generate_key_metrics(read_statement(x,ticker), terms_interested.values()) for x in statements_type],axis=0).drop_duplicates()
         master_table_unformatted = master_table_unformatted.loc[~master_table_unformatted.index.duplicated(keep='first'),:]
-        mt_growth = master_table_unformatted.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
+        mt_growth = master_table_unformatted.T.pct_change(periods=1).T.style.pipe(make_pretty, use_on='metric')
         master_table_formatted = master_table_unformatted.style.pipe(make_pretty)
-        col3.dataframe(mt_growth)
 
         # st.metric(label=f'{mt_growth.columns[0]}', value=mt_growth.iloc[:,0].mean(skipna=True)/len(mt_growth.index), delta=mt_growth.iloc[-1,0])
 
         # To create the master key metrics table compiled from statements
         col3.dataframe(master_table_formatted)
+        col3.write("##### Y-o-Y Growth Table")
+        col3.dataframe(mt_growth)
     
     with charts_tab:
         chart_select = st.multiselect('*Select charts to show:*', terms_interested.keys(), key=f'{ticker}_multiselect')
