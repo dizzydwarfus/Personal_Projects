@@ -278,15 +278,19 @@ def generate_plots(dataframe, arrangement: tuple):
                 cols[m].plotly_chart(
                     fig, use_container_width=True,)
 
-def make_pretty(styler, use_on):
+def make_pretty(styler, use_on=None):
     # styler.set_caption("Weather Conditions")
     # styler.format(rain_condition)
     # styler.format_index(lambda v: v.strftime("%A"))
     # styler.background_gradient(axis=None, vmin=1, vmax=5, cmap="YlGnBu")
-    styler.applymap(lambda x: 'color:red;' if (x < 0 if type(x) != str else None) else None)
+    if use_on == None:
+        styler.format(precision=2, na_rep='MISSING', thousands=' ', subset=pd.IndexSlice[['grossProfitRatio','netIncomeRatio', 'operatingIncomeRatio', 'epsdiluted'],:])
+        styler.format(precision=0, na_rep='MISSING', thousands=' ', subset=pd.IndexSlice[['revenue', 'operatingIncome', 'netIncome', 'weightedAverageShsOutDil', 'operatingCashFlow', 'netDebt', 'capitalExpenditure', 'freeCashFlow', 'dividendsPaid'],:])
+        styler.format(precision=0, na_rep='MISSING', thousands=' ')
+        styler.applymap(lambda x: 'color:red;' if (x < 0 if type(x) != str else None) else None)
     # styler.highlight_min(color='indianred', axis=0)
     # styler.highlight_max(color='green', axis=0)
-    if use_on == 'statements':
+    elif use_on == 'statements':
         styler.format(precision=0, na_rep='MISSING', thousands=' ',formatter={'grossProfitRatio': "{:.0%}",
                                                                                   'ebitdaratio': "{:.0%}",
                                                                                   'netIncomeRatio': "{:.0%}",
@@ -297,6 +301,7 @@ def make_pretty(styler, use_on):
                                                                                  })
     else:
         styler.format(na_rep='-',formatter='{:.0%}')
+        styler.applymap(lambda x: 'color:red;' if (x < 0 if type(x) != str else None) else None)
 
     return styler
 
@@ -393,7 +398,7 @@ def create_financial_page(ticker,company_profile_info,col1,col2,col3,p: list):
         master_table = pd.concat([generate_key_metrics(read_statement(x,ticker), terms_interested.values()) for x in statements_type],axis=0).drop_duplicates()
         master_table = master_table.loc[~master_table.index.duplicated(keep='first'),:]
         mt_growth = master_table.T.pct_change(periods=1).style.pipe(make_pretty, use_on='metric')
-
+        master_table = master_table.style.pipe(make_pretty)
         col3.dataframe(mt_growth)
 
         # st.metric(label=f'{mt_growth.columns[0]}', value=mt_growth.iloc[:,0].mean(skipna=True)/len(mt_growth.index), delta=mt_growth.iloc[-1,0])

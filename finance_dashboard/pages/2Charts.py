@@ -23,15 +23,17 @@ st.write(f"""
 
     """)
 
-key_metrics_table = generate_key_metrics(read_statement(statements_type[0],ticker_list_box), terms_interested.values())
+master_table = pd.concat([generate_key_metrics(read_statement(x,ticker_list_box), terms_interested.values()) for x in statements_type],axis=0).drop_duplicates()
+master_table = master_table.loc[~master_table.index.duplicated(keep='first'),:]
+
 
 chart_select = st.multiselect('*Select charts to show:*', terms_interested.keys())
 
 
 
-generate_plots(key_metrics_table, [1])
-key_metrics_table
-
+generate_plots(master_table, [1])
+master_table = master_table.style.pipe(make_pretty)
+st.dataframe(master_table)
 """
 Show eps by industry/sector: create lists containing ticker
                             symbols belonging to an industry
