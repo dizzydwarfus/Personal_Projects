@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from pymongo import ASCENDING, DESCENDING
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page, make_pretty, read_profile, statements_type
+from functions import tickers,balance_sheet_collection, income_collection, cash_collection, company_profile, terms_interested, company_statements, read_statement, generate_key_metrics, create_financial_page, make_pretty, read_profile, statements_type
 
 #####################################################
 
@@ -10,8 +10,6 @@ from functions import balance_sheet_collection, income_collection, cash_collecti
 
 #####################################################
 
-
-tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
 
 ticker_list_box = st.sidebar.selectbox(
     "Select a ticker symbol:", sorted(tickers), key="ticker_list")

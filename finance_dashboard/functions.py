@@ -55,6 +55,12 @@ balance_sheet_collection,income_collection,cash_collection,company_profile = get
 
 
 # delete_page("D:\lianz\Desktop\Python\personal_projects\personal_finance\Ticker_List.py", "classes")
+@st.cache_data
+def get_tickers():
+    tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
+    return tickers
+
+tickers = get_tickers()
 
 company_statements = [income_collection,
                       cash_collection, balance_sheet_collection]
