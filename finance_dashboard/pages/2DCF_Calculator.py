@@ -32,7 +32,7 @@ df = pd.concat([generate_key_metrics(read_statement(x,ticker),terms_interested.v
 df = df.loc[~df.index.duplicated(keep='first'),:]
 df_growth = df.T.pct_change(periods=1).T
 
-con2.dataframe(df_growth.iloc[list(terms_interested.keys()).index('Revenue'):,-5:])
+# con2.dataframe(df_growth.iloc[list(terms_interested.keys()).index('Revenue'):,-5:])
 
 count = 0
 for i,x in terms_interested.items():
