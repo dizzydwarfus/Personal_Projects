@@ -13,10 +13,11 @@ from functions import tickers, company_profile, terms_interested, company_statem
 con1, con2 = st.container(),st.container()
 
 c1,c2,c3 = con1.columns([0.5,0.5,1])
-c4,c5,c6,c7 = con2.columns([1,1,1,1])
+c4,c5,c6,c7,c8,c9,c10,c11 = con2.columns([1,0.5,1,0.5,1,0.5,1,0.5])
 
 
-cols = [c4,c5,c6,c7]
+cols = [c4,c6,c8,c10]
+manual_cols = [c5,c7,c9,c11]
 c1.title("DCF Calculator")
 
 con1.markdown("""
@@ -42,6 +43,7 @@ for i,x in terms_interested.items():
         <span style='font-size:1.2em;'>:green[{'{:.2%}'.format(df_growth.loc[x,df_growth.columns[-5]:].mean())}]</span>
 
         """, unsafe_allow_html=True)
+        manual_cols[count].number_input(f'Manual Input:',0,100, step=1, key=f'{x}_manual_growth')
         if count < len(cols)-1:
             count += 1
         else:
@@ -50,6 +52,10 @@ for i,x in terms_interested.items():
         pass
 
 #TODO: forecast growth 10 years ahead based on average of past n (input) years
+
+con3 = st.container()
+
+
 
 st.markdown("***Data provided by Financial Modeling Prep***")
 
