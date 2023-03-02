@@ -19,6 +19,13 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 
+@st.cache_resource
+def get_api():
+    api = st.secrets["fmp_api"]
+    return api
+
+fmp_api = get_api()
+
 @st.cache_resource(ttl=86400) # only refresh after 24h
 def get_data():
     client = init_connection()
@@ -55,6 +62,7 @@ balance_sheet_collection,income_collection,cash_collection,company_profile = get
 
 
 # delete_page("D:\lianz\Desktop\Python\personal_projects\personal_finance\Ticker_List.py", "classes")
+
 @st.cache_data
 def get_tickers():
     tickers = list(set([i['symbol'] for i in balance_sheet_collection.find()]))
@@ -144,6 +152,10 @@ def select_quote(ticker, statement):
 def select_profile(ticker, statement):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?apikey={fmp_api}")
+    r = r.json()
+    return r
+
+# Save the read file to json
 
 def save_to_json(ticker_symbol, statement):
 
@@ -170,7 +182,7 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
         file = select_profile(ticker, statement)
         file[0]['index_id'] = f"{file[0]['symbol']}_{file[0][second_key]}"
         
-        if profile_update:
+        if st.session_state['profile_update']:
             collection.delete_one({'symbol':ticker})
         try:
             collection.insert_one(file[0])
@@ -178,8 +190,6 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
     else:
-        if manual_update:
-            collection.delete_many({})
         
         file = select_quote(ticker, statement)
         

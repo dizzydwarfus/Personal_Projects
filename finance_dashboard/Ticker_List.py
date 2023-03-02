@@ -4,7 +4,7 @@ import json
 import streamlit as st
 import requests
 from pymongo import MongoClient,ASCENDING, DESCENDING
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, fmp_api, insert_to_mongoDB, select_profile, select_quote
 
 #####################################################
 
@@ -20,9 +20,6 @@ st.set_page_config(page_title="Investment Dashboard",
 # replace filepath with fmp API link
 # with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\fmp_api.txt','r') as f:
 #     fmp_api = f.readlines()[0]
-
-fmp_api = 'eb29218df82acef0486b5c014ccec868'
-
 
 
 #####################################################
@@ -153,28 +150,6 @@ col9.button("Hide All", key="hide_all")
 
 #####################################################
 
-# Read from financialmodelingAPI
-def select_quote(ticker, statement):
-    r = requests.get(
-        f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?limit=120&apikey={fmp_api}")
-    r = r.json()
-    return r
-def select_profile(ticker, statement):
-    r = requests.get(
-        f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?apikey={fmp_api}")
-    r = r.json()
-    return r
-# Save the read file to json
-
-
-def save_to_json(ticker_symbol, statement):
-
-    file = select_quote(ticker_symbol, statement)
-
-    with open(f'D:\lianz\Desktop\Python\personal_projects\personal_finance\{statement}/{ticker_symbol}.json', 'w+') as p:
-        json.dump(file, p, indent=4)
-
-
 possible_statements = ['income-statement',
                        'balance-sheet-statement', 'cash-flow-statement']
 
@@ -190,57 +165,12 @@ st.write(
 
 """)
 
-
-# Function for creating id in each json file
-def define_id(json_file, second_key):
-    for i in json_file:
-        i['index_id'] = f"{i['symbol']}_{i[second_key]}"
-
-# Functino for accessing specific entry in mongodb
-def access_entry(collection_name, entry_name, entry_value, return_value):
-    data = collection_name.find({entry_name:entry_value})
-
-    data = [f"{i[return_value]}" for i in data]
-
-    return data
-
 cont3 = st.container()
 col10, col11, col12, col13 = cont3.columns([0.3,0.3,0.3,1.5])
 
 
 profile_update = col10.checkbox("Enable company profile update", key='profile_update')
 manual_download = col11.checkbox("Enable manual download of all statements", key='update_list')
-
-# Function to insert file to database
-def insert_to_mongoDB(collection, ticker, statement, second_key):
-    if statement == 'profile':
-        file = select_profile(ticker, statement)
-        file[0]['index_id'] = f"{file[0]['symbol']}_{file[0][second_key]}"
-        
-        if profile_update:
-            collection.delete_one({'symbol':ticker})
-        try:
-            collection.insert_one(file[0])
-            return st.success(f"{ticker} {statement} updated!", icon="✅")
-        except:
-            return st.error(f"{ticker} {statement} already exists", icon="🚨")
-    else:
-        
-        file = select_quote(ticker, statement)
-        
-        if len(file) <= 1:
-            pass
-        else:
-            for i in file:
-                i['index_id'] = f"{i['symbol']}_{i[second_key]}"
-            
-            ids = [i['index_id'] for i in file if i['index_id'] not in access_entry(collection,'symbol',ticker,'index_id')]
-
-            try:
-                collection.insert_many([i for i in file if i['index_id'] in ids])
-                return st.success(f"{ticker} {statement} updated!", icon="✅")
-            except:
-                return st.error(f"{ticker} {statement} already exists", icon="🚨")
 
 
 if st.button("Download Statements :ledger:"):

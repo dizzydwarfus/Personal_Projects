@@ -9,3 +9,4 @@ finance_dashboard/__pycache__
 finance_dashboard/.streamlit/secrets.toml
 !requirements.txt
 grocery_list/
+data_discovery/

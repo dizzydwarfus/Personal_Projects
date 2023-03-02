@@ -43,7 +43,7 @@ for i,x in terms_interested.items():
         <span style='font-size:1.2em;'>:green[{'{:.2%}'.format(df_growth.loc[x,df_growth.columns[-5]:].mean())}]</span>
 
         """, unsafe_allow_html=True)
-        manual_cols[count].number_input(f'Manual Input:',0,100, step=1, key=f'{x}_manual_growth')
+        manual_cols[count].number_input(f'Enter Manual Input here:',0,100, step=1, key=f'{x}_manual_growth')
         if count < len(cols)-1:
             count += 1
         else:
@@ -52,6 +52,11 @@ for i,x in terms_interested.items():
         pass
 
 #TODO: forecast growth 10 years ahead based on average of past n (input) years
+#TODO: compare DCF calculated stock price, with current price (repeat for past years, to see trend)
+#TODO: show % difference for past DCF calculated values and calculate safety of margin, pick best metric from that.
+#TODO: show extra tab with historical stock price using yfinance
+#TODO: show technical indicators, and perform backtest
+#TODO: use ML model to predict stock price
 
 con3 = st.container()
 
