@@ -10,14 +10,15 @@ from functions import tickers, company_profile, terms_interested, company_statem
 
 #####################################################
 
-con1, con2 = st.container(),st.container()
+con1, con2 = st.container(), st.container()
 
-c1,c2,c3 = con1.columns([0.5,0.5,1])
-c4,c5,c6,c7,c8,c9,c10,c11 = con2.columns([1,0.5,1,0.5,1,0.5,1,0.5])
+c1, c2, c3 = con1.columns([0.5, 0.5, 1])
+c4, c5, c6, c7, c8, c9, c10, c11 = con2.columns(
+    [1, 0.5, 1, 0.5, 1, 0.5, 1, 0.5])
 
 
-cols = [c4,c6,c8,c10]
-manual_cols = [c5,c7,c9,c11]
+cols = [c4, c6, c8, c10]
+manual_cols = [c5, c7, c9, c11]
 c1.title("DCF Calculator")
 
 con1.markdown("""
@@ -26,24 +27,27 @@ con1.markdown("""
 
 """)
 
-ticker = c2.selectbox("Select a ticker symbol:", sorted(tickers), key="DCF_tickers")
+ticker = c2.selectbox("Select a ticker symbol:",
+                      sorted(tickers), key="DCF_tickers")
 
 
-df = pd.concat([generate_key_metrics(read_statement(x,ticker),terms_interested.values()) for x in statements_type], axis=0).drop_duplicates()
-df = df.loc[~df.index.duplicated(keep='first'),:]
+df = pd.concat([generate_key_metrics(read_statement(x, ticker), terms_interested.values())
+                for x in statements_type], axis=0).drop_duplicates()
+df = df.loc[~df.index.duplicated(keep='first'), :]
 df_growth = df.T.pct_change(periods=1).T
 
 # con2.dataframe(df_growth.iloc[list(terms_interested.keys()).index('Revenue'):,-5:])
 
 count = 0
-for i,x in terms_interested.items():
+for i, x in terms_interested.items():
     try:
         cols[count].markdown(
-        f"""<span style='font-size:1.5em;'>{i.capitalize()} Growth</span>  
+            f"""<span style='font-size:1.5em;'>{i.capitalize()} Growth</span>  
         <span style='font-size:1.2em;'>:green[{'{:.2%}'.format(df_growth.loc[x,df_growth.columns[-5]:].mean())}]</span>
 
         """, unsafe_allow_html=True)
-        manual_cols[count].number_input(f'Enter Manual Input here:',0,100, step=1, key=f'{x}_manual_growth')
+        manual_cols[count].number_input(
+            f'Enter Manual Input here:', 0, 100, step=1, key=f'{x}_manual_growth')
         if count < len(cols)-1:
             count += 1
         else:
@@ -51,16 +55,14 @@ for i,x in terms_interested.items():
     except:
         pass
 
-#TODO: forecast growth 10 years ahead based on average of past n (input) years
-#TODO: compare DCF calculated stock price, with current price (repeat for past years, to see trend)
-#TODO: show % difference for past DCF calculated values and calculate safety of margin, pick best metric from that.
-#TODO: show extra tab with historical stock price using yfinance
-#TODO: show technical indicators, and perform backtest
-#TODO: use ML model to predict stock price
+# TODO: forecast growth 10 years ahead based on average of past n (input) years
+# TODO: compare DCF calculated stock price, with current price (repeat for past years, to see trend)
+# TODO: show % difference for past DCF calculated values and calculate safety of margin, pick best metric from that.
+# TODO: show extra tab with historical stock price using yfinance
+# TODO: show technical indicators, and perform backtest
+# TODO: use ML model to predict stock price
 
 con3 = st.container()
-
-
 
 st.markdown("***Data provided by Financial Modeling Prep***")
 
@@ -86,4 +88,3 @@ st.markdown("***Data provided by Financial Modeling Prep***")
 
 # for items in todos:
 #     st.checkbox(f"{items}")
-
