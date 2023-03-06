@@ -312,7 +312,8 @@ def generate_plots(dataframe, arrangement: tuple, metric):
                 fig, use_container_width=True,)
 
 @st.cache_data
-def historical_plots(dataframe):
+def historical_plots(dataframe, arrangement):
+    cols = st.columns(arrangement)
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
     # Add traces (graphs)
@@ -343,7 +344,9 @@ def historical_plots(dataframe):
     fig.update_yaxes(showgrid=False, zeroline=True, secondary_y=False)
     fig.update_yaxes(
         title_text="Daily Volume", secondary_y=True, showgrid=False, zeroline=False)
-
+    
+    cols[0].plotly_chart(
+        fig, use_container_width=True,)
 
 def make_pretty(styler, use_on=None):
     # styler.set_caption("Weather Conditions")
@@ -467,5 +470,5 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         generate_plots(master_table_unformatted, [1], chart_select)
 
     with historical_tab:
-        df_historical = pd.DataFrame.from_records([x for i,x in enumerate(historical.find({'symbol':ticker}))], index='date')
-        historical_plots(df_historical)
+        df_historical = pd.DataFrame.from_records([x for i,x in enumerate(historical.find({'symbol':ticker}))], index='date').sort_index()
+        historical_plots(df_historical, [1])
