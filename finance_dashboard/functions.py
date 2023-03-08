@@ -337,20 +337,20 @@ def generate_plots(dataframe, arrangement: tuple, metric):
                 fig, use_container_width=True,)
 
 @st.cache_data
-def historical_plots(dataframe, arrangement):
+def historical_plots(dataframe, arrangement, date):
     cols = st.columns(arrangement)
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
     # Add traces (graphs)
     fig.add_trace(
         go.Candlestick(
-            x=dataframe.index, open=dataframe[f'1. open'], high=dataframe['2. high'], low=dataframe['3. low'], close=dataframe[f'4. close']),
+            x=dataframe.loc[(dataframe.index.date >= date[0]) & (dataframe.index.date < date[-1])].index, open=dataframe[f'1. open'], high=dataframe['2. high'], low=dataframe['3. low'], close=dataframe[f'4. close']),
         secondary_y=False,
     )
 
     fig.add_trace(
         go.Bar(
-            x=dataframe.index, y=dataframe['5. volume'], opacity=0.2, marker=dict({'color': 'darkorange'}), textposition="inside", name="Daily Volume"),
+            x=dataframe.loc[(dataframe.index.date >= date[0]) & (dataframe.index.date < date[-1])].index, y=dataframe['5. volume'], opacity=0.2, marker=dict({'color': 'darkorange'}), textposition="inside", name="Daily Volume"),
         secondary_y=True,
     )
     try:
@@ -362,13 +362,14 @@ def historical_plots(dataframe, arrangement):
         pass
 
     # Update figure title, legend, axes
-    fig.update_layout(showlegend=False,
+    fig.update_layout(height=1000,
+                      showlegend=False,
                         #   template='plotly_dark',
-                        paper_bgcolor='#1c2541',
-                        plot_bgcolor="#0b132b",
-                        xaxis_title='Date',
+                        # paper_bgcolor='#1c2541',
+                        # plot_bgcolor="#0b132b",
+                        # xaxis_title='Date',
                         #   yaxis_title=f'{n}',
-                        title={'text': f'<b>{dataframe["symbol"][0]} price</b> (from {dataframe.index.year[0]}-{dataframe.index.year[-1]})',
+                        title={'text': f'<b>{dataframe["symbol"][0]} price</b> (from {date[0]}-{date[-1]})',
                                 'x': 0.5,
                                 'xanchor': 'center',
                                 'font': {'size': 25}},
@@ -503,4 +504,5 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
     with historical_tab:
         df_historical = pd.DataFrame.from_records([x for i,x in enumerate(historical.find({'symbol':ticker}))], index='date').sort_index()
-        historical_plots(df_historical, [1])
+        date_select = st.slider("Select date range:", min_value=df_historical.index.date[0], max_value=df_historical.index.date[-1], value=(df_historical.index.date[-365],df_historical.index.date[-1]))
+        historical_plots(df_historical, [1], date_select)
