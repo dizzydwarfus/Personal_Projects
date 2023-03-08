@@ -4,7 +4,7 @@ import json
 import streamlit as st
 import requests
 from pymongo import MongoClient, ASCENDING, DESCENDING
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, historical, insert_to_mongoDB, fmp_api
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, historical, stock_split, insert_to_mongoDB, fmp_api
 
 #####################################################
 
@@ -185,7 +185,7 @@ profile_update = col10.checkbox(
 manual_download = col11.checkbox(
     "Enable manual download of all statements", key='update_list')
 historical_download = col12.checkbox("Enable download of historical price data", key='historical_price')
-
+stock_split_download = col13.checkbox("Enable download of stock split data", key='stock_split_data')
 if st.button("Download Statements :ledger:"):
     if manual_download:
         for i, x in enumerate(eval(list_tickers)):
@@ -196,7 +196,8 @@ if st.button("Download Statements :ledger:"):
             insert_to_mongoDB(cash_collection, x,
                               'cash-flow-statement', 'date')
             insert_to_mongoDB(company_profile, x, 'profile', 'ipoDate')
-            insert_to_mongoDB(historical, x, 'stock price', 'date')
+            insert_to_mongoDB(historical, x, 'stock_price', 'date')
+            insert_to_mongoDB(stock_split, x, 'stock_split', 'date')
 
             # current += step
 
@@ -218,6 +219,13 @@ if st.button("Download Statements :ledger:"):
 
         if i == len(eval(list_tickers))-1:
             st.success(f"All downloads are completed.", icon="💯")
+
+    elif stock_split_download:
+        for i,x in enumerate(eval(list_tickers)):
+            insert_to_mongoDB(stock_split, x, 'stock_split', 'date')
+        
+        if i == len(eval(list_tickers))-1:
+            st.success(f"All downloads are completed.", icon="💯")
     else:
         for i, x in enumerate(missing_tickers):
 
@@ -227,7 +235,9 @@ if st.button("Download Statements :ledger:"):
             insert_to_mongoDB(cash_collection, x,
                               'cash-flow-statement', 'date')
             insert_to_mongoDB(company_profile, x, 'profile', 'ipoDate')
-            insert_to_mongoDB(historical, x, 'stock price', 'date')
+            insert_to_mongoDB(historical, x, 'stock_price', 'date')
+            insert_to_mongoDB(stock_split, x, 'stock_split', 'date')
+
 
             # current += step
 

@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import requests
 from pymongo import MongoClient, ASCENDING, DESCENDING
+import datetime as dt
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
@@ -30,6 +31,13 @@ def get_api():
 
 fmp_api = get_api()
 
+def stock_price_api(ticker):
+    url = "https://alpha-vantage.p.rapidapi.com/query"
+    headers = {"X-RapidAPI-Key": st.secrets["rapidapi_key"],
+               "X-RapidAPI-Host": "alpha-vantage.p.rapidapi.com"}
+    querystring = {"function":"TIME_SERIES_DAILY","symbol":f"{ticker}","outputsize":"full","datatype":"json"}
+    response = requests.request("GET", url=url, headers=headers, params=querystring)
+    return response.json()
 
 @st.cache_resource(ttl=86400)  # only refresh after 24h
 def get_data():
@@ -40,10 +48,11 @@ def get_data():
     cash_collection = db.cash_flow_statement
     company_profile = db.company_profile
     historical = db.historical
-    return balance_sheet_collection, income_collection, cash_collection, company_profile, historical
+    stock_split = db.stock_split
+    return balance_sheet_collection, income_collection, cash_collection, company_profile, historical, stock_split
 
 
-balance_sheet_collection, income_collection, cash_collection, company_profile, historical = get_data()
+balance_sheet_collection, income_collection, cash_collection, company_profile, historical, stock_split = get_data()
 
 # with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\mongodb_api.txt','r') as f:
 #     cluster = f.readlines()[0]
@@ -176,9 +185,9 @@ def select_profile(ticker, statement):
     return r
 
 
-def download_stockprice(ticker):
+def download_stocksplit(ticker):
     r = requests.get(
-        f"https://financialmodelingprep.com/api/v3/historical-price-full/{ticker}?apikey={fmp_api}"
+        f"https://financialmodelingprep.com/api/v3/historical-price-full/stock_split/{ticker}?apikey={fmp_api}"
     )
     r = r.json()
     return r
@@ -221,20 +230,36 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
     elif statement == 'stock_price':
-        file = download_stockprice(ticker)
-        for i in file['historical']:    
-            i['index_id'] = f"{file['symbol']}_{i[second_key]}"
-            i['symbol'] = f"{file['symbol']}"
+        file = stock_price_api(ticker)
+        for i,x in file['Time Series (Daily)'].items():    
+            x['index_id'] = f"{ticker}_{i}"
+            x['symbol'] = f"{ticker}"
+            x[second_key] = dt.datetime.strftime(i, '%Y-%m-%d')
 
-        ids = [i['index_id'] for i in file['historical'] if i['index_id']
+        ids = [x['index_id'] for i,x in file['Time Series (Daily)'].items() if x['index_id']
                    not in access_entry(collection, 'symbol', ticker, 'index_id')]
         try:
-            collection.insert_many([i for i in file['historical'] if i['index_id'] in ids])
+            collection.insert_many([x for i,x in file['Time Series (Daily)'].items() if x['index_id'] in ids])
             return st.success(f"{ticker} {statement} updated!", icon="✅")
 
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
-            
+    
+    elif statement == 'stock_split':
+        file = download_stocksplit(ticker)
+        for i in file['historical']:
+            i['index_id'] = f"{file['symbol']}_{i[second_key]}"
+            i['symbol'] = f"{file['symbol']}"
+            i['date'] = dt.datetime.strftime(i['date'], '%Y-%m-%d')
+
+        ids = [i['index_id'] for i in file['historical'] if i['index_id'] not in access_entry(collection, 'symbol', ticker, 'index_id')]
+
+        try:
+            collection.insert_many([i for i in file if i['index_id'] in ids])
+            return st.success(f"{ticker} {statement} updated!", icon="✅")
+
+        except:
+            return st.error(f"{ticker} {statement} already exists", icon="🚨")
     else:
         file = select_quote(ticker, statement)
 
@@ -319,15 +344,22 @@ def historical_plots(dataframe, arrangement):
     # Add traces (graphs)
     fig.add_trace(
         go.Scatter(
-            x=dataframe.index, y=dataframe[f'adjClose'], mode="lines+markers", name=f"adjClose"),
+            x=dataframe.index, y=dataframe[f'4. close'], mode="lines+markers", name=f"Closing Price"),
         secondary_y=False,
     )
 
     fig.add_trace(
         go.Bar(
-            x=dataframe.index, y=dataframe['volume'], marker=dict({'color': 'darkorange'}), textposition="inside", name="Volume"),
+            x=dataframe.index, y=dataframe['5. volume'], opacity=0.2, marker=dict({'color': 'darkorange'}), textposition="inside", name="Daily Volume"),
         secondary_y=True,
     )
+    try:
+        for i in stock_split.find({'symbol':dataframe['symbol'][0]}):
+            fig.add_vline(
+                x=i['date'], line_width=3, line_dash="dash", line_color="red", annotation_text=f"{i['numerator']}-to-{i['denominator']}"
+            )
+    except:
+        pass
 
     # Update figure title, legend, axes
     fig.update_layout(showlegend=False,
@@ -336,7 +368,7 @@ def historical_plots(dataframe, arrangement):
                         plot_bgcolor="#0b132b",
                         xaxis_title='Date',
                         #   yaxis_title=f'{n}',
-                        title={'text': f'<b>{dataframe["symbol"][0]} price</b> (last {len(dataframe)} days)',
+                        title={'text': f'<b>{dataframe["symbol"][0]} price</b> (from {dataframe.index[0][:4]}-{dataframe.index[-1][:4]})',
                                 'x': 0.5,
                                 'xanchor': 'center',
                                 'font': {'size': 25}},
