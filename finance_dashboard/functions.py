@@ -343,8 +343,8 @@ def historical_plots(dataframe, arrangement):
 
     # Add traces (graphs)
     fig.add_trace(
-        go.Scatter(
-            x=dataframe.index, y=dataframe[f'4. close'], mode="lines+markers", name=f"Closing Price"),
+        go.Candlestick(
+            x=dataframe.index, open=dataframe[f'1. open'], high=dataframe['2. high'], low=dataframe['3. low'], close=dataframe[f'4. close']),
         secondary_y=False,
     )
 
@@ -368,7 +368,7 @@ def historical_plots(dataframe, arrangement):
                         plot_bgcolor="#0b132b",
                         xaxis_title='Date',
                         #   yaxis_title=f'{n}',
-                        title={'text': f'<b>{dataframe["symbol"][0]} price</b> (from {dataframe.index[0][:4]}-{dataframe.index[-1][:4]})',
+                        title={'text': f'<b>{dataframe["symbol"][0]} price</b> (from {dataframe.index.year[0]}-{dataframe.index.year[-1]})',
                                 'x': 0.5,
                                 'xanchor': 'center',
                                 'font': {'size': 25}},

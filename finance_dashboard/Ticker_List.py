@@ -86,8 +86,9 @@ income_list = list(set([i['symbol'] for i in income_collection.find()]))
 cash_list = list(set([i['symbol'] for i in cash_collection.find()]))
 company_list = list(set([i['symbol'] for i in company_profile.find()]))
 historical_list = list(set([i['symbol'] for i in historical.find()]))
+stock_split_list = list(set([i['symbol'] for i in stock_split.find()]))
 list_tickers = ['balance_list', 'income_list',
-                'cash_list', 'company_list', 'manual_list', 'historical_list']
+                'cash_list', 'company_list', 'manual_list', 'historical_list','stock_split']
 
 list_tickers = col3.selectbox(
     "*Choose a list to scan/download*:", list_tickers, key="select_ticker_list")
@@ -100,6 +101,7 @@ st.session_state['income_list'] = income_list
 st.session_state['cash_list'] = cash_list
 st.session_state['company_list'] = company_list
 st.session_state['historical_list'] = historical_list
+st.session_state['stock_split_list'] = stock_split_list
 st.session_state['tickers'] = tickers
 st.session_state['missing_tickers'] = missing_tickers
 
@@ -145,6 +147,8 @@ def change_state():
             f"Company profile: {len(st.session_state['company_list'])}")
         show_historical = col3.write(
             f"Historical Price: {len(st.session_state['historical_list'])}")
+        show_stock_split = col3.write(
+            f"Stock Split: {len(st.session_state['stock_split_list'])}")
         show_ticks = col5.write(st.session_state['tickers'])
         show_missing = col6.write(st.session_state['missing_tickers'])
 
