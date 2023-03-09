@@ -16,29 +16,20 @@ import datetime as dt
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
-
-
 @st.cache_resource
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 
-
+# function to get api keys from secrets
 @st.cache_resource
 def get_api():
-    api = st.secrets["fmp_api"]
-    return api
+    fmp_api = st.secrets["fmp_api"]
+    alpha_vantage_api = st.secrets["rapidapi_key"]
+    return fmp_api,alpha_vantage_api
 
+fmp_api, alpha_vantage_api = get_api()
 
-fmp_api = get_api()
-
-def stock_price_api(ticker):
-    url = "https://alpha-vantage.p.rapidapi.com/query"
-    headers = {"X-RapidAPI-Key": st.secrets["rapidapi_key"],
-               "X-RapidAPI-Host": "alpha-vantage.p.rapidapi.com"}
-    querystring = {"function":"TIME_SERIES_DAILY","symbol":f"{ticker}","outputsize":"full","datatype":"json"}
-    response = requests.request("GET", url=url, headers=headers, params=querystring)
-    return response.json()
-
+# Initialize collection connection
 @st.cache_resource(ttl=86400)  # only refresh after 24h
 def get_data():
     client = init_connection()
@@ -78,6 +69,7 @@ balance_sheet_collection, income_collection, cash_collection, company_profile, h
 
 
 # delete_page("D:\lianz\Desktop\Python\personal_projects\personal_finance\Ticker_List.py", "classes")
+
 
 @st.cache_data
 def get_tickers():
@@ -144,6 +136,7 @@ def read_statement(type_statement, ticker):
     return statement
 
 
+# generate key metrics table
 def generate_key_metrics(financial_statement, _list_of_metrics):
     l = []
     dict_holder = {}
@@ -171,6 +164,7 @@ def generate_key_metrics(financial_statement, _list_of_metrics):
     return df
 
 
+# download company financial statements
 def select_quote(ticker, statement):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?limit=120&apikey={fmp_api}")
@@ -178,6 +172,7 @@ def select_quote(ticker, statement):
     return r
 
 
+# download company profile
 def select_profile(ticker, statement):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?apikey={fmp_api}")
@@ -185,6 +180,7 @@ def select_profile(ticker, statement):
     return r
 
 
+# download stock split
 def download_stocksplit(ticker):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v3/historical-price-full/stock_split/{ticker}?apikey={fmp_api}"
@@ -192,9 +188,18 @@ def download_stocksplit(ticker):
     r = r.json()
     return r
 
+
+# download stock price
+def stock_price_api(ticker):
+    url = "https://alpha-vantage.p.rapidapi.com/query"
+    headers = {"X-RapidAPI-Key": alpha_vantage_api,
+               "X-RapidAPI-Host": "alpha-vantage.p.rapidapi.com"}
+    querystring = {"function":"TIME_SERIES_DAILY","symbol":f"{ticker}","outputsize":"full","datatype":"json"}
+    response = requests.request("GET", url=url, headers=headers, params=querystring)
+    return response.json()
+
+
 # Save the read file to json
-
-
 def save_to_json(ticker_symbol, statement):
 
     file = select_quote(ticker_symbol, statement)
@@ -203,11 +208,13 @@ def save_to_json(ticker_symbol, statement):
         json.dump(file, p, indent=4)
 
 
+# define index for each json
 def define_id(json_file):
     for i in json_file:
         i['index_id'] = f"{i['symbol']}_{i['date']}"
 
 
+# access entries in collection
 def access_entry(_collection_name, entry_name, entry_value, return_value):
     data = _collection_name.find({entry_name: entry_value})
 
@@ -215,8 +222,8 @@ def access_entry(_collection_name, entry_name, entry_value, return_value):
 
     return data
 
-# Function to insert file to database
 
+# Function to insert file to database
 def insert_to_mongoDB(collection, ticker, statement, second_key):
     if statement == 'profile':
         file = select_profile(ticker, statement)
@@ -280,6 +287,7 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
                 return st.error(f"{ticker} {statement} already exists", icon="🚨")
 
 
+# function to generate growth over time plots
 @st.cache_data
 def generate_plots(dataframe, arrangement: tuple, metric):
 
@@ -336,6 +344,8 @@ def generate_plots(dataframe, arrangement: tuple, metric):
             cols[m].plotly_chart(
                 fig, use_container_width=True,)
 
+
+# generate plots for historical price
 @st.cache_data
 def historical_plots(dataframe, arrangement, date):
     cols = st.columns(arrangement)
@@ -381,6 +391,8 @@ def historical_plots(dataframe, arrangement, date):
     cols[0].plotly_chart(
         fig, use_container_width=True,)
 
+
+# function to format pandas dataframe
 def make_pretty(styler, use_on=None):
     # styler.set_caption("Weather Conditions")
     # styler.format(rain_condition)
@@ -413,6 +425,7 @@ def make_pretty(styler, use_on=None):
     return styler
 
 
+# function to create financial_statements page
 def create_financial_page(ticker, company_profile_info, col3, p: list):
 
     p[0].markdown(

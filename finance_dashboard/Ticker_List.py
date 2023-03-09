@@ -15,17 +15,12 @@ st.set_page_config(page_title="Investment Dashboard",
                    page_icon=":moneybag:",
                    layout="wide")
 
-
-# replace filepath with fmp API link
-# with open('D:\lianz\Desktop\Python\personal_projects\\finance_dashboard\\fmp_api.txt','r') as f:
-#     fmp_api = f.readlines()[0]
-
-
 #####################################################
 
 # Generate Ticker List and Download Statements
 
 #####################################################
+
 st.markdown(
     """
 
