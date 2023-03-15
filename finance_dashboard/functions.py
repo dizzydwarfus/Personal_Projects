@@ -257,12 +257,13 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
         for i in file['historical']:
             i['index_id'] = f"{file['symbol']}_{i[second_key]}"
             i['symbol'] = f"{file['symbol']}"
-            i['date'] = dt.datetime.strftime(i['date'], '%Y-%m-%d')
+            i[second_key] = dt.datetime.strptime(i['date'], '%Y-%m-%d')
+            
 
         ids = [i['index_id'] for i in file['historical'] if i['index_id'] not in access_entry(collection, 'symbol', ticker, 'index_id')]
 
         try:
-            collection.insert_many([i for i in file if i['index_id'] in ids])
+            collection.insert_many([i for i in file['historical'] if i['index_id'] in ids])
             return st.success(f"{ticker} {statement} updated!", icon="✅")
 
         except:

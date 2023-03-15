@@ -11,9 +11,10 @@ from functions import balance_sheet_collection, income_collection, cash_collecti
 # Set page config
 
 #####################################################
-st.set_page_config(page_title="Investment Dashboard",
-                   page_icon=":moneybag:",
-                   layout="wide")
+if 'state' not in st.session_state:
+    st.session_state['state'] = st.set_page_config(page_title="Investment Dashboard",
+                                                   page_icon=":moneybag:",
+                                                   layout="wide")
 
 #####################################################
 
