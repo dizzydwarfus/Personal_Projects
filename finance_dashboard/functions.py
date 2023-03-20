@@ -241,7 +241,17 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
         for i,x in file['Time Series (Daily)'].items():    
             x['index_id'] = f"{ticker}_{i}"
             x['symbol'] = f"{ticker}"
-            x[second_key] = dt.datetime.strftime(i, '%Y-%m-%d')
+            x[second_key] = dt.datetime.strptime(i, '%Y-%m-%d')
+            x['open'] = x['1. open']
+            x['high'] = x['2. high']
+            x['low'] = x['3. low']
+            x['close'] = x['4. close']
+            x['volume'] = x['5. volume']
+            x.pop('1. open')
+            x.pop('2. high')
+            x.pop('3. low')
+            x.pop('4. close')
+            x.pop('5. volume')
 
         ids = [x['index_id'] for i,x in file['Time Series (Daily)'].items() if x['index_id']
                    not in access_entry(collection, 'symbol', ticker, 'index_id')]
@@ -366,8 +376,9 @@ def historical_plots(dataframe, arrangement, date):
     )
     try:
         for i in stock_split.find({'symbol':dataframe['symbol'][0]}):
-            fig.add_vline(
-                x=i['date'], line_width=3, line_dash="dash", line_color="red", annotation_text=f"{i['numerator']}-to-{i['denominator']}"
+            fig.add_shape(type="line",
+                    x0=i['date'], x1=i['date'], y0=dataframe['4. close'].max(), y1=dataframe['4. close'].max(),
+                    line=dict(color="RoyalBlue",width=3)
             )
     except:
         pass

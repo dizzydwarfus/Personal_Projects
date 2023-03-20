@@ -76,13 +76,12 @@ if manual_list != "" and manual_list not in tickers:
 # st.write(st.session_state)
 
 # Check list of tickers in database instead of locally
-balance_list = list(set([i['symbol']
-                         for i in balance_sheet_collection.find()]))
-income_list = list(set([i['symbol'] for i in income_collection.find()]))
-cash_list = list(set([i['symbol'] for i in cash_collection.find()]))
-company_list = list(set([i['symbol'] for i in company_profile.find()]))
-historical_list = list(set([i['symbol'] for i in historical.find()]))
-stock_split_list = list(set([i['symbol'] for i in stock_split.find()]))
+balance_list = balance_sheet_collection.distinct('symbol')
+income_list = income_collection.distinct('symbol')
+cash_list = cash_collection.distinct('symbol')
+company_list = company_profile.distinct('symbol')
+historical_list = historical.distinct('symbol')
+stock_split_list = stock_split.distinct('symbol')
 list_tickers = ['balance_list', 'income_list',
                 'cash_list', 'company_list', 'manual_list', 'historical_list','stock_split']
 
