@@ -236,6 +236,7 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
             return st.success(f"{ticker} {statement} updated!", icon="✅")
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
+    
     elif statement == 'stock_price':
         file = stock_price_api(ticker)
         for i,x in file['Time Series (Daily)'].items():    
@@ -365,23 +366,23 @@ def historical_plots(dataframe, arrangement, date):
     # Add traces (graphs)
     fig.add_trace(
         go.Candlestick(
-            x=dataframe.loc[(dataframe.index.date >= date[0]) & (dataframe.index.date < date[-1])].index, open=dataframe[f'1. open'], high=dataframe['2. high'], low=dataframe['3. low'], close=dataframe[f'4. close']),
+            x=dataframe.loc[(dataframe.index.date >= date[0]) & (dataframe.index.date < date[-1])].index, open=dataframe[f'open'], high=dataframe['high'], low=dataframe['low'], close=dataframe[f'close']),
         secondary_y=False,
     )
 
     fig.add_trace(
         go.Bar(
-            x=dataframe.loc[(dataframe.index.date >= date[0]) & (dataframe.index.date < date[-1])].index, y=dataframe['5. volume'], opacity=0.2, marker=dict({'color': 'darkorange'}), textposition="inside", name="Daily Volume"),
+            x=dataframe.loc[(dataframe.index.date >= date[0]) & (dataframe.index.date < date[-1])].index, y=dataframe['volume'], opacity=0.2, marker=dict({'color': 'darkorange'}), textposition="inside", name="Daily Volume"),
         secondary_y=True,
     )
-    try:
-        for i in stock_split.find({'symbol':dataframe['symbol'][0]}):
-            fig.add_shape(type="line",
-                    x0=i['date'], x1=i['date'], y0=dataframe['4. close'].max(), y1=dataframe['4. close'].max(),
-                    line=dict(color="RoyalBlue",width=3)
-            )
-    except:
-        pass
+    # try:
+    #     for i in stock_split.find({'symbol':dataframe['symbol'][0]}):
+    #         fig.add_shape(type="line",
+    #                 x0=i['date'], x1=i['date'], y0=dataframe['close'].max(), y1=dataframe['close'].max(),
+    #                 line=dict(color="RoyalBlue",width=3)
+    #         )
+    # except:
+    #     pass
 
     # Update figure title, legend, axes
     fig.update_layout(height=1000,
