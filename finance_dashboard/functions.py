@@ -13,6 +13,7 @@ from plotly.subplots import make_subplots
 import requests
 from pymongo import MongoClient, ASCENDING, DESCENDING
 import datetime as dt
+import math
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
@@ -198,6 +199,25 @@ def stock_price_api(ticker):
     response = requests.request("GET", url=url, headers=headers, params=querystring)
     return response.json()
 
+# retrieve latest treasury yield
+@st.cache_data
+def treasury(date):
+    # date1 = dt.datetime.strftime(date - dt.timedelta(days=90), "%Y-%m-%d")
+    # date2 = dt.datetime.strftime(date, "%Y-%m-%d")
+    r = requests.get(
+        f"https://financialmodelingprep.com/api/v4/treasury?from={date}&to={date}&apikey={fmp_api}"
+    )
+    r = r.json()
+    return r
+
+# download company stock peers
+def stock_peers(ticker):
+    r = requests.get(
+        f"https://financialmodelingprep.com/api/v4/stock_peers?symbol={ticker}&apikey={fmp_api}"
+    )
+    r = r.json()
+    return r
+
 
 # Save the read file to json
 def save_to_json(ticker_symbol, statement):
@@ -227,12 +247,14 @@ def access_entry(_collection_name, entry_name, entry_value, return_value):
 def insert_to_mongoDB(collection, ticker, statement, second_key):
     if statement == 'profile':
         file = select_profile(ticker, statement)
+        file2 = stock_peers(ticker)
         file[0]['index_id'] = f"{file[0]['symbol']}_{file[0][second_key]}"
 
         if st.session_state['profile_update']:
             collection.delete_one({'symbol': ticker})
         try:
             collection.insert_one(file[0])
+            collection.insert_one(file2[0])
             return st.success(f"{ticker} {statement} updated!", icon="✅")
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
@@ -532,3 +554,59 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         df_historical = pd.DataFrame.from_records([x for i,x in enumerate(historical.find({'symbol':ticker}))], index='date').sort_index()
         date_select = st.slider("Select date range:", min_value=df_historical.index.date[0], max_value=df_historical.index.date[-1], value=(df_historical.index.date[-365],df_historical.index.date[-1]))
         historical_plots(df_historical, [1], date_select)
+
+
+# DCF Functions
+
+# project revenue based on average growth of past_n_years into the future_n_years
+def project_revenue(df, past_n_years, future_n_years):
+    projected = [df['revenue'][-1]]
+    avg_revenue_growth = df['revenue'].pct_change()[-past_n_years:].mean()
+    for i in range(future_n_years):
+        projected.append(projected[i] * (1+avg_revenue_growth))
+    
+    return projected
+
+# calculate yield to maturity of company bonds
+def ytm(coupon_rate, face_value, present_value, maturity_date: str):
+    maturity_date = dt.datetime.strptime(maturity_date, "%Y-%m-%d")
+    n_compounding_periods = math.trunc((maturity_date - dt.datetime.today()).days/365)
+    num = coupon_rate + ((face_value - present_value)/n_compounding_periods)
+    den = ((face_value + present_value)/2)
+    YTM = num / den
+    return YTM
+
+# wacc is the minimum rate of return that the company must earn on its investments to satisfy its investors and creditors.
+def wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years):
+    # beta of company stock
+    # risk free rate using 2Y,5Y,10Y treasury yield
+    # market return = annualized % return expected if investing in this stock
+    cost_of_equity = risk_free_rate + beta * (market_return - risk_free_rate) # estimatino based on CAPM 
+    cost_of_debt = (1 - tax_rate) * (df['interestExpense'][-historical_years:]/df['longTermDebt'][-historical_years:]).mean() # estimated based on weighted average of total interest expense and longterm debt
+    # debt = sum of principal amounts of all outstanding debt securities issued by the company, including bonds, loans, and other debt instruments
+    # equity = market cap = shares * price per share 
+    total_market_value = equity + debt 
+    weight_of_equity = equity/total_market_value
+    weight_of_debt = debt/total_market_value
+    wacc = weight_of_equity * cost_of_equity + weight_of_debt * cost_of_debt
+    return wacc
+
+# Define a function to calculate the intrinsic value
+def intrinsic_value(revenues, ebitda_margin, terminal_growth_rate, wacc, tax_rate, depreciation, capex, nwc, years):
+    # Calculate the free cash flows for each year
+    ebitda = [revenue * ebitda_margin for revenue in revenues]
+    ebit = [ebitda[i] - depreciation for i in range(len(ebitda))]
+    tax_paid = [-1 * tax_rate * ebit[i] for i in range(len(ebit))]
+    net_income = [ebit[i] + tax_paid[i] for i in range(len(ebit))]
+    free_cash_flow = [net_income[i] - capex - nwc for i in range(len(net_income))]
+
+    # Calculate the terminal value
+    last_free_cash_flow = free_cash_flow[-1]
+    terminal_value = last_free_cash_flow * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
+
+    # Calculate the present value of the cash flows
+    discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
+    pv_cash_flows = [free_cash_flow[i] * discount_factors[i] for i in range(years)]
+    pv_terminal_value = [terminal_value * discount_factors[-1]]
+    intrinsic_value = sum(pv_cash_flows) + sum(pv_terminal_value)
+    return intrinsic_value
