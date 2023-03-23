@@ -202,10 +202,10 @@ def stock_price_api(ticker):
 # retrieve latest treasury yield
 @st.cache_data
 def treasury(date):
-    # date1 = dt.datetime.strftime(date - dt.timedelta(days=90), "%Y-%m-%d")
-    # date2 = dt.datetime.strftime(date, "%Y-%m-%d")
+    date1 = dt.datetime.strftime(date - dt.timedelta(days=2), "%Y-%m-%d")
+    date2 = dt.datetime.strftime(date, "%Y-%m-%d")
     r = requests.get(
-        f"https://financialmodelingprep.com/api/v4/treasury?from={date}&to={date}&apikey={fmp_api}"
+        f"https://financialmodelingprep.com/api/v4/treasury?from={date1}&to={date2}&apikey={fmp_api}"
     )
     r = r.json()
     return r
@@ -559,12 +559,17 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 # DCF Functions
 
 # project revenue based on average growth of past_n_years into the future_n_years
-def project_revenue(df, past_n_years, future_n_years):
-    projected = [df['revenue'][-1]]
-    avg_revenue_growth = df['revenue'].pct_change()[-past_n_years:].mean()
-    for i in range(future_n_years):
-        projected.append(projected[i] * (1+avg_revenue_growth))
-    
+def project_metric(df, metric, past_n_years, first_n_years, second_n_years, first_growth=None, second_growth=None):
+    projected = [df[metric][-1]]
+    if first_growth == 0:
+        avg_growth = df[metric].pct_change()[-past_n_years:].mean()
+        for i in range(first_n_years+second_n_years):
+            projected.append(projected[i] * (1 + avg_growth))
+    else:
+        for i in range(first_n_years):
+            projected.append(projected[i] * (1 + first_growth))
+        for i in range(first_n_years, second_n_years + first_n_years):
+            projected.append(projected[i] * (1 + second_growth))
     return projected
 
 # calculate yield to maturity of company bonds
@@ -592,21 +597,35 @@ def wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, histor
     return wacc
 
 # Define a function to calculate the intrinsic value
-def intrinsic_value(revenues, ebitda_margin, terminal_growth_rate, wacc, tax_rate, depreciation, capex, nwc, years):
+def intrinsic_value(df, ebitda_margin, terminal_growth_rate, wacc, tax_rate, depreciation, capex, nwc, years, metric, projected_metric):
     # Calculate the free cash flows for each year
-    ebitda = [revenue * ebitda_margin for revenue in revenues]
-    ebit = [ebitda[i] - depreciation for i in range(len(ebitda))]
-    tax_paid = [-1 * tax_rate * ebit[i] for i in range(len(ebit))]
-    net_income = [ebit[i] + tax_paid[i] for i in range(len(ebit))]
-    free_cash_flow = [net_income[i] - capex - nwc for i in range(len(net_income))]
+    if metric == 'revenue':
+        ebitda = [revenue * ebitda_margin for revenue in projected_metric]
+        ebit = [ebitda[i] - depreciation for i in range(len(ebitda))]
+        tax_paid = [-1 * tax_rate * ebit[i] for i in range(len(ebit))]
+        net_income = [ebit[i] + tax_paid[i] for i in range(len(ebit))]
+        free_cash_flow = [net_income[i] - capex - nwc for i in range(len(net_income))]
 
-    # Calculate the terminal value
-    last_free_cash_flow = free_cash_flow[-1]
-    terminal_value = last_free_cash_flow * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
+        # Calculate the terminal value
+        last_free_cash_flow = free_cash_flow[-1]
+        terminal_value = last_free_cash_flow * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
 
-    # Calculate the present value of the cash flows
-    discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
-    pv_cash_flows = [free_cash_flow[i] * discount_factors[i] for i in range(years)]
-    pv_terminal_value = [terminal_value * discount_factors[-1]]
-    intrinsic_value = sum(pv_cash_flows) + sum(pv_terminal_value)
-    return intrinsic_value
+        # Calculate the present value of the cash flows
+        discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
+        pv_cash_flows = [free_cash_flow[i] * discount_factors[i] for i in range(years)]
+        pv_terminal_value = [terminal_value * discount_factors[-1]]
+        intrinsic_value = sum(pv_cash_flows) + sum(pv_terminal_value)
+        
+        return intrinsic_value/df['weightedAverageShsOutDil'][-1]
+    else:
+        # Calculate the present value of metric
+        discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
+        pv = [projected_metric[i] * discount_factors[i] for i in range(years)]
+        pv_terminal_value = [terminal_value * discount_factors[-1]]
+        intrinsic_value = sum(pv) + sum(pv_terminal_value)
+        
+        if metric == 'netIncome':
+            return intrinsic_value/df['weightedAverageShsOutDil'][-1]
+        
+        else:
+            return intrinsic_value
