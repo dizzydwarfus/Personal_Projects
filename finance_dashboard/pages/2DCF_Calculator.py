@@ -23,7 +23,7 @@ con2.markdown("""
 """)
 
 c4, c5, c6, c7, c8, c9 = con2.columns(
-    [0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
+    [0.5, 0.5, 0.18, 0.5, 0.5, 0.5])
 
 con3.markdown("""
 
@@ -53,7 +53,7 @@ df = df.loc[~df.index.duplicated(keep='first'), :].T.sort_index()
 
 forecast_n_years = c4.number_input("Forecast First n Years: ", min_value=1, step=1, value=5)
 forecast_m_years = c4.number_input("Forecast Next m Years: ", min_value=1, step=1, value=5)
-historical_years = c6.number_input("Past Years: ", min_value=1, step=1, value=5)
+historical_years = c7.number_input("Past Years: ", min_value=1, step=1, value=5)
 
 
 try:
@@ -69,11 +69,15 @@ try:
     # # Define the assumptions for standard scenario
     ebitda_margin = df['ebitdaratio'][-historical_years:].mean()  # EBITDA margin as average of past n=historical_years years for the company
     average_growth_rate = df[avg_gr_choices].pct_change()[historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
+    c6.markdown(f'''
+    Average over last {historical_years} years: 
+
+    `{"{:.0%}".format(average_growth_rate)}`
+    ''')
     terminal_growth_rate = min(0.05, average_growth_rate) # This limits the terminal growth rate to 5% maximum
 
-
     # # Define the WACC assumptions
-    treasury_rate = c12.selectbox("Risk-free Rate: ", ['month1', 'month2', 'month3', 'month6', 'year1', 'year2', 'year3', 'year5', 'year7', 'year10', 'year20', 'year30']) # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
+    treasury_rate = c12.selectbox("Risk-free Rate: ", ['month1', 'month2', 'month3', 'month6', 'year1', 'year2', 'year3', 'year5', 'year7', 'year10', 'year20', 'year30'], ) # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
     risk_free_rate = treasury(dt.date.today())[0][treasury_rate]/100
     market_return = c14.number_input("Expected Market Return:", min_value=0.0, step=0.005, value=0.08) # assume a 8% return is desired
     profile = select_profile(ticker,'profile')[0]
