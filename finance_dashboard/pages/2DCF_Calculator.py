@@ -12,7 +12,7 @@ import datetime as dt
 
 #####################################################
 
-con1, con2, con3 = st.container(), st.container(), st.container()
+con1, con2, con2_3, con3 = st.container(), st.container(), st.container(), st.container()
 
 c1, c2, c3 = con1.columns([0.5, 0.5, 1])
 
@@ -24,6 +24,7 @@ con2.markdown("""
 
 c4, c5, c6, c7, c8, c9 = con2.columns(
     [0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
+
 
 con3.markdown("""
 
@@ -52,8 +53,15 @@ df = pd.concat([pd.DataFrame.from_records(read_statement(x, 'AAPL'),
 df = df.loc[~df.index.duplicated(keep='first'), :].T.sort_index()
 forecast_n_years = c4.number_input("Forecast First n Years: ", min_value=1, step=1, value=5)
 forecast_m_years = c4.number_input("Forecast Next m Years: ", min_value=1, step=1, value=5)
-historical_years = c7.number_input("Past Years: ", min_value=1, step=1, value=5)
+historical_years = c6.number_input("Past Years: ", min_value=1, step=1, value=5)
 
+con2_3.markdown(f"""
+
+>##### *Average growth over last {historical_years} years*:
+
+""")
+
+g1,g2,g3,g4,g5,g6 = con2_3.columns([1,1,1,1,3,3])
 
 try:
     # Define the financials of the company
@@ -74,17 +82,12 @@ try:
     avg_gr_eps = df[avg_gr_choices[1]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
     avg_gr_dividends = df[avg_gr_choices[2]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
     avg_gr_netincome = df[avg_gr_choices[3]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
-    c6.markdown(f'''
-    Average over last {historical_years} years: 
+    
+    g1.markdown(f'###### Revenue: `{"{:.0%}".format(avg_gr_revenue)}`')
+    g2.markdown(f'###### EPS: `{"{:.0%}".format(avg_gr_eps)}`')
+    g3.markdown(f'###### Dividends: `{"{:.0%}".format(avg_gr_dividends)}`')
+    g4.markdown(f'###### Net Income: `{"{:.0%}".format(avg_gr_netincome)}`')
 
-    `Revenue: {"{:.0%}".format(avg_gr_revenue)}`
-
-    `EPS: {"{:.0%}".format(avg_gr_eps)}`
-
-    `Dividends: {"{:.0%}".format(avg_gr_dividends)}`
-
-    `Net Income: {"{:.0%}".format(avg_gr_netincome)}`
-    ''')
     terminal_gr_revenue = min(0.05, avg_gr_revenue) # This limits the terminal growth rate to 5% maximum
     terminal_gr_eps = min(0.05, avg_gr_eps) # This limits the terminal growth rate to 5% maximum
     terminal_gr_netincome = min(0.05, avg_gr_netincome) # This limits the terminal growth rate to 5% maximum
