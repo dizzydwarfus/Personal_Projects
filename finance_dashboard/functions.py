@@ -618,14 +618,17 @@ def intrinsic_value(df, ebitda_margin, terminal_growth_rate, wacc, tax_rate, dep
         
         return intrinsic_value/df['weightedAverageShsOutDil'][-1]
     else:
+        # Calculate the terminal value
+        last_year = projected_metric[-1]
+        terminal_value = last_year * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
         # Calculate the present value of metric
         discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
         pv = [projected_metric[i] * discount_factors[i] for i in range(years)]
         pv_terminal_value = [terminal_value * discount_factors[-1]]
-        intrinsic_value = sum(pv) + sum(pv_terminal_value)
+        intrinsic_value = abs(sum(pv) + sum(pv_terminal_value))
         
-        if metric == 'netIncome':
-            return intrinsic_value/df['weightedAverageShsOutDil'][-1]
+        if metric == 'epsdiluted':
+            return intrinsic_value
         
         else:
-            return intrinsic_value
+            return intrinsic_value/df['weightedAverageShsOutDil'][-1]
