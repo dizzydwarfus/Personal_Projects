@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-from functions import tickers, statements_type
-from functions import read_statement,  wacc, intrinsic_value, treasury, select_profile, project_metric
+from functions import project_metric, wacc, intrinsic_value, treasury
+from functions import tickers, statements_type, read_statement, select_profile
 import datetime as dt
 
 
@@ -23,7 +23,7 @@ con2.markdown("""
 """)
 
 c4, c5, c6, c7, c8, c9 = con2.columns(
-    [0.5, 0.5, 0.18, 0.5, 0.5, 0.5])
+    [0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
 
 con3.markdown("""
 

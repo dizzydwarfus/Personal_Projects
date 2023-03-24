@@ -558,7 +558,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
 # DCF Functions
 
-# project revenue based on average growth of past_n_years into the future_n_years
+# project financials based on average growth of past_n_years into the future_n_years
 def project_metric(df, metric, past_n_years, first_n_years, second_n_years, first_growth=None, second_growth=None):
     projected = [df[metric][-1]]
     if first_growth == 0:
