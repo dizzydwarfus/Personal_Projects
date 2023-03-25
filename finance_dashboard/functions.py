@@ -460,6 +460,84 @@ def make_pretty(styler, use_on=None):
     return styler
 
 
+# DCF Functions
+
+# project financials based on average growth of past_n_years into the future_n_years
+def project_metric(df, metric, past_n_years, first_n_years, second_n_years, first_growth=None, second_growth=None):
+    projected = [df[metric][-1]]
+    if first_growth == 0:
+        avg_growth = df[metric].pct_change()[-past_n_years:].mean()
+        for i in range(first_n_years+second_n_years):
+            projected.append(projected[i] * (1 + avg_growth))
+    else:
+        for i in range(first_n_years):
+            projected.append(projected[i] * (1 + first_growth))
+        for i in range(first_n_years, second_n_years + first_n_years):
+            projected.append(projected[i] * (1 + second_growth))
+    return projected
+
+# calculate yield to maturity of company bonds
+def ytm(coupon_rate, face_value, present_value, maturity_date: str):
+    maturity_date = dt.datetime.strptime(maturity_date, "%Y-%m-%d")
+    n_compounding_periods = math.trunc((maturity_date - dt.datetime.today()).days/365)
+    num = coupon_rate + ((face_value - present_value)/n_compounding_periods)
+    den = ((face_value + present_value)/2)
+    YTM = num / den
+    return YTM
+
+# wacc is the minimum rate of return that the company must earn on its investments to satisfy its investors and creditors.
+def wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years):
+    # beta of company stock
+    # risk free rate using 2Y,5Y,10Y treasury yield
+    # market return = annualized % return expected if investing in this stock
+    cost_of_equity = risk_free_rate + beta * (market_return - risk_free_rate) # estimatino based on CAPM 
+    cost_of_debt = (1 - tax_rate) * (df['interestExpense'][-historical_years:]/df['longTermDebt'][-historical_years:]).mean() # estimated based on weighted average of total interest expense and longterm debt
+    # debt = sum of principal amounts of all outstanding debt securities issued by the company, including bonds, loans, and other debt instruments
+    # equity = market cap = shares * price per share 
+    total_market_value = equity + debt 
+    weight_of_equity = equity/total_market_value
+    weight_of_debt = debt/total_market_value
+    wacc = weight_of_equity * cost_of_equity + weight_of_debt * cost_of_debt
+    return wacc
+
+# Define a function to calculate the intrinsic value
+def intrinsic_value(df, ebitda_margin, terminal_growth_rate, wacc, tax_rate, depreciation, capex, nwc, years, metric, projected_metric):
+    # Calculate the free cash flows for each year
+    if metric == 'revenue':
+        ebitda = [revenue * ebitda_margin for revenue in projected_metric]
+        ebit = [ebitda[i] - depreciation for i in range(len(ebitda))]
+        tax_paid = [-1 * tax_rate * ebit[i] for i in range(len(ebit))]
+        net_income = [ebit[i] + tax_paid[i] for i in range(len(ebit))]
+        free_cash_flow = [net_income[i] - capex - nwc for i in range(len(net_income))]
+
+        # Calculate the terminal value
+        last_free_cash_flow = free_cash_flow[-1]
+        terminal_value = last_free_cash_flow * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
+
+        # Calculate the present value of the cash flows
+        discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
+        pv_cash_flows = [free_cash_flow[i] * discount_factors[i] for i in range(years)]
+        pv_terminal_value = [terminal_value * discount_factors[-1]]
+        intrinsic_value = sum(pv_cash_flows) + sum(pv_terminal_value)
+        
+        return intrinsic_value/df['weightedAverageShsOutDil'][-1]
+    else:
+        # Calculate the terminal value
+        last_year = projected_metric[-1]
+        terminal_value = last_year * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
+        # Calculate the present value of metric
+        discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
+        pv = [projected_metric[i] * discount_factors[i] for i in range(years)]
+        pv_terminal_value = [terminal_value * discount_factors[-1]]
+        intrinsic_value = abs(sum(pv) + sum(pv_terminal_value))
+        
+        if metric == 'epsdiluted':
+            return intrinsic_value
+        
+        else:
+            return intrinsic_value/df['weightedAverageShsOutDil'][-1]
+
+
 # function to create financial_statements page
 def create_financial_page(ticker, company_profile_info, col3, p: list):
 
@@ -570,8 +648,8 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
         """)
 
-        c4, c5, c6, c7, c8, c9 = con2.columns(
-            [0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
+        c4, c5, c6 = con2.columns(
+            [0.5, 0.5, 0.5])
 
 
         con3.markdown("""
@@ -579,7 +657,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         >##### *Main Inputs*:
 
         """)
-        c12, c13, c14, c15, c16, c17 = con3.columns([0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
+        c12, c13, c14 = con3.columns([0.5, 0.5, 0.5])
 
         # c1.title("DCF Calculator")
 
@@ -607,7 +685,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
         """)
 
-        g1,g2,g3,g4,g5,g6 = con2_3.columns([1,1,1,1,3,3])
+        g1,g5,g2,g6,g3,g7,g4 = con2_3.columns([1,0.5,1,0.5,1,0.5,1])
 
         try:
             # Define the financials of the company
@@ -673,79 +751,3 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         except:
             pass
 
-# DCF Functions
-
-# project financials based on average growth of past_n_years into the future_n_years
-def project_metric(df, metric, past_n_years, first_n_years, second_n_years, first_growth=None, second_growth=None):
-    projected = [df[metric][-1]]
-    if first_growth == 0:
-        avg_growth = df[metric].pct_change()[-past_n_years:].mean()
-        for i in range(first_n_years+second_n_years):
-            projected.append(projected[i] * (1 + avg_growth))
-    else:
-        for i in range(first_n_years):
-            projected.append(projected[i] * (1 + first_growth))
-        for i in range(first_n_years, second_n_years + first_n_years):
-            projected.append(projected[i] * (1 + second_growth))
-    return projected
-
-# calculate yield to maturity of company bonds
-def ytm(coupon_rate, face_value, present_value, maturity_date: str):
-    maturity_date = dt.datetime.strptime(maturity_date, "%Y-%m-%d")
-    n_compounding_periods = math.trunc((maturity_date - dt.datetime.today()).days/365)
-    num = coupon_rate + ((face_value - present_value)/n_compounding_periods)
-    den = ((face_value + present_value)/2)
-    YTM = num / den
-    return YTM
-
-# wacc is the minimum rate of return that the company must earn on its investments to satisfy its investors and creditors.
-def wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years):
-    # beta of company stock
-    # risk free rate using 2Y,5Y,10Y treasury yield
-    # market return = annualized % return expected if investing in this stock
-    cost_of_equity = risk_free_rate + beta * (market_return - risk_free_rate) # estimatino based on CAPM 
-    cost_of_debt = (1 - tax_rate) * (df['interestExpense'][-historical_years:]/df['longTermDebt'][-historical_years:]).mean() # estimated based on weighted average of total interest expense and longterm debt
-    # debt = sum of principal amounts of all outstanding debt securities issued by the company, including bonds, loans, and other debt instruments
-    # equity = market cap = shares * price per share 
-    total_market_value = equity + debt 
-    weight_of_equity = equity/total_market_value
-    weight_of_debt = debt/total_market_value
-    wacc = weight_of_equity * cost_of_equity + weight_of_debt * cost_of_debt
-    return wacc
-
-# Define a function to calculate the intrinsic value
-def intrinsic_value(df, ebitda_margin, terminal_growth_rate, wacc, tax_rate, depreciation, capex, nwc, years, metric, projected_metric):
-    # Calculate the free cash flows for each year
-    if metric == 'revenue':
-        ebitda = [revenue * ebitda_margin for revenue in projected_metric]
-        ebit = [ebitda[i] - depreciation for i in range(len(ebitda))]
-        tax_paid = [-1 * tax_rate * ebit[i] for i in range(len(ebit))]
-        net_income = [ebit[i] + tax_paid[i] for i in range(len(ebit))]
-        free_cash_flow = [net_income[i] - capex - nwc for i in range(len(net_income))]
-
-        # Calculate the terminal value
-        last_free_cash_flow = free_cash_flow[-1]
-        terminal_value = last_free_cash_flow * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
-
-        # Calculate the present value of the cash flows
-        discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
-        pv_cash_flows = [free_cash_flow[i] * discount_factors[i] for i in range(years)]
-        pv_terminal_value = [terminal_value * discount_factors[-1]]
-        intrinsic_value = sum(pv_cash_flows) + sum(pv_terminal_value)
-        
-        return intrinsic_value/df['weightedAverageShsOutDil'][-1]
-    else:
-        # Calculate the terminal value
-        last_year = projected_metric[-1]
-        terminal_value = last_year * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
-        # Calculate the present value of metric
-        discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
-        pv = [projected_metric[i] * discount_factors[i] for i in range(years)]
-        pv_terminal_value = [terminal_value * discount_factors[-1]]
-        intrinsic_value = abs(sum(pv) + sum(pv_terminal_value))
-        
-        if metric == 'epsdiluted':
-            return intrinsic_value
-        
-        else:
-            return intrinsic_value/df['weightedAverageShsOutDil'][-1]
