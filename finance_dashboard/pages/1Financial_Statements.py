@@ -104,4 +104,3 @@ p1, p2, p3 = st.columns([1, 1, 1])
 create_financial_page(ticker_list_box, companyA_info, st, [p1, p2, p3])
 
 st.markdown("***[Data provided by Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)***", unsafe_allow_html=True)
-

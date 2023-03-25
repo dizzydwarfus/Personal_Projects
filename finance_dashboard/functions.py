@@ -587,11 +587,11 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         with x:
             col3.write(f"### {statements_type[i]}")
             tab_statement = read_statement(statements_type[i], ticker)
-
+            max_year = int(tab_statement[0]['calendarYear'])-int(tab_statement[-1]['calendarYear'])+1
             year_range = col3.slider('Select year range (past n years):',
                                      min_value=1,
-                                     max_value=int(
-                                         tab_statement[0]['calendarYear'])-int(tab_statement[-1]['calendarYear'])+1,
+                                     max_value=max_year,
+                                     value=max_year,
                                      key=f'{ticker}_{x}_{i}')
 
             year_list = list(range(year_range))
@@ -602,7 +602,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
             df_financial_statements = pd.DataFrame.from_records(
                 tab_statement[year_list[0]:year_list[-1]+1],
-                index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::-1, 9:]
+                index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::1, 9:]
             df_financial_statements = df_financial_statements.style.pipe(
                 make_pretty, use_on='statements')
 
