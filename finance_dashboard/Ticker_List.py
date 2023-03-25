@@ -2,9 +2,7 @@
 import pandas as pd
 import json
 import streamlit as st
-import requests
-from pymongo import MongoClient, ASCENDING, DESCENDING
-from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, historical, stock_split, insert_to_mongoDB, fmp_api
+from functions import balance_sheet_collection, income_collection, cash_collection, company_profile, historical, stock_split, insert_to_mongoDB
 
 #####################################################
 
@@ -246,3 +244,4 @@ if st.button("Download Statements :ledger:"):
                 st.success(f"All downloads are completed.", icon="💯")
 
 # st.write(st.session_state)
+st.markdown("***[Data provided by Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)***", unsafe_allow_html=True)
