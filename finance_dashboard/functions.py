@@ -606,7 +606,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
                                      key=f'{ticker}_{x}_{i}')
 
             year_list = list(range(year_range))
-            st.write(year_list)
+
             # col3.checkbox("Use container width",
             #             value=False,
             #             key=f'use_container_width_{x}_{i}')
