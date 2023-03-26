@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import tickers, create_financial_page, read_profile
+from functions import tickers, create_financial_page, select_profile, read_profile, company_profile
 
 #####################################################
 
@@ -11,7 +11,9 @@ from functions import tickers, create_financial_page, read_profile
 ticker_list_box = st.sidebar.selectbox(
     "Select a ticker symbol:", sorted(tickers), key="ticker_list")
 
-companyA_info = read_profile(ticker_list_box)[0]
+companyA_info = select_profile(ticker_list_box, 'profile')[0]
+
+company_profile.update_one({'index_id':f"{ticker_list_box}_{companyA_info['ipoDate']}"}, {"$set": companyA_info}, upsert=True)
 
 same_sector = sorted([i for i in tickers if read_profile(i)[
                      0]['sector'] == companyA_info['sector']])
@@ -88,7 +90,7 @@ st.markdown(f"""
 st.markdown(f"""
 
 
-# {companyA_info['companyName']}
+# {companyA_info['companyName']} `{companyA_info['currency']} {companyA_info['price']}`
 ###### *Ticker symbol*: {ticker_list_box}
 ---
 ### Company Profile

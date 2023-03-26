@@ -166,6 +166,7 @@ def generate_key_metrics(financial_statement, _list_of_metrics):
 
 
 # download company financial statements
+@st.cache_data
 def select_quote(ticker, statement):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?limit=120&apikey={fmp_api}")
@@ -174,6 +175,7 @@ def select_quote(ticker, statement):
 
 
 # download company profile
+@st.cache_data(ttl=86400)
 def select_profile(ticker, statement):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v3/{statement}/{ticker}?apikey={fmp_api}")
@@ -199,6 +201,14 @@ def stock_price_api(ticker):
     response = requests.request("GET", url=url, headers=headers, params=querystring)
     return response.json()
 
+# download company real-time stock price
+def realtime_price(ticker):
+    r = requests.get(
+        f"https://financialmodelingprep.com/api/v3/quote-short/{ticker}?apikey={fmp_api}"
+    )
+    r = r.json()
+    return r
+
 # retrieve latest treasury yield
 @st.cache_data
 def treasury(date):
@@ -211,6 +221,7 @@ def treasury(date):
     return r
 
 # download company stock peers
+@st.cache_data
 def stock_peers(ticker):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v4/stock_peers?symbol={ticker}&apikey={fmp_api}"
@@ -247,14 +258,14 @@ def access_entry(_collection_name, entry_name, entry_value, return_value):
 def insert_to_mongoDB(collection, ticker, statement, second_key):
     if statement == 'profile':
         file = select_profile(ticker, statement)
-        file2 = stock_peers(ticker)
+        # file2 = stock_peers(ticker)
         file[0]['index_id'] = f"{file[0]['symbol']}_{file[0][second_key]}"
 
         if st.session_state['profile_update']:
             collection.delete_one({'symbol': ticker})
         try:
             collection.insert_one(file[0])
-            collection.insert_one(file2[0])
+            # collection.insert_one(file2[0])
             return st.success(f"{ticker} {statement} updated!", icon="✅")
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
@@ -602,7 +613,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
             df_financial_statements = pd.DataFrame.from_records(
                 tab_statement[year_list[0]:year_list[-1]+1],
-                index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::1, 9:]
+                index=[tab_statement[i]['calendarYear'] for i in year_list]).iloc[::1, 9:-2]
             df_financial_statements = df_financial_statements.style.pipe(
                 make_pretty, use_on='statements')
 
@@ -669,7 +680,6 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
         # avg_gr_choices = c3.selectbox("Choose which metric to calculate by:", ['revenue','epsdiluted','dividendsPaid','netIncome'])
         avg_gr_choices = ['revenue','epsdiluted','dividendsPaid','netIncome']
-        profile = select_profile(ticker,'profile')[0]
         df = pd.concat([pd.DataFrame.from_records(read_statement(x, 'AAPL'), 
                                                 index='calendarYear', 
                                                 exclude=['_id','date','symbol','reportedCurrency','cik','fillingDate','acceptedDate','period','link','finalLink','index_id'])
@@ -721,8 +731,8 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
             treasury_rate = c12.selectbox("Risk-free Rate: ", ['month1', 'month2', 'month3', 'month6', 'year1', 'year2', 'year3', 'year5', 'year7', 'year10', 'year20', 'year30'], ) # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
             risk_free_rate = treasury(dt.date.today())[0][treasury_rate]/100
             market_return = c14.number_input("Expected Market Return:", min_value=0.0, step=0.005, value=0.08) # assume a 8% return is desired
-            beta = profile['beta'] # beta of stock
-            equity = profile['mktCap'] # market cap of stock
+            beta = company_profile['beta'] # beta of stock
+            equity = company_profile['mktCap'] # market cap of stock
             debt = df['totalDebt'][-historical_years:].mean() # total debt of company (excluding liabilities that are not debt)
             discount_rate = c13.number_input("Discount Rate: ", min_value=0.01, step=0.01, value=wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years))
             years = forecast_n_years + forecast_m_years # total years to forecast forward
@@ -730,7 +740,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
             DCF_eps = round(intrinsic_value(df, ebitda_margin, terminal_gr_eps, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[1], projected_metric=projected_eps), 2)
             DCF_netincome = round(intrinsic_value(df, ebitda_margin, terminal_gr_netincome, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[3], projected_metric=projected_netincome), 2)
             DCF_dividends = round(intrinsic_value(df, ebitda_margin, terminal_gr_dividends, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[2], projected_metric=projected_dividends), 2)
-            current_price = "${:.2f}".format(profile['price'])
+            current_price = "${:.2f}".format(company_profile['price'])
             # Display the results
             con3.markdown(f"""
             --------
