@@ -680,7 +680,7 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
         # avg_gr_choices = c3.selectbox("Choose which metric to calculate by:", ['revenue','epsdiluted','dividendsPaid','netIncome'])
         avg_gr_choices = ['revenue','epsdiluted','dividendsPaid','netIncome']
-        df = pd.concat([pd.DataFrame.from_records(read_statement(x, 'AAPL'), 
+        df = pd.concat([pd.DataFrame.from_records(read_statement(x, ticker), 
                                                 index='calendarYear', 
                                                 exclude=['_id','date','symbol','reportedCurrency','cik','fillingDate','acceptedDate','period','link','finalLink','index_id'])
                         for x in statements_type], axis=1).T
