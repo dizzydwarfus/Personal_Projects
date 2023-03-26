@@ -731,8 +731,8 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
             treasury_rate = c12.selectbox("Risk-free Rate: ", ['month1', 'month2', 'month3', 'month6', 'year1', 'year2', 'year3', 'year5', 'year7', 'year10', 'year20', 'year30'], ) # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
             risk_free_rate = treasury(dt.date.today())[0][treasury_rate]/100
             market_return = c14.number_input("Expected Market Return:", min_value=0.0, step=0.005, value=0.08) # assume a 8% return is desired
-            beta = company_profile['beta'] # beta of stock
-            equity = company_profile['mktCap'] # market cap of stock
+            beta = company_profile_info['beta'] # beta of stock
+            equity = company_profile_info['mktCap'] # market cap of stock
             debt = df['totalDebt'][-historical_years:].mean() # total debt of company (excluding liabilities that are not debt)
             discount_rate = c13.number_input("Discount Rate: ", min_value=0.01, step=0.01, value=wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years))
             years = forecast_n_years + forecast_m_years # total years to forecast forward
@@ -740,23 +740,16 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
             DCF_eps = round(intrinsic_value(df, ebitda_margin, terminal_gr_eps, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[1], projected_metric=projected_eps), 2)
             DCF_netincome = round(intrinsic_value(df, ebitda_margin, terminal_gr_netincome, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[3], projected_metric=projected_netincome), 2)
             DCF_dividends = round(intrinsic_value(df, ebitda_margin, terminal_gr_dividends, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[2], projected_metric=projected_dividends), 2)
-            current_price = "${:.2f}".format(company_profile['price'])
+            current_price = "${:.2f}".format(company_profile_info['price'])
             # Display the results
-            con3.markdown(f"""
-            --------
-
-            ### DCF Results:
-
-            >Current Price: `{current_price}`
-
-            """)
+            con3.markdown(f"""--------""")
 
             con4 = st.container()
             c18, c19, c20, c21 = con4.columns([1,1,1,1])
-            c18.metric("DCF from Revenue: ", DCF_revenue, label_visibility='visible')
-            c19.metric("DCF from EPS: ", DCF_eps, label_visibility='visible')
-            c20.metric("DCF from Net Income: ", DCF_netincome, label_visibility='visible')
-            c21.metric("DCF from Dividends: ", DCF_dividends, label_visibility='visible')
+            c18.markdown(f""">#### From Revenue: `{company_profile_info['currency']} {DCF_revenue}`""")
+            c19.markdown(f""">#### From EPS: `{company_profile_info['currency']} {DCF_eps}`""")
+            c20.markdown(f""">#### From Net Income: `{company_profile_info['currency']} {DCF_netincome}`""")
+            c21.markdown(f""">#### DCF From Dividends: `{company_profile_info['currency']} {DCF_dividends}`""")
 
         except:
             pass
