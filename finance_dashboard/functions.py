@@ -210,12 +210,10 @@ def realtime_price(ticker):
     return r
 
 # retrieve latest treasury yield
-@st.cache_data
-def treasury(date):
-    date1 = dt.datetime.strftime(date - dt.timedelta(days=2), "%Y-%m-%d")
-    date2 = dt.datetime.strftime(date, "%Y-%m-%d")
+@st.cache_data(ttl=86400)
+def treasury(maturiy):
     r = requests.get(
-        f"https://financialmodelingprep.com/api/v4/treasury?from={date1}&to={date2}&apikey={fmp_api}"
+        f"https://www.alphavantage.co/query?function=TREASURY_YIELD&interval=daily&maturity={maturiy}&apikey={alpha_vantage_api}"
     )
     r = r.json()
     return r
@@ -649,13 +647,13 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
 
     with DCF_tab:
-        con1, con2, con2_3, con3 = st.container(), st.container(), st.container(), st.container()
+        con1, con2, con3, con2_3 = st.container(), st.container(), st.container(), st.container()
 
         c1, c2, c3 = con1.columns([0.5, 0.5, 1])
 
         con2.markdown("""
 
-        >##### *Set time frame (in years)*:
+        >>##### *Set time frame (in years)*:
 
         """)
 
@@ -665,11 +663,17 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
         con3.markdown("""
 
-        >##### *Main Inputs*:
+        >>##### *Main Inputs for WACC*
 
         """)
         c12, c13, c14 = con3.columns([0.5, 0.5, 0.5])
 
+        trate_dict = {'3month':float(treasury('3month')['data'][0]['value'])/100,
+                      '2year':float(treasury('2year')['data'][0]['value'])/100,
+                      '5year':float(treasury('5year')['data'][0]['value'])/100,
+                      '7year':float(treasury('7year')['data'][0]['value'])/100,
+                      '10year':float(treasury('10year')['data'][0]['value'])/100}
+        
         # c1.title("DCF Calculator")
 
         # con1.markdown("""
@@ -691,11 +695,11 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
         con2_3.markdown(f"""
 
-        >##### *Average growth over last {historical_years} years*:
+        >>##### *Averages over last {historical_years} years*:
 
         """)
 
-        g1,g5,g2,g6,g3,g7,g4 = con2_3.columns([1,0.5,1,0.5,1,0.5,1])
+        g1,g2,g3,g4,g5 = con2_3.columns([1,1,1,1,1])
 
         try:
             # Define the financials of the company
@@ -717,10 +721,11 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
             avg_gr_dividends = df[avg_gr_choices[2]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
             avg_gr_netincome = df[avg_gr_choices[3]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
             
-            g1.markdown(f'###### Revenue: `{"{:.0%}".format(avg_gr_revenue)}`')
-            g2.markdown(f'###### EPS: `{"{:.0%}".format(avg_gr_eps)}`')
-            g3.markdown(f'###### Dividends: `{"{:.0%}".format(avg_gr_dividends)}`')
-            g4.markdown(f'###### Net Income: `{"{:.0%}".format(avg_gr_netincome)}`')
+            g1.markdown(f'###### Revenue: `{"{:.1%}".format(avg_gr_revenue)}`')
+            g2.markdown(f'###### EPS: `{"{:.1%}".format(avg_gr_eps)}`')
+            g3.markdown(f'###### Dividends: `{"{:.1%}".format(avg_gr_dividends)}`')
+            g4.markdown(f'###### Net Income: `{"{:.1%}".format(avg_gr_netincome)}`')
+            g5.markdown(f'###### Tax-rate: `{"{:.1%}".format(tax_rate)}`')
 
             terminal_gr_revenue = min(0.05, avg_gr_revenue) # This limits the terminal growth rate to 5% maximum
             terminal_gr_eps = min(0.05, avg_gr_eps) # This limits the terminal growth rate to 5% maximum
@@ -728,8 +733,10 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
             terminal_gr_dividends = min(0.05, avg_gr_dividends) # This limits the terminal growth rate to 5% maximum
 
             # # Define the WACC assumptions
-            treasury_rate = c12.selectbox("Risk-free Rate: ", ['month1', 'month2', 'month3', 'month6', 'year1', 'year2', 'year3', 'year5', 'year7', 'year10', 'year20', 'year30'], ) # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
-            risk_free_rate = treasury(dt.date.today())[0][treasury_rate]/100
+            treasury_rate = c12.selectbox("Risk-free Rate: ", ['3month', '2year', '5year', '7year', '10year', '30year'], ) # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
+            c12.markdown(f'''*3-mth*: `{"{:.2%}".format(trate_dict["3month"])}` *2-yr*: `{"{:.2%}".format(trate_dict["2year"])}` *5-yr*: `{"{:.2%}".format(trate_dict["5year"])}` *7-yr*: `{"{:.2%}".format(trate_dict["7year"])}` *10-yr*: `{"{:.2%}".format(trate_dict["10year"])}`''')
+            risk_free_rate = trate_dict[treasury_rate]
+
             market_return = c14.number_input("Expected Market Return:", min_value=0.0, step=0.005, value=0.08) # assume a 8% return is desired
             beta = company_profile_info['beta'] # beta of stock
             equity = company_profile_info['mktCap'] # market cap of stock
@@ -740,11 +747,10 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
             DCF_eps = round(intrinsic_value(df, ebitda_margin, terminal_gr_eps, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[1], projected_metric=projected_eps), 2)
             DCF_netincome = round(intrinsic_value(df, ebitda_margin, terminal_gr_netincome, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[3], projected_metric=projected_netincome), 2)
             DCF_dividends = round(intrinsic_value(df, ebitda_margin, terminal_gr_dividends, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[2], projected_metric=projected_dividends), 2)
-            current_price = "${:.2f}".format(company_profile_info['price'])
             # Display the results
-            con3.markdown(f"""--------""")
 
             con4 = st.container()
+            con4.markdown(f"""--------""")
             c18, c19, c20, c21 = con4.columns([1,1,1,1])
             c18.markdown(f""">#### From Revenue: `{company_profile_info['currency']} {DCF_revenue}`""")
             c19.markdown(f""">#### From EPS: `{company_profile_info['currency']} {DCF_eps}`""")
