@@ -596,11 +596,11 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         with x:
             col3.write(f"### {statements_type[i]}")
             tab_statement = read_statement(statements_type[i], ticker)
-            max_year = int(tab_statement[0]['calendarYear'])-int(tab_statement[-1]['calendarYear'])+1
+            max_year = int(tab_statement[0]['calendarYear'])-int(tab_statement[-1]['calendarYear'])
             year_range = col3.slider('Select year range (past n years):',
                                      min_value=1,
                                      max_value=max_year,
-                                    #  value=max_year,
+                                    value=int(max_year/2),
                                      key=f'{ticker}_{x}_{i}')
 
             year_list = list(range(year_range))
@@ -760,3 +760,15 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         except:
             pass
 
+#####################################################################
+
+# Sentiment Analysis functions
+
+#####################################################################
+
+def news_sentiment():
+    url = f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey={alpha_vantage_api}'
+    r = requests.get(url)
+    r = r.json()
+
+    return r

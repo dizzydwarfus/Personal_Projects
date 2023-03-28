@@ -1,16 +1,26 @@
 import pandas as pd
 import streamlit as st
-import numpy as np
+import seaborn as sns
+import re
+
+# NLTK sub-libraries
+import nltk as lp
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.stem.porter import PorterStemmer
 
 
 #####################################################
 
-# Dashboard
+# Sentiment Analysis
 
 #####################################################
 
 
 
+
+# TODO: Sentiment analysis on tickers - https://www.alphavantage.co/documentation/ for 
 # TODO: compare DCF calculated stock price, with current price (repeat for past years, to see trend)
 # TODO: show % difference for past DCF calculated values and calculate safety of margin, pick best metric from that.
 # TODO: show extra tab with historical stock price using yfinance
