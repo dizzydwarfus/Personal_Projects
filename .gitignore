@@ -12,3 +12,9 @@ grocery_list/
 data_discovery/
 supply_chain/
 finance_dashboard/investment_dashboard.ipynb
+.git
+.env
+.DS_Store # macOS specific ignore
+airflow_settings.yaml
+__pycache__/
+astro

@@ -2,12 +2,12 @@ import pandas as pd
 import streamlit as st
 import re
 
-# NLTK sub-libraries
-import nltk as lp
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem.wordnet import WordNetLemmatizer
-from nltk.stem.porter import PorterStemmer
+# # NLTK sub-libraries
+# import nltk as lp
+# from nltk.tokenize import word_tokenize
+# from nltk.corpus import stopwords
+# from nltk.stem.wordnet import WordNetLemmatizer
+# from nltk.stem.porter import PorterStemmer
 
 
 #####################################################
