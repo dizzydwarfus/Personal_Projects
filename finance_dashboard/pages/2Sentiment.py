@@ -26,6 +26,9 @@ import re
 # TODO: show technical indicators, and perform backtest
 # TODO: use ML model to predict stock price
 
+#####################################################
 
+# Show Calculated DCF and filter for undervalued/overvalued companies based on each of the 4 DCF calculations
+# Get quarterly reports as well as yearly
 
 st.markdown("***[Data provided by Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)***", unsafe_allow_html=True)
