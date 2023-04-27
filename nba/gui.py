@@ -6,25 +6,10 @@ from ttkbootstrap.constants import *
 from ttkbootstrap.toast import ToastNotification
 from ttkbootstrap.tableview import Tableview
 from ttkbootstrap.validation import add_regex_validation
+from nba_api import NBA
 
-url = "https://stats.nba.com/stats/"
-
-headers = {
-    'Accept': '*/*',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Connection': 'keep-alive',
-    'Host': 'stats.nba.com',
-    'Origin': 'https://www.nba.com',
-    'Referer': 'https://www.nba.com/',
-    'sec-ch-ua': '"Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': "Windows",
-    'Sec-Fetch-Dest': 'empty',
-    'Sec-Fetch-Mode': 'cors',
-    'Sec-Fetch-Site': 'same-site',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-}
+nba_info = NBA()
+print(nba_info.player_shot_locations_columns)
 
 
 class App(ttk.Window):
@@ -32,16 +17,10 @@ class App(ttk.Window):
         super().__init__(themename=themename)
 
         self.title('NBA Stats')
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=4)
+        self.colors = self.style.colors
+        self.theme_list = self.style.theme_names()
         self.create_switch(row=24, column=0, padx=10, pady=10, sticky=NSEW)
-        r, c = 25, 0
-        for values in self.style.theme_names():
-            self.create_radio_buttons(values, row=r, column=c, padx=5, pady=10)
-
-            c += 1
-            if c > 12:
-                r, c = r + 1, 0
+        self.create_menu(row=25, col=0)
 
     def create_switch(self, **kwargs):
         def toggle_mode():
@@ -53,14 +32,44 @@ class App(ttk.Window):
             self, text='Mode', style='Roundtoggle.Toolbutton', command=toggle_mode)
         mode_switch.grid(**kwargs)
 
-    def create_radio_buttons(self, values, **kwargs):
+    def create_radio_buttons(self, **kwargs):
+        btns_frame = ttk.Frame(self)
+        btns_frame.grid(**kwargs)
+
         def my_upd():
             self.style.theme_use(my_str.get())
+
         my_str = ttk.StringVar(value=self.style.theme_use())
 
-        b = ttk.Radiobutton(self, text=values,
-                            variable=my_str, command=lambda: my_upd())
-        b.grid(**kwargs)
+        for values in self.theme_list:
+            b = ttk.Radiobutton(btns_frame, text=values, value=values,
+                                variable=my_str, command=lambda: my_upd())
+            b.pack(side=LEFT, padx=5, pady=5)
+
+    def create_menu(self, row, col):
+        def my_upd():
+            self.style.theme_use(my_str.get())
+
+        my_str = ttk.StringVar(value=self.style.theme_use())
+
+        menu_field_container = ttk.Frame(self)
+        menu_field_container.grid(sticky=EW, pady=5, row=row, column=col)
+
+        menu_label = ttk.Label(master=menu_field_container,
+                               text='Select a theme: ', )
+        menu_label.pack(side=LEFT, padx=12, pady=10)
+
+        menu = ttk.Menubutton(master=menu_field_container,
+                              textvariable=my_str)
+        menu.pack(side=LEFT, padx=12, pady=10)
+
+        menu_input = ttk.Menu(menu)
+        for x in self.theme_list:
+            menu_input.add_radiobutton(
+                label=x, variable=my_str, value=x, command=lambda: my_upd())
+
+        menu['menu'] = menu_input
+        return menu_input
 
 
 # Separate components into frames
@@ -120,7 +129,7 @@ class ParamsInput(ttk.Frame):
 
         instruction_text = "Please enter parameters to query from www.nba.com/stats: "
         instruction = ttk.Label(self, text=instruction_text, width=60)
-        instruction.grid(sticky=EW, pady=10, row=0, column=0, columnspan=2)
+        instruction.grid(sticky=EW, pady=10, row=0, column=0)
 
         self.create_form_entry('Endpoint', self.endpoint, 1, 0)
         self.create_form_entry('College', self.college, 2, 0)
@@ -207,20 +216,38 @@ class ParamsInput(ttk.Frame):
         separator = ttk.Separator(self)
         separator.grid(**kwargs)
 
+
 # Component 2 - TableView Frame
+
+
+coldata = [
+    {"text": "LicenseNumber", "stretch": False},
+    "CompanyName",
+    {"text": "UserCount", "stretch": False},
+]
+
+rowdata = [
+    ('A123', 'IzzyCo', 12),
+    ('A136', 'Kimdee Inc.', 45),
+    ('A158', 'Farmadding Co.', 36),
+]
 
 
 class TableFrame(ttk.Frame):
     def __init__(self, master_window):
         super().__init__(master_window)
-        self.pack(fill=BOTH, expand=YES)
+
+        self.grid(row=0, column=1, sticky=NSEW)
 
         options = {'padx': 5, 'pady': 5}
+
+        table = Tableview(master=self, coldata=coldata, rowdata=rowdata, paginated=True,
+                          searchable=True, bootstyle=PRIMARY,)
+        table.pack(fill=BOTH, expand=YES, padx=10, pady=10)
 
 
 if __name__ == "__main__":
     app = App(themename='solar')
     frame = ParamsInput(app)
+    table = TableFrame(app)
     app.mainloop()
-
-    print([i for i in ttk.Window().style._theme_names])
