@@ -1,5 +1,6 @@
 # Next Step: Build a UI using ttkbootstrap to have entry/dropdown for all parameters and automatically show in table (mimic website but have option to store into SQL database)
 import datetime as dt
+import pandas as pd
 import sys
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
@@ -7,9 +8,7 @@ from ttkbootstrap.toast import ToastNotification
 from ttkbootstrap.tableview import Tableview
 from ttkbootstrap.validation import add_regex_validation
 from nba_api import NBA
-
-nba_info = NBA()
-print(nba_info.player_shot_locations_columns)
+from typing import List, Tuple, Dict
 
 
 class App(ttk.Window):
@@ -219,31 +218,53 @@ class ParamsInput(ttk.Frame):
 
 # Component 2 - TableView Frame
 
-
-coldata = [
-    {"text": "LicenseNumber", "stretch": False},
-    "CompanyName",
-    {"text": "UserCount", "stretch": False},
-]
-
-rowdata = [
-    ('A123', 'IzzyCo', 12),
-    ('A136', 'Kimdee Inc.', 45),
-    ('A158', 'Farmadding Co.', 36),
-]
-
-
 class TableFrame(ttk.Frame):
     def __init__(self, master_window):
         super().__init__(master_window)
 
         self.grid(row=0, column=1, sticky=NSEW)
+        self.nba_info = NBA()
 
         options = {'padx': 5, 'pady': 5}
 
-        table = Tableview(master=self, coldata=coldata, rowdata=rowdata, paginated=True,
-                          searchable=True, bootstyle=PRIMARY,)
-        table.pack(fill=BOTH, expand=YES, padx=10, pady=10)
+    # create the canvas and scrollbars
+        canvas = ttk.Canvas(self)
+        canvas.pack(side=LEFT, fill=BOTH, expand=True)
+
+        scrollbar_y = ttk.Scrollbar(
+            self, orient=VERTICAL, command=canvas.yview)
+        scrollbar_y.pack(side=RIGHT, fill=Y)
+
+        scrollbar_x = ttk.Scrollbar(
+            self, orient=HORIZONTAL, command=canvas.xview)
+        scrollbar_x.pack(side=BOTTOM, fill=X)
+
+        # configure the canvas and scrollbars
+        canvas.configure(yscrollcommand=scrollbar_y.set,
+                         xscrollcommand=scrollbar_x.set)
+        canvas.bind('<Configure>', lambda event: canvas.configure(
+            scrollregion=canvas.bbox('all')))
+
+        table_frame = ttk.Frame(canvas)
+        canvas.create_window((0, 0), window=table_frame, anchor=NW)
+
+        table = Tableview(master=table_frame, coldata=self.get_cols(), rowdata=self.get_rows(pd.read_csv('player_shotLocations.csv', header=1, index_col=0)), paginated=True,
+                          searchable=True, bootstyle=PRIMARY, pagesize=50, )
+        table.autofit_columns()
+        table.pack(fill=Y, expand=YES, padx=10, pady=10)
+
+    def get_rows(self, df: pd.DataFrame) -> List[tuple]:
+        rowdata = [
+            tuple(row) for row in df.itertuples()
+        ]
+        return rowdata
+
+    def get_cols(self) -> List[dict]:
+        coldata = [
+            {"text": name, "stretch": False} for name in [" ".join(i).strip()
+                                                          for i in self.nba_info.player_shot_locations_columns]
+        ]
+        return coldata
 
 
 if __name__ == "__main__":
@@ -251,3 +272,4 @@ if __name__ == "__main__":
     frame = ParamsInput(app)
     table = TableFrame(app)
     app.mainloop()
+1

@@ -53,7 +53,8 @@ def player_shots_columns() -> List[str]:
         ('35-39 ft.', 'FG_PCT'),
         ('40+ ft.',    'FGM'),
         ('40+ ft.',    'FGA'),
-        ('40+ ft.', 'FG_PCT')
+        ('40+ ft.', 'FG_PCT'),
+        ("", "Year"),
     ]
     return index
 
