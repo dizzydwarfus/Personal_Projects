@@ -1,25 +1,54 @@
-import mysql.connector
-from mysql.connector import Error
+from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
+import os
+from dotenv import load_dotenv
+from functools import partial
 
-try:
-    connection = mysql.connector.connect(host='localhost',
-                                         database='sakila',
-                                         user='root',
-                                         password='',)
+load_dotenv()
 
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("select database();")
-        record = cursor.fetchone()
-        print("You're connected to database: ", record)
 
-except Error as e:
-    print("Error while connecting to MySQL", e)
+def create_connection_url(server, database, username, password, port, driver):
+    connection_url = URL.create(
+        "mssql+pyodbc",
+        username=username,
+        password=password,
+        host=server,
+        port=port,
+        database=database,
+        query={
+            "driver": driver,
+            "TrustServerCertificate": "yes",
+            "authentication": "ActiveDirectoryIntegrated",
+        }
+    )
+    return connection_url
 
-finally:
-    if connection.is_connected():
-        cursor.close()
-        connection.close()
-        print("MySQL connection is closed")
+
+def test_connection(connection_string):
+    try:
+        # Replace the connection string with your own
+        connection_string = connection_string
+        engine = create_engine(connection_string)
+        engine.execute('SELECT @@VERSION')
+        row = engine.fetchone()
+        assert row[0] is not None
+    except Exception as e:
+        # If the connection fails, the test will fail with an exception
+        assert False, f'Connection test failed: {e}'
+
+
+server = os.environ.get('server')
+database = 'NBA'
+username = os.getenv('DB_username')
+password = os.getenv('DB_password')
+port = os.getenv('port')
+driver = 'ODBC Driver 17 for SQL Server'
+
+CreateURL = partial(create_connection_url, server=server,
+                    username=username, password=password, port=port, driver=driver,)
+
+nba_connection = CreateURL(
+    database=database)
+
+
+test_connection(connection_string=nba_connection)

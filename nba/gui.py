@@ -248,7 +248,7 @@ class TableFrame(ttk.Frame):
         table_frame = ttk.Frame(canvas)
         canvas.create_window((0, 0), window=table_frame, anchor=NW)
 
-        table = Tableview(master=table_frame, coldata=self.get_cols(), rowdata=self.get_rows(pd.read_csv('player_shotLocations.csv', header=1, index_col=0)), paginated=True,
+        table = Tableview(master=table_frame, coldata=self.get_cols(), rowdata=self.get_rows(pd.read_csv('data\player_shotLocations.csv', header=1, index_col=0)), paginated=True,
                           searchable=True, bootstyle=PRIMARY, pagesize=50, )
         table.autofit_columns()
         table.pack(fill=Y, expand=YES, padx=10, pady=10)
@@ -272,4 +272,3 @@ if __name__ == "__main__":
     frame = ParamsInput(app)
     table = TableFrame(app)
     app.mainloop()
-1
