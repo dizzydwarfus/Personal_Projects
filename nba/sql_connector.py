@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine
-from sqlalchemy import text
 from sqlalchemy.engine import URL
 import os
 from dotenv import load_dotenv
@@ -18,8 +17,8 @@ def create_connection_url(server, database, username, password, port, driver):
         database=database,
         query={
             "driver": driver,
-            # "TrustServerCertificate": "yes",
-            # "authentication": "ActiveDirectoryIntegrated",
+            "TrustServerCertificate": "yes",
+            "authentication": "ActiveDirectoryIntegrated",
         }
     )
     return connection_url
@@ -29,11 +28,10 @@ def test_connection(connection_string):
     try:
         # Replace the connection string with your own
         connection_string = connection_string
-        engine = create_engine(connection_string, echo=True)
-        with engine.connect() as conn:
-            result = conn.execute(text("SELECT DB_NAME()")).fetchone()
-        assert result[0] is not None
-        print(f'Connection to {result[0]} was successful.')
+        engine = create_engine(connection_string)
+        engine.execute('SELECT @@VERSION')
+        row = engine.fetchone()
+        assert row[0] is not None
     except Exception as e:
         # If the connection fails, the test will fail with an exception
         assert False, f'Connection test failed: {e}'
