@@ -350,14 +350,14 @@ def generate_plots(dataframe, arrangement: tuple, metric):
 
             # Add traces (graphs)
             fig.add_trace(
-                go.Scatter(
-                    x=dataframe.index, y=dataframe[f'{n}'], mode="lines+markers", name=f"{n.capitalize()}"),
+                go.Bar(
+                    x=dataframe.index, y=dataframe[f'{n}'], texttemplate="$%{value:,}", textposition="inside", name=f"{n.capitalize()}"),
                 secondary_y=False,
             )
 
             fig.add_trace(
-                go.Bar(
-                    x=dataframe.index, y=growth, text=[i for i in growth], opacity=0.3, marker=dict({'color': 'darkorange'}), texttemplate="%{value:.1%}", textposition="inside", name="Growth Y-o-Y"),
+                go.Scatter(
+                    x=dataframe.index, y=growth, text=[i for i in growth], mode="lines+markers", opacity=0.3, marker=dict({'color': 'darkorange'}), name="Growth Y-o-Y"),
                 secondary_y=True,
             )
 
