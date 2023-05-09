@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from functools import partial
 from dataclasses import dataclass
 
+
 load_dotenv()
 
 

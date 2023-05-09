@@ -26,11 +26,12 @@ def draw_plotly_court(fig, fig_width=800, margins=0, x_cal=0, y_cal=0):
     threept_break_y = 89.47765084 + y_cal
     three_line_col = "black"
     main_line_col = "black"
+    basket = "#981717"  # ec7607
 
     fig.update_layout(
         # Line Horizontal
         margin=dict(l=0, r=0, t=0, b=0),
-        paper_bgcolor="white",
+        paper_bgcolor="#dfbb85",
         plot_bgcolor="#dfbb85",
         yaxis=dict(
             scaleanchor="x",
@@ -83,16 +84,16 @@ def draw_plotly_court(fig, fig_width=800, margins=0, x_cal=0, y_cal=0):
 
             dict(
                 type="rect", x0=-2 + x_cal, y0=-7.25 + y_cal, x1=2 + x_cal, y1=-12.5 + y_cal,
-                line=dict(color="#ec7607", width=1),
-                fillcolor='#ec7607',
+                line=dict(color=basket, width=2),
+                fillcolor=basket,
             ),
             dict(
                 type="circle", x0=-7.5 + x_cal, y0=-7.5 + y_cal, x1=7.5 + x_cal, y1=7.5 + y_cal, xref="x", yref="y",
-                line=dict(color="#ec7607", width=1),
+                line=dict(color=basket, width=3),
             ),
             dict(
                 type="line", x0=-30 + x_cal, y0=-12.5 + y_cal, x1=30 + x_cal, y1=-12.5 + y_cal,
-                line=dict(color="#ec7607", width=1),
+                line=dict(color=basket, width=5),
             ),
 
             dict(type="path",
