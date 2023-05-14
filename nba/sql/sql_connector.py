@@ -11,8 +11,8 @@ load_dotenv()
 
 
 @dataclass
-class Database:
-    database: str
+class DB:
+    db_name: str
     server: str = os.environ.get('server')
     username: str = os.getenv('DB_username')
     password: str = os.getenv('DB_password')
@@ -30,11 +30,11 @@ class Database:
             password=self.password,
             host=self.server,
             port=self.port,
-            database=self.database,
+            database=self.db_name,
             query={
                 "driver": self.driver,
                 # "TrustServerCertificate": "yes",
-                # "authentication": "ActiveDirectoryIntegrated",
+                # "authentication": "SqlPassword",
             }
         )
         return self.connection_url
@@ -45,13 +45,10 @@ class Database:
 
     def test_connection(self):
         try:
-            with self.engine.connect() as conn:
-                result = conn.execute(text("SELECT DB_NAME()")).fetchone()
-            assert result[0] is not None
+            with self.engine.connect() as connection:
+                result = connection.execute(
+                    text("SELECT DB_NAME()")).fetchone()
             print(f'Connection to {result[0]} was successful.')
+            return True
         except Exception as e:
-            # If the connection fails, the test will fail with an exception
-            assert False, f'Connection test failed: {e}'
-
-
-Database(database='NBA',).test_connection()
+            return False, f'Connection test failed: {e}'
