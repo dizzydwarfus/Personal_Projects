@@ -17,20 +17,27 @@ import math
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
+
+
 @st.cache_resource
 def init_connection():
     return MongoClient(**st.secrets["mongo"])
 
 # function to get api keys from secrets
+
+
 @st.cache_resource
 def get_api():
     fmp_api = st.secrets["fmp_api"]
     alpha_vantage_api = st.secrets["rapidapi_key"]
-    return fmp_api,alpha_vantage_api
+    return fmp_api, alpha_vantage_api
+
 
 fmp_api, alpha_vantage_api = get_api()
 
 # Initialize collection connection
+
+
 @st.cache_resource(ttl=86400)  # only refresh after 24h
 def get_data():
     client = init_connection()
@@ -197,11 +204,15 @@ def stock_price_api(ticker):
     url = "https://alpha-vantage.p.rapidapi.com/query"
     headers = {"X-RapidAPI-Key": alpha_vantage_api,
                "X-RapidAPI-Host": "alpha-vantage.p.rapidapi.com"}
-    querystring = {"function":"TIME_SERIES_DAILY","symbol":f"{ticker}","outputsize":"full","datatype":"json"}
-    response = requests.request("GET", url=url, headers=headers, params=querystring)
+    querystring = {"function": "TIME_SERIES_DAILY",
+                   "symbol": f"{ticker}", "outputsize": "full", "datatype": "json"}
+    response = requests.request(
+        "GET", url=url, headers=headers, params=querystring)
     return response.json()
 
 # download company real-time stock price
+
+
 def realtime_price(ticker):
     r = requests.get(
         f"https://financialmodelingprep.com/api/v3/quote-short/{ticker}?apikey={fmp_api}"
@@ -210,6 +221,8 @@ def realtime_price(ticker):
     return r
 
 # retrieve latest treasury yield
+
+
 @st.cache_data(ttl=86400)
 def treasury(maturiy):
     r = requests.get(
@@ -219,6 +232,8 @@ def treasury(maturiy):
     return r
 
 # download company stock peers
+
+
 @st.cache_data
 def stock_peers(ticker):
     r = requests.get(
@@ -267,10 +282,10 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
             return st.success(f"{ticker} {statement} updated!", icon="✅")
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
-    
+
     elif statement == 'stock_price':
         file = stock_price_api(ticker)
-        for i,x in file['Time Series (Daily)'].items():    
+        for i, x in file['Time Series (Daily)'].items():
             x['index_id'] = f"{ticker}_{i}"
             x['symbol'] = f"{ticker}"
             x[second_key] = dt.datetime.strptime(i, '%Y-%m-%d')
@@ -285,27 +300,29 @@ def insert_to_mongoDB(collection, ticker, statement, second_key):
             x.pop('4. close')
             x.pop('5. volume')
 
-        ids = [x['index_id'] for i,x in file['Time Series (Daily)'].items() if x['index_id']
-                   not in access_entry(collection, 'symbol', ticker, 'index_id')]
+        ids = [x['index_id'] for i, x in file['Time Series (Daily)'].items() if x['index_id']
+               not in access_entry(collection, 'symbol', ticker, 'index_id')]
         try:
-            collection.insert_many([x for i,x in file['Time Series (Daily)'].items() if x['index_id'] in ids])
+            collection.insert_many(
+                [x for i, x in file['Time Series (Daily)'].items() if x['index_id'] in ids])
             return st.success(f"{ticker} {statement} updated!", icon="✅")
 
         except:
             return st.error(f"{ticker} {statement} already exists", icon="🚨")
-    
+
     elif statement == 'stock_split':
         file = download_stocksplit(ticker)
         for i in file['historical']:
             i['index_id'] = f"{file['symbol']}_{i[second_key]}"
             i['symbol'] = f"{file['symbol']}"
             i[second_key] = dt.datetime.strptime(i['date'], '%Y-%m-%d')
-            
 
-        ids = [i['index_id'] for i in file['historical'] if i['index_id'] not in access_entry(collection, 'symbol', ticker, 'index_id')]
+        ids = [i['index_id'] for i in file['historical'] if i['index_id']
+               not in access_entry(collection, 'symbol', ticker, 'index_id')]
 
         try:
-            collection.insert_many([i for i in file['historical'] if i['index_id'] in ids])
+            collection.insert_many(
+                [i for i in file['historical'] if i['index_id'] in ids])
             return st.success(f"{ticker} {statement} updated!", icon="✅")
 
         except:
@@ -418,20 +435,20 @@ def historical_plots(dataframe, arrangement, date):
     # Update figure title, legend, axes
     fig.update_layout(height=1000,
                       showlegend=False,
-                        #   template='plotly_dark',
-                        # paper_bgcolor='#1c2541',
-                        # plot_bgcolor="#0b132b",
-                        # xaxis_title='Date',
-                        #   yaxis_title=f'{n}',
-                        title={'text': f'<b>{dataframe["symbol"][0]} price</b> (from {date[0]}-{date[-1]})',
-                                'x': 0.5,
-                                'xanchor': 'center',
-                                'font': {'size': 25}},
-                        font={'size': 15})
+                      #   template='plotly_dark',
+                      # paper_bgcolor='#1c2541',
+                      # plot_bgcolor="#0b132b",
+                      # xaxis_title='Date',
+                      #   yaxis_title=f'{n}',
+                      title={'text': f'<b>{dataframe["symbol"][0]} price</b> (from {date[0]}-{date[-1]})',
+                             'x': 0.5,
+                             'xanchor': 'center',
+                             'font': {'size': 25}},
+                      font={'size': 15})
     fig.update_yaxes(showgrid=False, zeroline=True, secondary_y=False)
     fig.update_yaxes(
         title_text="Daily Volume", secondary_y=True, showgrid=False, zeroline=False)
-    
+
     cols[0].plotly_chart(
         fig, use_container_width=True,)
 
@@ -486,30 +503,40 @@ def project_metric(df, metric, past_n_years, first_n_years, second_n_years, firs
     return projected
 
 # calculate yield to maturity of company bonds
+
+
 def ytm(coupon_rate, face_value, present_value, maturity_date: str):
     maturity_date = dt.datetime.strptime(maturity_date, "%Y-%m-%d")
-    n_compounding_periods = math.trunc((maturity_date - dt.datetime.today()).days/365)
+    n_compounding_periods = math.trunc(
+        (maturity_date - dt.datetime.today()).days/365)
     num = coupon_rate + ((face_value - present_value)/n_compounding_periods)
     den = ((face_value + present_value)/2)
     YTM = num / den
     return YTM
 
 # wacc is the minimum rate of return that the company must earn on its investments to satisfy its investors and creditors.
+
+
 def wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years):
     # beta of company stock
     # risk free rate using 2Y,5Y,10Y treasury yield
     # market return = annualized % return expected if investing in this stock
-    cost_of_equity = risk_free_rate + beta * (market_return - risk_free_rate) # estimatino based on CAPM 
-    cost_of_debt = (1 - tax_rate) * (df['interestExpense'][-historical_years:]/df['longTermDebt'][-historical_years:]).mean() # estimated based on weighted average of total interest expense and longterm debt
+    cost_of_equity = risk_free_rate + beta * \
+        (market_return - risk_free_rate)  # estimatino based on CAPM
+    # estimated based on weighted average of total interest expense and longterm debt
+    cost_of_debt = (1 - tax_rate) * (df['interestExpense']
+                                     [-historical_years:]/df['longTermDebt'][-historical_years:]).mean()
     # debt = sum of principal amounts of all outstanding debt securities issued by the company, including bonds, loans, and other debt instruments
-    # equity = market cap = shares * price per share 
-    total_market_value = equity + debt 
+    # equity = market cap = shares * price per share
+    total_market_value = equity + debt
     weight_of_equity = equity/total_market_value
     weight_of_debt = debt/total_market_value
     wacc = weight_of_equity * cost_of_equity + weight_of_debt * cost_of_debt
     return wacc
 
 # Define a function to calculate the intrinsic value
+
+
 def intrinsic_value(df, ebitda_margin, terminal_growth_rate, wacc, tax_rate, depreciation, capex, nwc, years, metric, projected_metric):
     # Calculate the free cash flows for each year
     if metric == 'revenue':
@@ -517,32 +544,36 @@ def intrinsic_value(df, ebitda_margin, terminal_growth_rate, wacc, tax_rate, dep
         ebit = [ebitda[i] - depreciation for i in range(len(ebitda))]
         tax_paid = [-1 * tax_rate * ebit[i] for i in range(len(ebit))]
         net_income = [ebit[i] + tax_paid[i] for i in range(len(ebit))]
-        free_cash_flow = [net_income[i] - capex - nwc for i in range(len(net_income))]
+        free_cash_flow = [net_income[i] - capex -
+                          nwc for i in range(len(net_income))]
 
         # Calculate the terminal value
         last_free_cash_flow = free_cash_flow[-1]
-        terminal_value = last_free_cash_flow * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
+        terminal_value = last_free_cash_flow * \
+            (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
 
         # Calculate the present value of the cash flows
         discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
-        pv_cash_flows = [free_cash_flow[i] * discount_factors[i] for i in range(years)]
+        pv_cash_flows = [free_cash_flow[i] * discount_factors[i]
+                         for i in range(years)]
         pv_terminal_value = [terminal_value * discount_factors[-1]]
         intrinsic_value = sum(pv_cash_flows) + sum(pv_terminal_value)
-        
+
         return intrinsic_value/df['weightedAverageShsOutDil'][-1]
     else:
         # Calculate the terminal value
         last_year = projected_metric[-1]
-        terminal_value = last_year * (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
+        terminal_value = last_year * \
+            (1 + terminal_growth_rate) / (wacc - terminal_growth_rate)
         # Calculate the present value of metric
         discount_factors = [1 / (1 + wacc) ** i for i in range(1, years+1)]
         pv = [projected_metric[i] * discount_factors[i] for i in range(years)]
         pv_terminal_value = [terminal_value * discount_factors[-1]]
         intrinsic_value = abs(sum(pv) + sum(pv_terminal_value))
-        
+
         if metric == 'epsdiluted':
             return intrinsic_value
-        
+
         else:
             return intrinsic_value/df['weightedAverageShsOutDil'][-1]
 
@@ -591,16 +622,17 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
     income_tab, cash_tab, balance_tab, key_metrics_tab, charts_tab, DCF_tab = col3.tabs(
         ["Income Statement", "Cash Flow", "Balance Sheet", "Key Metrics", "Charts", "DCF Calculator"], )
-    
+
     for i, x in enumerate([income_tab, cash_tab, balance_tab]):
         with x:
             col3.write(f"### {statements_type[i]}")
             tab_statement = read_statement(statements_type[i], ticker)
-            max_year = int(tab_statement[0]['calendarYear'])-int(tab_statement[-1]['calendarYear'])
+            max_year = int(tab_statement[0]['calendarYear']) - \
+                int(tab_statement[-1]['calendarYear'])
             year_range = col3.slider('Select year range (past n years):',
                                      min_value=1,
                                      max_value=max_year,
-                                    value=int(max_year/2),
+                                     value=int(max_year/2),
                                      key=f'{ticker}_{x}_{i}')
 
             year_list = list(range(year_range))
@@ -645,9 +677,9 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
     #     date_select = st.slider("Select date range:", min_value=df_historical.index.date[0], max_value=df_historical.index.date[-1], value=(df_historical.index.date[-365],df_historical.index.date[-1]))
     #     historical_plots(df_historical, [1], date_select)
 
-
     with DCF_tab:
-        con1, con2, con3, con2_3 = st.container(), st.container(), st.container(), st.container()
+        con1, con2, con3, con2_3 = st.container(
+        ), st.container(), st.container(), st.container()
 
         c1, c2, c3 = con1.columns([0.5, 0.5, 1])
 
@@ -660,7 +692,6 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         c4, c5, c6 = con2.columns(
             [0.5, 0.5, 0.5])
 
-
         con3.markdown("""
 
         >>##### *Main Inputs for WACC*
@@ -668,12 +699,12 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         """)
         c12, c13, c14 = con3.columns([0.5, 0.5, 0.5])
 
-        trate_dict = {'3month':float(treasury('3month')['data'][0]['value'])/100,
-                      '2year':float(treasury('2year')['data'][0]['value'])/100,
-                      '5year':float(treasury('5year')['data'][0]['value'])/100,
-                      '7year':float(treasury('7year')['data'][0]['value'])/100,
-                      '10year':float(treasury('10year')['data'][0]['value'])/100}
-        
+        trate_dict = {'3month': float(treasury('3month')['data'][0]['value'])/100,
+                      '2year': float(treasury('2year')['data'][0]['value'])/100,
+                      '5year': float(treasury('5year')['data'][0]['value'])/100,
+                      '7year': float(treasury('7year')['data'][0]['value'])/100,
+                      '10year': float(treasury('10year')['data'][0]['value'])/100}
+
         # c1.title("DCF Calculator")
 
         # con1.markdown("""
@@ -683,15 +714,19 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
         # """)
 
         # avg_gr_choices = c3.selectbox("Choose which metric to calculate by:", ['revenue','epsdiluted','dividendsPaid','netIncome'])
-        avg_gr_choices = ['revenue','epsdiluted','dividendsPaid','netIncome']
-        df = pd.concat([pd.DataFrame.from_records(read_statement(x, ticker), 
-                                                index='calendarYear', 
-                                                exclude=['_id','date','symbol','reportedCurrency','cik','fillingDate','acceptedDate','period','link','finalLink','index_id'])
+        avg_gr_choices = ['revenue', 'epsdiluted',
+                          'dividendsPaid', 'netIncome']
+        df = pd.concat([pd.DataFrame.from_records(read_statement(x, ticker),
+                                                  index='calendarYear',
+                                                  exclude=['_id', 'date', 'symbol', 'reportedCurrency', 'cik', 'fillingDate', 'acceptedDate', 'period', 'link', 'finalLink', 'index_id'])
                         for x in statements_type], axis=1).T
         df = df.loc[~df.index.duplicated(keep='first'), :].T.sort_index()
-        forecast_n_years = c4.number_input("Forecast First n Years: ", min_value=1, step=1, value=5)
-        forecast_m_years = c4.number_input("Forecast Next m Years: ", min_value=1, step=1, value=5)
-        historical_years = c6.number_input("Past Years: ", min_value=1, step=1, value=5)
+        forecast_n_years = c4.number_input(
+            "Forecast First n Years: ", min_value=1, step=1, value=5)
+        forecast_m_years = c4.number_input(
+            "Forecast Next m Years: ", min_value=1, step=1, value=5)
+        historical_years = c6.number_input(
+            "Past Years: ", min_value=1, step=1, value=5)
 
         con2_3.markdown(f"""
 
@@ -699,63 +734,105 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
         """)
 
-        g1,g2,g3,g4,g5 = con2_3.columns([1,1,1,1,1])
+        g1, g2, g3, g4, g5 = con2_3.columns([1, 1, 1, 1, 1])
 
         try:
             # Define the financials of the company
-            first_growth = c5.number_input("Growth rate (first n years):", min_value=0.0, step=0.01, value=0.0)
-            second_growth = c5.number_input("Growth rate (next m years):", min_value=0.0, step=0.01, value=0.0)
-            projected_revenue = project_metric(df, avg_gr_choices[0], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years, first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
-            projected_eps = project_metric(df, avg_gr_choices[1], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years, first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
-            projected_netincome = project_metric(df, avg_gr_choices[3], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years, first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
-            projected_dividends = project_metric(df, avg_gr_choices[2], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years, first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
-            depreciation = df['depreciationAndAmortization'][-historical_years:].mean()  # Depreciation as average of past n=historical_years years for the company
-            capital_expenditures = df['capitalExpenditure'][-historical_years:].mean()  # Capital expenditures as average of past n=historical_years years for the company
-            tax_rate = (df['incomeTaxExpense'][-historical_years:]/df['incomeBeforeTax'][-historical_years:]).mean()  # Tax rate as average of past n=historical_years years for the company calculated by dividing tax expense by incomebeforetax
-            net_working_capital = (df['totalCurrentAssets'][-historical_years:]-df['totalCurrentLiabilities'][-historical_years:]).mean()  # Net working capital (current assets - current liabilities where current generally defines period of 12 months - assets that can be liquidated/debts that must be repayed within that time period)
+            first_growth = c5.number_input(
+                "Growth rate (first n years):", min_value=0.0, step=0.01, value=0.0)
+            second_growth = c5.number_input(
+                "Growth rate (next m years):", min_value=0.0, step=0.01, value=0.0)
+            projected_revenue = project_metric(df, avg_gr_choices[0], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years,
+                                               first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
+            projected_eps = project_metric(df, avg_gr_choices[1], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years,
+                                           first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
+            projected_netincome = project_metric(df, avg_gr_choices[3], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years,
+                                                 first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
+            projected_dividends = project_metric(df, avg_gr_choices[2], past_n_years=historical_years, first_n_years=forecast_n_years, second_n_years=forecast_m_years,
+                                                 first_growth=first_growth, second_growth=second_growth)  # Revenue forecast for the next five years based on growth of past n=10 years
+            # Depreciation as average of past n=historical_years years for the company
+            depreciation = df['depreciationAndAmortization'][-historical_years:].mean()
+            # Capital expenditures as average of past n=historical_years years for the company
+            capital_expenditures = df['capitalExpenditure'][-historical_years:].mean()
+            # Tax rate as average of past n=historical_years years for the company calculated by dividing tax expense by incomebeforetax
+            tax_rate = (df['incomeTaxExpense'][-historical_years:] /
+                        df['incomeBeforeTax'][-historical_years:]).mean()
+            # Net working capital (current assets - current liabilities where current generally defines period of 12 months - assets that can be liquidated/debts that must be repayed within that time period)
+            net_working_capital = (df['totalCurrentAssets'][-historical_years:] -
+                                   df['totalCurrentLiabilities'][-historical_years:]).mean()
 
             # # Define the assumptions for standard scenario
-            ebitda_margin = df['ebitdaratio'][-historical_years:].mean()  # EBITDA margin as average of past n=historical_years years for the company
-            avg_gr_revenue = df[avg_gr_choices[0]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
-            avg_gr_eps = df[avg_gr_choices[1]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
-            avg_gr_dividends = df[avg_gr_choices[2]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
-            avg_gr_netincome = df[avg_gr_choices[3]].pct_change()[-historical_years:].mean() # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
-            
+            # EBITDA margin as average of past n=historical_years years for the company
+            ebitda_margin = df['ebitdaratio'][-historical_years:].mean()
+            # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
+            avg_gr_revenue = df[avg_gr_choices[0]
+                                ].pct_change()[-historical_years:].mean()
+            # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
+            avg_gr_eps = df[avg_gr_choices[1]
+                            ].pct_change()[-historical_years:].mean()
+            # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
+            avg_gr_dividends = df[avg_gr_choices[2]
+                                  ].pct_change()[-historical_years:].mean()
+            # this can be based on revenue, net income, dividendsPaid, epsdiluted, give a choice
+            avg_gr_netincome = df[avg_gr_choices[3]
+                                  ].pct_change()[-historical_years:].mean()
+
             g1.markdown(f'###### Revenue: `{"{:.1%}".format(avg_gr_revenue)}`')
             g2.markdown(f'###### EPS: `{"{:.1%}".format(avg_gr_eps)}`')
-            g3.markdown(f'###### Dividends: `{"{:.1%}".format(avg_gr_dividends)}`')
-            g4.markdown(f'###### Net Income: `{"{:.1%}".format(avg_gr_netincome)}`')
+            g3.markdown(
+                f'###### Dividends: `{"{:.1%}".format(avg_gr_dividends)}`')
+            g4.markdown(
+                f'###### Net Income: `{"{:.1%}".format(avg_gr_netincome)}`')
             g5.markdown(f'###### Tax-rate: `{"{:.1%}".format(tax_rate)}`')
 
-            terminal_gr_revenue = min(0.05, avg_gr_revenue) # This limits the terminal growth rate to 5% maximum
-            terminal_gr_eps = min(0.05, avg_gr_eps) # This limits the terminal growth rate to 5% maximum
-            terminal_gr_netincome = min(0.05, avg_gr_netincome) # This limits the terminal growth rate to 5% maximum
-            terminal_gr_dividends = min(0.05, avg_gr_dividends) # This limits the terminal growth rate to 5% maximum
+            # This limits the terminal growth rate to 5% maximum
+            terminal_gr_revenue = min(0.05, avg_gr_revenue)
+            # This limits the terminal growth rate to 5% maximum
+            terminal_gr_eps = min(0.05, avg_gr_eps)
+            # This limits the terminal growth rate to 5% maximum
+            terminal_gr_netincome = min(0.05, avg_gr_netincome)
+            # This limits the terminal growth rate to 5% maximum
+            terminal_gr_dividends = min(0.05, avg_gr_dividends)
 
             # # Define the WACC assumptions
-            treasury_rate = c12.selectbox("Risk-free Rate: ", ['3month', '2year', '5year', '7year', '10year', '30year'], ) # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
-            c12.markdown(f'''*3-mth*: `{"{:.2%}".format(trate_dict["3month"])}` *2-yr*: `{"{:.2%}".format(trate_dict["2year"])}` *5-yr*: `{"{:.2%}".format(trate_dict["5year"])}` *7-yr*: `{"{:.2%}".format(trate_dict["7year"])}` *10-yr*: `{"{:.2%}".format(trate_dict["10year"])}`''')
+            # get latest 5Y treasury yield # treasury yield (2Y, 5Y, 10Y), get realtime by querying fedAPI
+            treasury_rate = c12.selectbox(
+                "Risk-free Rate: ", ['3month', '2year', '5year', '7year', '10year', '30year'], )
+            c12.markdown(
+                f'''*3-mth*: `{"{:.2%}".format(trate_dict["3month"])}` *2-yr*: `{"{:.2%}".format(trate_dict["2year"])}` *5-yr*: `{"{:.2%}".format(trate_dict["5year"])}` *7-yr*: `{"{:.2%}".format(trate_dict["7year"])}` *10-yr*: `{"{:.2%}".format(trate_dict["10year"])}`''')
             risk_free_rate = trate_dict[treasury_rate]
 
-            market_return = c14.number_input("Expected Market Return:", min_value=0.0, step=0.005, value=0.08) # assume a 8% return is desired
-            beta = company_profile_info['beta'] # beta of stock
-            equity = company_profile_info['mktCap'] # market cap of stock
-            debt = df['totalDebt'][-historical_years:].mean() # total debt of company (excluding liabilities that are not debt)
-            discount_rate = c13.number_input("Discount Rate: ", min_value=0.01, step=0.01, value=wacc(df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years))
-            years = forecast_n_years + forecast_m_years # total years to forecast forward
-            DCF_revenue = round(intrinsic_value(df, ebitda_margin, terminal_gr_revenue, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[0], projected_metric=projected_revenue), 2)
-            DCF_eps = round(intrinsic_value(df, ebitda_margin, terminal_gr_eps, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[1], projected_metric=projected_eps), 2)
-            DCF_netincome = round(intrinsic_value(df, ebitda_margin, terminal_gr_netincome, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[3], projected_metric=projected_netincome), 2)
-            DCF_dividends = round(intrinsic_value(df, ebitda_margin, terminal_gr_dividends, discount_rate, tax_rate, depreciation, capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[2], projected_metric=projected_dividends), 2)
+            # assume a 8% return is desired
+            market_return = c14.number_input(
+                "Expected Market Return:", min_value=0.0, step=0.005, value=0.08)
+            beta = company_profile_info['beta']  # beta of stock
+            equity = company_profile_info['mktCap']  # market cap of stock
+            # total debt of company (excluding liabilities that are not debt)
+            debt = df['totalDebt'][-historical_years:].mean()
+            discount_rate = c13.number_input("Discount Rate: ", min_value=0.01, step=0.01, value=wacc(
+                df, risk_free_rate, beta, market_return, tax_rate, equity, debt, historical_years))
+            years = forecast_n_years + forecast_m_years  # total years to forecast forward
+            DCF_revenue = round(intrinsic_value(df, ebitda_margin, terminal_gr_revenue, discount_rate, tax_rate, depreciation,
+                                capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[0], projected_metric=projected_revenue), 2)
+            DCF_eps = round(intrinsic_value(df, ebitda_margin, terminal_gr_eps, discount_rate, tax_rate, depreciation,
+                            capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[1], projected_metric=projected_eps), 2)
+            DCF_netincome = round(intrinsic_value(df, ebitda_margin, terminal_gr_netincome, discount_rate, tax_rate, depreciation,
+                                  capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[3], projected_metric=projected_netincome), 2)
+            DCF_dividends = round(intrinsic_value(df, ebitda_margin, terminal_gr_dividends, discount_rate, tax_rate, depreciation,
+                                  capital_expenditures, net_working_capital,  years, metric=avg_gr_choices[2], projected_metric=projected_dividends), 2)
             # Display the results
 
             con4 = st.container()
             con4.markdown(f"""--------""")
-            c18, c19, c20, c21 = con4.columns([1,1,1,1])
-            c18.markdown(f""">#### From Revenue: `{company_profile_info['currency']} {DCF_revenue}`""")
-            c19.markdown(f""">#### From EPS: `{company_profile_info['currency']} {DCF_eps}`""")
-            c20.markdown(f""">#### From Net Income: `{company_profile_info['currency']} {DCF_netincome}`""")
-            c21.markdown(f""">#### DCF From Dividends: `{company_profile_info['currency']} {DCF_dividends}`""")
+            c18, c19, c20, c21 = con4.columns([1, 1, 1, 1])
+            c18.markdown(
+                f""">#### From Revenue: `{company_profile_info['currency']} {DCF_revenue}`""")
+            c19.markdown(
+                f""">#### From EPS: `{company_profile_info['currency']} {DCF_eps}`""")
+            c20.markdown(
+                f""">#### From Net Income: `{company_profile_info['currency']} {DCF_netincome}`""")
+            c21.markdown(
+                f""">#### DCF From Dividends: `{company_profile_info['currency']} {DCF_dividends}`""")
 
         except:
             pass
@@ -766,9 +843,13 @@ def create_financial_page(ticker, company_profile_info, col3, p: list):
 
 #####################################################################
 
+
 def news_sentiment():
     url = f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey={alpha_vantage_api}'
     r = requests.get(url)
     r = r.json()
 
     return r
+
+
+# TODO: Scrape from SEC.gove (limit of 10 requests per second)

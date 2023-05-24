@@ -18,3 +18,4 @@ finance_dashboard/investment_dashboard.ipynb
 airflow_settings.yaml
 __pycache__/
 astro
+*.html
