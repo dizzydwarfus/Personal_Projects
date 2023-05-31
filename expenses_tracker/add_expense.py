@@ -49,7 +49,7 @@ class ExpensesTracker:
 
         self.save_data(self.data)
 
-    def delete_expenses(self, month, category):
+    def delete_expense(self, month, category):
         for existing_month in self.data["months"]:
             if existing_month["month"] == month:
                 existing_month["expenses"] = [
@@ -172,7 +172,7 @@ class ExpensesTracker:
             category = category_entries[0].get() if category_entries else ""
 
             if month and category:
-                self.delete_expenses(month, category)
+                self.delete_expense(month, category)
                 Messagebox.show_info(title="Expenses Tracker",
                                      message="Expenses deleted successfully!")
             else:
@@ -194,7 +194,34 @@ class ExpensesTracker:
 
         window.mainloop()
 
+    # add total expenses for each month when selecting a month
+    def get_total_expenses(self):
+        total_expenses = 0
+        for month in self.data["months"]:
+            for expense in month["expenses"]:
+                total_expenses += expense["amount"]
+        return total_expenses
 
-# Usage example
-tracker = ExpensesTracker('expenses.json')
-tracker.enter_expenses()
+    # get number of expenses
+    def get_number_of_expenses(self):
+        number_of_expenses = 0
+        for month in self.data["months"]:
+            number_of_expenses += len(month["expenses"])
+        return number_of_expenses
+
+    # get average expenses per month
+    def get_average_expenses(self):
+        return self.get_total_expenses() / len(self.data["months"])
+
+
+if __name__ == "__main__":
+    tracker = ExpensesTracker('expenses.json')
+    tracker.enter_expenses()
+
+    print(f'Number of months: {len(tracker.data["months"])}')
+    print(f'Number of expenses: {tracker.get_number_of_expenses()}')
+    print(f'Current total expenses: € {tracker.get_total_expenses():.2f}')
+    print(
+        f'Average expenses per month: € {tracker.get_average_expenses():.2f}')
+
+# TODO: add total expenses for each month when selecting a month
