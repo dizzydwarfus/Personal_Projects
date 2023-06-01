@@ -130,8 +130,8 @@ class ExpensesTracker:
                     except ValueError:
                         pass
 
-            amount_var.trace_add("write", validate_amount)
-            amount_var.trace_add("write", update_amount_var)
+            # amount_var.trace_add("write", validate_amount)
+            # amount_var.trace_add("write", update_amount_var)
 
         def remove_expense(frame):
             frame.destroy()
@@ -149,12 +149,12 @@ class ExpensesTracker:
                 category = category_entries[i].get().lower()
                 amount_str = amount_entries[i].get()
                 try:
-                    amount = float(amount_str.split(" ")[1])
+                    amount = float(amount_str)
                     expenses.append({"category": category, "amount": amount})
                 except ValueError:
                     Messagebox.show_info(
                         title="Expenses Tracker",
-                        message=f"Invalid amount format for category: {category}. Please use format '€ <amount>'."
+                        message=f"Invalid amount format for category: {category}. Please use format '<amount>'."
                     )
                     return
 
@@ -194,7 +194,10 @@ class ExpensesTracker:
 
         window.mainloop()
 
-    # add total expenses for each month when selecting a month
+    # get number of months with expenses
+    def get_number_of_months(self):
+        return len([month for month in self.data["months"] if len(month["expenses"]) != 0])
+
     def get_total_expenses(self):
         total_expenses = 0
         for month in self.data["months"]:
@@ -211,17 +214,19 @@ class ExpensesTracker:
 
     # get average expenses per month
     def get_average_expenses(self):
-        return self.get_total_expenses() / len(self.data["months"])
+        return self.get_total_expenses() / self.get_number_of_months()
 
 
 if __name__ == "__main__":
     tracker = ExpensesTracker('expenses.json')
     tracker.enter_expenses()
 
-    print(f'Number of months: {len(tracker.data["months"])}')
+    print(f'Number of months: {tracker.get_number_of_months()}')
     print(f'Number of expenses: {tracker.get_number_of_expenses()}')
     print(f'Current total expenses: € {tracker.get_total_expenses():.2f}')
     print(
         f'Average expenses per month: € {tracker.get_average_expenses():.2f}')
+    print(
+        f'Average expenses per expense: € {tracker.get_total_expenses() / tracker.get_number_of_expenses():.2f}')
 
 # TODO: add total expenses for each month when selecting a month
