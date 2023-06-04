@@ -14,6 +14,19 @@ def index():
 @main.route('/dashboard', methods=['POST', 'GET'])
 @login_required
 def dashboard():
-    # The 'GET' request case:
-    expenses = Expense.query.filter_by(user_id=current_user.id).all()
-    return render_template('dashboard.html', user=current_user, expenses=expenses)
+    # Retrieve expenses from the database
+    expenses = Expense.query.filter_by(user_id=current_user.id).order_by(
+        Expense.date_of_expense.desc()).all()
+
+    # Group expenses by month and category
+    expenses_by_month_category = {}
+    for expense in expenses:
+        month = expense.date_of_expense.strftime('%B %Y')
+        category = expense.category
+        if month not in expenses_by_month_category:
+            expenses_by_month_category[month] = {}
+        if category not in expenses_by_month_category[month]:
+            expenses_by_month_category[month][category] = []
+        expenses_by_month_category[month][category].append(expense)
+
+    return render_template('dashboard.html', user=current_user, expenses=expenses, expenses_by_month_category=expenses_by_month_category)

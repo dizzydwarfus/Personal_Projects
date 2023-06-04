@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from app.models.user import User
 from app import db
 
@@ -10,20 +10,20 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
+        username_email = request.form.get('username_email')
         password = request.form.get('password')
         remember = True if request.form.get('remember') else False
 
-        user = User.query.filter_by(email=email).first()
+        # Query the user based on either username or email
+        user = User.query.filter((User.username == username_email) | (
+            User.email == username_email)).first()
 
-        # check if the user actually exists
-        # take the user-supplied password, hash it, and compare it to the hashed password in the database
+        # Check if the user actually exists and validate the password
         if not user or not check_password_hash(user.password_hash, password):
             flash('Please check your login details and try again.')
-            # if the user doesn't exist or password is wrong, reload the page
             return redirect(url_for('auth.login'))
 
-        # if the above check passes, then we know the user has the right credentials
+        # If the above check passes, then we know the user has the right credentials
         login_user(user, remember=remember)
         return redirect(url_for('main.dashboard'))
     else:
@@ -82,3 +82,18 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+
+@auth.route('/delete_user/<int:user_id>', methods=['POST'])
+@login_required
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if user.id == current_user.id:
+        db.session.delete(user)
+        db.session.commit()
+        # Log out the user after deleting their account
+        logout_user()
+        return redirect(url_for('main.index'))
+    else:
+        # Handle unauthorized access
+        return abort(403)

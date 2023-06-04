@@ -19,8 +19,8 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     with app.app_context():
-        from .models.expense import Expense
-        from .models.user import User
+        from app.models.expense import Expense
+        from app.models.user import User
         db.create_all()
 
         @login_manager.user_loader
