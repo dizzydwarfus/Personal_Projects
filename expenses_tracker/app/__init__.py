@@ -21,6 +21,7 @@ def create_app():
     with app.app_context():
         from app.models.expense import Expense
         from app.models.user import User
+        from app.models.categories import Category, SubCategory
         db.create_all()
 
         @login_manager.user_loader

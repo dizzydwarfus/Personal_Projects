@@ -1,24 +1,186 @@
-.expense-card {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
+/* ... */
+body {
+    background: linear-gradient(to right, #1cb5e0, #000046);
+    color: white;
+}
+
+.custom-card {
+    background-color: #1c2331;
+    border: none;
     border-radius: 8px;
-    padding: 15px;
     margin-bottom: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.expense-category {
+.custom-card .card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.custom-card .card-subtitle {
+    font-size: 14px;
+    color: #a5a5a5;
+}
+
+.custom-card .card-text {
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.card {
+    background-color: #1c2331;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: #a5a5a5;
+}
+
+.card-text {
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.sidebar {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+}
+
+.sidebar h4 {
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+    margin-bottom: 10px;
 }
 
-.expense-date {
-    font-size: 14px;
-    color: #666;
+.sidebar p {
+    margin-bottom: 5px;
 }
 
-.expense-cost {
-    font-size: 20px;
-    color: #dc3545;
+.input-group {
+    margin-bottom: 10px;
 }
+
+.input-group-text {
+    background-color: #343a40;
+    border: none;
+    color: #fff;
+}
+
+.form-control {
+    background-color: #343a40;
+    border: none;
+    color: #fff;
+}
+
+.form-control:focus {
+    background-color: #343a40;
+    border-color: #fff;
+    color: #fff;
+    box-shadow: none;
+}
+
+.ribbon {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+    position: relative;
+}
+
+.ribbon:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 40px solid #343a40;
+    border-left: 40px solid transparent;
+    width: 0;
+}
+
+.ribbon-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ribbon-content .user-details {
+    flex-grow: 1;
+}
+
+.ribbon-content .user-actions {
+    margin-left: 20px;
+}
+
+.modal-content {
+    background-color: #f8f9fa;
+    color: black;
+}
+
+.modal-content .btn-primary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.modal-content .btn-primary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+.modal-content .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.modal-content .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+.add-expense-bracket {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.add-expense-toggle {
+    background-color: transparent;
+    color: #9cc5ed;
+    border: none;
+    padding: 0;
+    text-align: center;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.add-expense-toggle:hover {
+    text-decoration: underline;
+}
+
+.add-expense-content {
+    display: none;
+    padding: 15px;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+.add-expense-bracket.expanded .add-expense-content {
+    display: block;
+}
+/* ... */
