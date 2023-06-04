@@ -1,4 +1,5 @@
-from . import db
+from app import db
+from sqlalchemy import Sequence
 
 
 class Expense(db.Model):
@@ -6,4 +7,5 @@ class Expense(db.Model):
     description = db.Column(db.String(100))
     category = db.Column(db.String(50))
     cost = db.Column(db.Float)
+    date_of_expense = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

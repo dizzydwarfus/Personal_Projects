@@ -1,0 +1,24 @@
+.expense-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.expense-category {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.expense-date {
+    font-size: 14px;
+    color: #666;
+}
+
+.expense-cost {
+    font-size: 20px;
+    color: #dc3545;
+}

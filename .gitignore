@@ -19,3 +19,11 @@ airflow_settings.yaml
 __pycache__/
 astro
 *.html
+!index.html
+!README.md
+!LICENSE
+!requirements.txt
+!login.html
+!login.css
+!register.html
+!register.css

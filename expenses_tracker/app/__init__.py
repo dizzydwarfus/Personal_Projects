@@ -19,13 +19,13 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     with app.app_context():
+        from .models.expense import Expense
+        from .models.user import User
         db.create_all()
 
-    from .models import User
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
+        @login_manager.user_loader
+        def load_user(user_id):
+            return User.query.get(int(user_id))
 
     # blueprint for auth routes in our app
     from .routes.auth import auth as auth_blueprint
@@ -33,6 +33,8 @@ def create_app():
 
     # blueprint for non-auth parts of app
     from .routes.main import main as main_blueprint
+    from .routes.expenses import expenses as expenses_blueprint
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(expenses_blueprint)
 
     return app

@@ -49,9 +49,3 @@ driver = 'ODBC Driver 17 for SQL Server'
 
 CreateURL = partial(create_connection_url, server=server,
                     username=username, password=password, port=port, driver=driver,)
-
-db_connection = CreateURL(
-    database=database)
-
-
-test_connection(connection_string=db_connection)

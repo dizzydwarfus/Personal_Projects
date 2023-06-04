@@ -12,10 +12,11 @@ class ExpensesTracker:
     def __init__(self, filename):
         self.filename = filename
         self.data = self.load_data()
+        self.categories = self.data.get("categories", [])
 
     def load_data(self):
         if not os.path.isfile(self.filename) or os.stat(self.filename).st_size == 0:
-            data = {"months": []}
+            data = {"months": [], "categories": []}
             self.save_data(data)
             return data
         else:
@@ -25,6 +26,18 @@ class ExpensesTracker:
     def save_data(self, data):
         with open(self.filename, 'w') as file:
             json.dump(data, file, indent=4)
+
+    def add_category(self, category):
+        if category not in self.categories:
+            self.categories.append(category)
+            self.data["categories"] = self.categories
+            self.save_data(self.data)
+
+    @staticmethod
+    def sort_data(data):
+        data["months"].sort(
+            key=lambda month: dt.datetime.strptime(month["month"], "%B %Y"))
+        return data
 
     def add_monthly_expenses(self, month, expenses):
         for existing_month in self.data["months"]:
@@ -47,7 +60,7 @@ class ExpensesTracker:
             }
             self.data["months"].append(new_month_expenses)
 
-        self.save_data(self.data)
+        self.save_data(self.sort_data(self.data))
 
     def delete_expense(self, month, category):
         for existing_month in self.data["months"]:
@@ -56,7 +69,7 @@ class ExpensesTracker:
                     expense for expense in existing_month["expenses"] if expense["category"] != category]
                 break
 
-        self.save_data(self.data)
+        self.save_data(self.sort_data(self.data))
 
     def enter_expenses(self):
         # Create the main window
@@ -95,9 +108,39 @@ class ExpensesTracker:
 
             category_label = ttk.Label(expense_frame, text="Category:")
             category_label.pack(side=LEFT, padx=5, pady=5)
-            category_entry = ttk.Entry(expense_frame)
-            category_entry.pack(side=LEFT, padx=5, pady=5)
-            category_entries.append(category_entry)
+
+            category_var = tk.StringVar()
+            category_combobox = ttk.Combobox(
+                expense_frame, textvariable=category_var, state="normal")
+            category_combobox.pack(side=LEFT)
+            category_combobox['values'] = self.categories
+
+            update_id = None
+
+            def update_category_combobox(*args):
+                nonlocal update_id
+                if update_id:
+                    category_combobox.after_cancel(update_id)
+                update_id = category_combobox.after(5000, update_values)
+
+            def update_values():
+                new_category = category_var.get()
+                if new_category and new_category not in self.categories:
+                    # Save the new category to the JSON file
+                    self.add_category(new_category)
+
+            def on_category_select(*args):
+                selected_category = category_var.get()
+                if selected_category and selected_category not in category_combobox['values']:
+                    category_combobox['values'] = list(
+                        category_combobox['values']) + [selected_category]
+
+            # category_var.trace_add("write", on_category_select)
+            category_var.trace_add("write", update_category_combobox)
+            category_combobox.bind(
+                '<<ComboboxSelected>>', update_category_combobox)
+            category_combobox.bind('<Return>', on_category_select)
+            category_entries.append(category_var)
 
             amount_label = ttk.Label(expense_frame, text="Amount:")
             amount_label.pack(side=LEFT, padx=5, pady=5)
@@ -159,11 +202,12 @@ class ExpensesTracker:
                     return
 
             self.add_monthly_expenses(month, expenses)
+
             Messagebox.show_info(
                 title="Expenses Tracker",
                 message="Expenses saved successfully!"
             )
-            window.destroy()
+            # window.destroy()
 
         def delete_expenses():
             date_get = dt.datetime.strptime(
@@ -179,6 +223,43 @@ class ExpensesTracker:
                 Messagebox.show_info(
                     title="Expenses Tracker", message="Please select a month and enter a category to delete expenses.")
 
+        # show expenses for selected month
+        def show_expenses():
+            date_get = dt.datetime.strptime(
+                month_picker.entry.get(), "%Y-%m-%d")
+            month = dt.date.strftime(date_get, "%B %Y")
+            expenses = self.get_monthly_expenses(month)
+
+            if expenses:
+                expenses_window = ttk.Toplevel(window)
+                expenses_window.title(f"Expenses for {month}")
+
+                # Calculate the screen center
+                screen_width = expenses_window.winfo_screenwidth()
+                screen_height = expenses_window.winfo_screenheight()
+                window_x = int(
+                    (screen_width / 2) - (expenses_window.winfo_reqwidth() / 2))
+                window_y = int(
+                    (screen_height / 2) - (expenses_window.winfo_reqheight() / 2))
+
+                # Position the window in the center of the screen
+                expenses_window.geometry(f"+{window_x}+{window_y}")
+
+                expenses_frame = ttk.Frame(expenses_window)
+                expenses_frame.pack(padx=5, pady=5)
+
+                for expense in expenses:
+                    expense_frame = ttk.Frame(expenses_frame)
+                    expense_frame.pack(padx=5, pady=5)
+
+                    category_label = ttk.Label(
+                        expense_frame, text=f"Category: {expense['category']}")
+                    category_label.pack(side=LEFT, padx=5, pady=5)
+
+                    amount_label = ttk.Label(
+                        expense_frame, text=f"Amount: € {expense['amount']:.2f}")
+                    amount_label.pack(side=LEFT, padx=5, pady=5)
+
         # Create buttons for adding, saving, and deleting expenses
         add_expense_button = ttk.Button(
             window, text="Add Expense", command=add_expense)
@@ -190,7 +271,12 @@ class ExpensesTracker:
 
         save_expenses_button = ttk.Button(
             window, text="Save Expenses", command=save_expenses)
-        save_expenses_button.pack(side=BOTTOM, padx=5, pady=5)
+        save_expenses_button.pack(side=LEFT, padx=5, pady=5)
+
+        # Create button for showing expenses
+        show_expenses_button = ttk.Button(
+            window, text="Show Expenses", command=show_expenses)
+        show_expenses_button.pack(side=BOTTOM, padx=5, pady=5)
 
         window.mainloop()
 
@@ -216,6 +302,12 @@ class ExpensesTracker:
     def get_average_expenses(self):
         return self.get_total_expenses() / self.get_number_of_months()
 
+    # get monthly expenses
+    def get_monthly_expenses(self, month_name):
+        for month in self.data["months"]:
+            if month["month"] == month_name:
+                return month["expenses"]
+
 
 if __name__ == "__main__":
     tracker = ExpensesTracker('expenses.json')
@@ -228,5 +320,5 @@ if __name__ == "__main__":
         f'Average expenses per month: € {tracker.get_average_expenses():.2f}')
     print(
         f'Average expenses per expense: € {tracker.get_total_expenses() / tracker.get_number_of_expenses():.2f}')
-
+    print(f'{tracker.get_monthly_expenses("January 2023")}')
 # TODO: add total expenses for each month when selecting a month
