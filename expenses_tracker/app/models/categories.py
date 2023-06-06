@@ -9,6 +9,9 @@ class Category(db.Model):
     subcategories = db.relationship(
         'SubCategory', backref='category', lazy=True)
 
+    def __repr__(self):
+        return f"Category('{self.name}')"
+
 
 class SubCategory(db.Model):
     __tablename__ = 'subcategories'
@@ -17,3 +20,6 @@ class SubCategory(db.Model):
     name = db.Column(db.String(50), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey(
         'categories.id'), nullable=False)
+
+    def __repr__(self):
+        return f"SubCategory('{self.name}')"

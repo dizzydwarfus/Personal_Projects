@@ -242,6 +242,34 @@
         .select2-container {
             width: 100% !important;
         }
+
+        .chart-container {
+            background-color: #1c2331;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            width: 50%;  /* Adjust as needed */
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        .chart-container h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .chart {
+            max-width: 100%;
+            height: auto;
+            min-height: 400px;  /* Adjust as needed */
+        }
+
     </style>
 </head>
 <body>
@@ -411,82 +439,39 @@
         </div>
         </div>        
     </div>  
-    <!-- Including JS libraries at the end -->
+    <div class="chart-container">
+        <h2>Expenses by Category</h2>
+        <div class="chart">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+    <div class="chart-container">
+        <h2>Expenses Over Time</h2>
+        <div class="chart">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+    <div class="chart-container">
+        <h2>Expenses by Category Over Time</h2>
+        <div class="chart">
+            <canvas id="stackedBarChart"></canvas>
+        </div>
+    </div>
+    <div class="chart-container">
+        <h2>Heatmap of Expenses</h2>
+        <div class="chart" id="heatMap"></div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
-    function toggleAddExpense() {
-        var bracket = document.querySelector('.add-expense-bracket');
-        var content = document.querySelector('.add-expense-content');
-    
-        if (bracket.classList.contains('expanded')) {
-            bracket.classList.remove('expanded');
-            content.style.display = 'none';
-        } else {
-            bracket.classList.add('expanded');
-            content.style.display = 'block';
-        }
-    };
-    
-    $(document).ready(function () {
-        $('.edit-btn').on('click', function () {
-            var id = $(this).data('id');
-            var description = $(this).data('description');
-            var category = $(this).data('category');
-            var subcategory = $(this).data('subcategory');
-            var date = $(this).data('date');
-            var cost = $(this).data('cost');
-    
-            $('#editExpenseModal').find('#expenseId').val(id);
-            $('#editExpenseModal').find('#expenseDescription').val(description);
-            $('#editExpenseModal').find('#expenseCategory').val(category);
-            $('#editExpenseModal').find('#expenseSubCategory').val(subcategory);
-            $('#editExpenseModal').find('#expenseDate').val(date);
-            $('#editExpenseModal').find('#expenseCost').val(cost);
-    
-            var actionUrl = '/edit_expense/' + id;
-            $('#editExpenseForm').attr('action', actionUrl);
-            // Trigger the change event on category and subcategory fields
-            $('#editExpenseModal #expenseCategory').trigger('change')
-        });
+        var chartData = {{ chart_data | tojson | safe }};
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
-        $('#editExpenseModal #expenseCategory').on('change', function () {
-            var category = $(this).val();
-            var encodedCategory = encodeURIComponent(category);
-            $.getJSON('/get_subcategories/' + encodedCategory, function (data) {
-                var subCategorySelect = $('#editExpenseModal #expenseSubCategory');
-                subCategorySelect.empty();
-                $.each(data, function (index, value) {
-                    subCategorySelect.append('<option value="' + value + '">' + value + '</option>');
-                });
-            });
-        });
-    });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.select2').select2({
-                tags: true,
-                tokenSeparators: [',', ' ']
-            });
-            
-            $('#expenseCategory').on('change', function() {
-                console.log("Category change event triggered");
-                var category = $(this).val();
-                var encodedCategory = encodeURIComponent(category);
-                console.log("Selected category: " + encodedCategory);
-                $.getJSON('/get_subcategories/' + encodedCategory, function(data) {
-                    var subCategorySelect = $('#expenseSubCategory');
-                    subCategorySelect.empty();
-                    $.each(data, function(index, value) {
-                        subCategorySelect.append('<option value="' + value + '">' + value + '</option>');
-                    });
-                    subCategorySelect.trigger('change'); // Notify any JS components that the value changed
-                });
-            });
-        });
-    </script>
     
     <!--<script src="scripts.js"></script> Move all your JavaScript to a separate file -->
 </body>

@@ -18,7 +18,7 @@ def create_connection_url(server, database, username, password, port, driver):
         database=database,
         query={
             "driver": driver,
-            "TrustServerCertificate": "yes",
+            "TrustServerCertificate": "No",
         }
     )
     return connection_url
@@ -40,12 +40,14 @@ def test_connection(connection_string):
         assert False, f'Connection test failed: {e}'
 
 
-server = secrets['server']
-database = 'expense_tracker'
-username = secrets['DB_username']
-password = secrets['DB_password']
+server = secrets['azure_sql_server']
+database = secrets['azure_sql_database']
+username = secrets['azure_DB_username']
+password = secrets['azure_DB_password']
 port = secrets['port']
-driver = 'ODBC Driver 17 for SQL Server'
+driver = secrets['azure_DB_driver']
 
 CreateURL = partial(create_connection_url, server=server,
                     username=username, password=password, port=port, driver=driver,)
+
+test_connection(CreateURL(database=database))
