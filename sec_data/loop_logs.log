@@ -1,0 +1,873 @@
+2023-06-08 00:38:55,785 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:38:56,431 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:38:57,525 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:38:57,532 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:38:57,532 - INFO - 0000320193-17-000009 extraction completed.
+2023-06-08 00:38:57,532 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000007\filing-details.html
+2023-06-08 00:38:57,985 - INFO - Step 1: 0000320193-18-000007: Read html successfully.
+2023-06-08 00:38:58,992 - INFO - Step 2: 0000320193-18-000007: Found target table successfully.
+2023-06-08 00:38:58,997 - INFO - Step 3: 0000320193-18-000007: Extracted table successfully.
+2023-06-08 00:38:58,997 - INFO - 0000320193-18-000007 extraction completed.
+2023-06-08 00:38:58,997 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000070\filing-details.html
+2023-06-08 00:38:59,576 - INFO - Step 1: 0000320193-18-000070: Read html successfully.
+2023-06-08 00:39:00,702 - INFO - Step 2: 0000320193-18-000070: Found target table successfully.
+2023-06-08 00:39:00,713 - INFO - Step 3: 0000320193-18-000070: Extracted table successfully.
+2023-06-08 00:39:00,714 - INFO - 0000320193-18-000070 extraction completed.
+2023-06-08 00:39:38,810 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:39:39,499 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:39:40,567 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:39:40,575 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:39:40,575 - INFO - 0000320193-17-000009 extraction completed.
+2023-06-08 00:39:40,575 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000007\filing-details.html
+2023-06-08 00:39:41,062 - INFO - Step 1: 0000320193-18-000007: Read html successfully.
+2023-06-08 00:39:42,067 - INFO - Step 2: 0000320193-18-000007: Found target table successfully.
+2023-06-08 00:39:42,075 - INFO - Step 3: 0000320193-18-000007: Extracted table successfully.
+2023-06-08 00:39:42,075 - INFO - 0000320193-18-000007 extraction completed.
+2023-06-08 00:39:42,075 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000070\filing-details.html
+2023-06-08 00:39:42,648 - INFO - Step 1: 0000320193-18-000070: Read html successfully.
+2023-06-08 00:39:43,713 - INFO - Step 2: 0000320193-18-000070: Found target table successfully.
+2023-06-08 00:39:43,723 - INFO - Step 3: 0000320193-18-000070: Extracted table successfully.
+2023-06-08 00:39:43,723 - INFO - 0000320193-18-000070 extraction completed.
+2023-06-08 00:40:24,064 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:40:24,657 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:40:25,731 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:40:25,742 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:40:25,743 - INFO - 0000320193-17-000009 extraction completed.
+2023-06-08 00:40:25,743 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000007\filing-details.html
+2023-06-08 00:40:26,249 - INFO - Step 1: 0000320193-18-000007: Read html successfully.
+2023-06-08 00:40:27,269 - INFO - Step 2: 0000320193-18-000007: Found target table successfully.
+2023-06-08 00:40:27,274 - INFO - Step 3: 0000320193-18-000007: Extracted table successfully.
+2023-06-08 00:40:27,275 - INFO - 0000320193-18-000007 extraction completed.
+2023-06-08 00:40:27,275 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000070\filing-details.html
+2023-06-08 00:40:27,918 - INFO - Step 1: 0000320193-18-000070: Read html successfully.
+2023-06-08 00:40:28,992 - INFO - Step 2: 0000320193-18-000070: Found target table successfully.
+2023-06-08 00:40:29,000 - INFO - Step 3: 0000320193-18-000070: Extracted table successfully.
+2023-06-08 00:40:29,001 - INFO - 0000320193-18-000070 extraction completed.
+2023-06-08 00:41:01,126 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:41:01,769 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:41:02,911 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:41:02,919 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:41:02,919 - INFO - 0000320193-17-000009 extraction completed.
+2023-06-08 00:41:02,919 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000007\filing-details.html
+2023-06-08 00:41:03,427 - INFO - Step 1: 0000320193-18-000007: Read html successfully.
+2023-06-08 00:41:04,474 - INFO - Step 2: 0000320193-18-000007: Found target table successfully.
+2023-06-08 00:41:04,479 - INFO - Step 3: 0000320193-18-000007: Extracted table successfully.
+2023-06-08 00:41:04,480 - INFO - 0000320193-18-000007 extraction completed.
+2023-06-08 00:41:04,480 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000070\filing-details.html
+2023-06-08 00:41:05,079 - INFO - Step 1: 0000320193-18-000070: Read html successfully.
+2023-06-08 00:41:06,214 - INFO - Step 2: 0000320193-18-000070: Found target table successfully.
+2023-06-08 00:41:06,222 - INFO - Step 3: 0000320193-18-000070: Extracted table successfully.
+2023-06-08 00:41:06,222 - INFO - 0000320193-18-000070 extraction completed.
+2023-06-08 00:54:01,564 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:54:02,187 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:54:03,284 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:54:03,382 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:54:03,391 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 00:54:03,392 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 00:54:03,392 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000007\filing-details.html
+2023-06-08 00:54:03,887 - INFO - Step 1: 0000320193-18-000007: Read html successfully.
+2023-06-08 00:54:04,970 - INFO - Step 2: 0000320193-18-000007: Found target table successfully.
+2023-06-08 00:54:04,974 - INFO - Step 3: 0000320193-18-000007: Extracted table successfully.
+2023-06-08 00:54:04,981 - INFO - Step 4: 0000320193-18-000007: Cleaned table successfully.
+2023-06-08 00:54:04,982 - INFO - Step 5: 0000320193-18-000007: Stacked table successfully.
+2023-06-08 00:54:04,982 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000070\filing-details.html
+2023-06-08 00:54:05,690 - INFO - Step 1: 0000320193-18-000070: Read html successfully.
+2023-06-08 00:54:06,850 - INFO - Step 2: 0000320193-18-000070: Found target table successfully.
+2023-06-08 00:54:06,857 - INFO - Step 3: 0000320193-18-000070: Extracted table successfully.
+2023-06-08 00:54:06,866 - INFO - Step 4: 0000320193-18-000070: Cleaned table successfully.
+2023-06-08 00:54:06,867 - INFO - Step 5: 0000320193-18-000070: Stacked table successfully.
+2023-06-08 00:55:51,014 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:55:51,633 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:55:52,740 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:55:52,747 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:55:52,755 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 00:55:52,757 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 00:55:52,757 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 00:55:52,757 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 00:55:52,757 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000007\filing-details.html
+2023-06-08 00:55:53,231 - INFO - Step 1: 0000320193-18-000007: Read html successfully.
+2023-06-08 00:55:54,271 - INFO - Step 2: 0000320193-18-000007: Found target table successfully.
+2023-06-08 00:55:54,276 - INFO - Step 3: 0000320193-18-000007: Extracted table successfully.
+2023-06-08 00:55:54,284 - INFO - Step 4: 0000320193-18-000007: Cleaned table successfully.
+2023-06-08 00:55:54,285 - INFO - Step 5: 0000320193-18-000007: Stacked table successfully.
+2023-06-08 00:55:54,285 - INFO - Step 6: 0000320193-18-000007: Renamed columns successfully.
+2023-06-08 00:55:54,285 - INFO - Step 7: 0000320193-18-000007: Concatenated table successfully.
+2023-06-08 00:55:54,285 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000070\filing-details.html
+2023-06-08 00:55:54,880 - INFO - Step 1: 0000320193-18-000070: Read html successfully.
+2023-06-08 00:55:55,939 - INFO - Step 2: 0000320193-18-000070: Found target table successfully.
+2023-06-08 00:55:55,946 - INFO - Step 3: 0000320193-18-000070: Extracted table successfully.
+2023-06-08 00:55:55,955 - INFO - Step 4: 0000320193-18-000070: Cleaned table successfully.
+2023-06-08 00:55:55,956 - INFO - Step 5: 0000320193-18-000070: Stacked table successfully.
+2023-06-08 00:55:55,957 - INFO - Step 6: 0000320193-18-000070: Renamed columns successfully.
+2023-06-08 00:55:55,957 - INFO - Step 7: 0000320193-18-000070: Concatenated table successfully.
+2023-06-08 00:58:04,548 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:58:05,219 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:58:06,497 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:58:06,505 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:58:06,514 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 00:58:30,769 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:58:31,407 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:58:32,508 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:58:32,520 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:58:32,529 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 00:58:54,376 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:58:55,017 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:58:56,131 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:58:56,139 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 00:58:56,149 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 00:59:16,807 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 00:59:17,489 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 00:59:18,644 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 00:59:18,652 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:07:40,030 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:07:40,649 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:07:41,693 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:07:41,701 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:07:41,709 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:09:00,142 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:09:00,737 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:09:01,778 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:09:01,786 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:09:01,794 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:09:15,633 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:09:16,270 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:09:17,332 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:09:17,340 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:09:17,350 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:09:17,352 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:09:17,352 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:09:17,352 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:09:35,353 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:09:35,971 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:09:37,043 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:09:37,050 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:09:37,059 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:09:50,441 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:09:51,033 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:09:52,092 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:09:52,100 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:10:27,707 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:10:28,374 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:10:29,423 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:10:29,431 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:10:34,937 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:10:35,654 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:10:36,694 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:10:36,701 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:10:36,709 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:10:45,130 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:10:45,763 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:10:46,857 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:10:46,865 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:10:46,873 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:10:46,874 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:10:46,874 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:10:46,874 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:12:17,025 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:12:17,655 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:12:18,741 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:12:18,748 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:12:18,757 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:12:18,758 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:12:18,758 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:12:18,758 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:14:30,426 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:14:31,047 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:14:32,083 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:14:32,091 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:14:32,099 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:14:32,101 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:14:32,101 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:14:32,101 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:15:00,195 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:15:00,831 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:15:01,859 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:15:01,867 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:15:01,876 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:15:01,877 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:15:01,877 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:15:01,878 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:16:55,502 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:16:56,093 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:16:57,200 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:16:57,207 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:16:57,216 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:16:57,217 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:16:57,217 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:16:57,217 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:17:52,380 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:17:52,988 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:17:54,028 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:17:54,036 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:17:54,044 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:17:54,046 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:17:54,046 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:17:54,046 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:18:03,969 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:18:04,613 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:18:05,667 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:18:05,675 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:18:05,685 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:18:05,686 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:18:05,686 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:18:05,686 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:18:42,640 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-17-000009\filing-details.html
+2023-06-08 01:18:43,242 - INFO - Step 1: 0000320193-17-000009: Read html successfully.
+2023-06-08 01:18:44,266 - INFO - Step 2: 0000320193-17-000009: Found target table successfully.
+2023-06-08 01:18:44,273 - INFO - Step 3: 0000320193-17-000009: Extracted table successfully.
+2023-06-08 01:18:44,283 - INFO - Step 4: 0000320193-17-000009: Cleaned table successfully.
+2023-06-08 01:18:44,284 - INFO - Step 5: 0000320193-17-000009: Stacked table successfully.
+2023-06-08 01:18:44,284 - INFO - Step 6: 0000320193-17-000009: Renamed columns successfully.
+2023-06-08 01:18:44,285 - INFO - Step 7: 0000320193-17-000009: Concatenated table successfully.
+2023-06-08 01:18:44,285 - INFO - Number of files left: 66
+2023-06-08 01:18:44,285 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000007\filing-details.html
+2023-06-08 01:18:44,663 - INFO - Step 1: 0000320193-18-000007: Read html successfully.
+2023-06-08 01:18:45,627 - INFO - Step 2: 0000320193-18-000007: Found target table successfully.
+2023-06-08 01:18:45,632 - INFO - Step 3: 0000320193-18-000007: Extracted table successfully.
+2023-06-08 01:18:45,639 - INFO - Step 4: 0000320193-18-000007: Cleaned table successfully.
+2023-06-08 01:18:45,640 - INFO - Step 5: 0000320193-18-000007: Stacked table successfully.
+2023-06-08 01:18:45,640 - INFO - Step 6: 0000320193-18-000007: Renamed columns successfully.
+2023-06-08 01:18:45,641 - INFO - Step 7: 0000320193-18-000007: Concatenated table successfully.
+2023-06-08 01:18:45,641 - INFO - Number of files left: 65
+2023-06-08 01:18:45,641 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000070\filing-details.html
+2023-06-08 01:18:46,304 - INFO - Step 1: 0000320193-18-000070: Read html successfully.
+2023-06-08 01:18:47,344 - INFO - Step 2: 0000320193-18-000070: Found target table successfully.
+2023-06-08 01:18:47,351 - INFO - Step 3: 0000320193-18-000070: Extracted table successfully.
+2023-06-08 01:18:47,359 - INFO - Step 4: 0000320193-18-000070: Cleaned table successfully.
+2023-06-08 01:18:47,360 - INFO - Step 5: 0000320193-18-000070: Stacked table successfully.
+2023-06-08 01:18:47,361 - INFO - Step 6: 0000320193-18-000070: Renamed columns successfully.
+2023-06-08 01:18:47,361 - INFO - Step 7: 0000320193-18-000070: Concatenated table successfully.
+2023-06-08 01:18:47,361 - INFO - Number of files left: 64
+2023-06-08 01:18:47,361 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-18-000100\filing-details.html
+2023-06-08 01:18:47,948 - INFO - Step 1: 0000320193-18-000100: Read html successfully.
+2023-06-08 01:18:48,953 - INFO - Step 2: 0000320193-18-000100: Found target table successfully.
+2023-06-08 01:18:48,960 - INFO - Step 3: 0000320193-18-000100: Extracted table successfully.
+2023-06-08 01:18:48,968 - INFO - Step 4: 0000320193-18-000100: Cleaned table successfully.
+2023-06-08 01:18:48,969 - INFO - Step 5: 0000320193-18-000100: Stacked table successfully.
+2023-06-08 01:18:48,969 - INFO - Step 6: 0000320193-18-000100: Renamed columns successfully.
+2023-06-08 01:18:48,969 - INFO - Step 7: 0000320193-18-000100: Concatenated table successfully.
+2023-06-08 01:18:48,969 - INFO - Number of files left: 63
+2023-06-08 01:18:48,969 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-19-000010\filing-details.html
+2023-06-08 01:18:49,418 - INFO - Step 1: 0000320193-19-000010: Read html successfully.
+2023-06-08 01:18:50,316 - INFO - Step 2: 0000320193-19-000010: Found target table unsuccessfully.
+2023-06-08 01:18:50,316 - ERROR - list index out of range
+2023-06-08 01:18:50,323 - INFO - Step 3: 0000320193-19-000010: Extracted table successfully.
+2023-06-08 01:18:50,331 - INFO - Step 4: 0000320193-19-000010: Cleaned table successfully.
+2023-06-08 01:18:50,332 - INFO - Step 5: 0000320193-19-000010: Stacked table successfully.
+2023-06-08 01:18:50,332 - INFO - Step 6: 0000320193-19-000010: Renamed columns successfully.
+2023-06-08 01:18:50,332 - INFO - Step 7: 0000320193-19-000010: Concatenated table successfully.
+2023-06-08 01:18:50,333 - INFO - Number of files left: 62
+2023-06-08 01:18:50,333 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-19-000066\filing-details.html
+2023-06-08 01:18:51,033 - INFO - Step 1: 0000320193-19-000066: Read html successfully.
+2023-06-08 01:18:52,029 - INFO - Step 2: 0000320193-19-000066: Found target table unsuccessfully.
+2023-06-08 01:18:52,029 - ERROR - list index out of range
+2023-06-08 01:18:52,038 - INFO - Step 3: 0000320193-19-000066: Extracted table successfully.
+2023-06-08 01:18:52,046 - INFO - Step 4: 0000320193-19-000066: Cleaned table successfully.
+2023-06-08 01:18:52,048 - INFO - Step 5: 0000320193-19-000066: Stacked table successfully.
+2023-06-08 01:18:52,048 - INFO - Step 6: 0000320193-19-000066: Renamed columns successfully.
+2023-06-08 01:18:52,048 - INFO - Step 7: 0000320193-19-000066: Concatenated table successfully.
+2023-06-08 01:18:52,048 - INFO - Number of files left: 61
+2023-06-08 01:18:52,048 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-19-000076\filing-details.html
+2023-06-08 01:18:52,738 - INFO - Step 1: 0000320193-19-000076: Read html successfully.
+2023-06-08 01:18:53,682 - INFO - Step 2: 0000320193-19-000076: Found target table unsuccessfully.
+2023-06-08 01:18:53,682 - ERROR - list index out of range
+2023-06-08 01:18:53,692 - INFO - Step 3: 0000320193-19-000076: Extracted table successfully.
+2023-06-08 01:18:53,700 - INFO - Step 4: 0000320193-19-000076: Cleaned table successfully.
+2023-06-08 01:18:53,701 - INFO - Step 5: 0000320193-19-000076: Stacked table successfully.
+2023-06-08 01:18:53,701 - INFO - Step 6: 0000320193-19-000076: Renamed columns successfully.
+2023-06-08 01:18:53,701 - INFO - Step 7: 0000320193-19-000076: Concatenated table successfully.
+2023-06-08 01:18:53,701 - INFO - Number of files left: 60
+2023-06-08 01:18:53,701 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-20-000010\filing-details.html
+2023-06-08 01:18:54,220 - INFO - Step 1: 0000320193-20-000010: Read html successfully.
+2023-06-08 01:20:00,039 - INFO - Step 2: 0000320193-20-000010: Found target table unsuccessfully.
+2023-06-08 01:20:00,039 - ERROR - list index out of range
+2023-06-08 01:20:00,047 - INFO - Step 3: 0000320193-20-000010: Extracted table successfully.
+2023-06-08 01:20:00,055 - INFO - Step 4: 0000320193-20-000010: Cleaned table successfully.
+2023-06-08 01:20:00,055 - INFO - Step 5: 0000320193-20-000010: Stacked table successfully.
+2023-06-08 01:20:00,055 - INFO - Step 6: 0000320193-20-000010: Renamed columns successfully.
+2023-06-08 01:20:00,056 - INFO - Step 7: 0000320193-20-000010: Concatenated table successfully.
+2023-06-08 01:20:00,056 - INFO - Number of files left: 59
+2023-06-08 01:20:00,056 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-20-000052\filing-details.html
+2023-06-08 01:20:00,760 - INFO - Step 1: 0000320193-20-000052: Read html successfully.
+2023-06-08 01:21:24,516 - INFO - Step 2: 0000320193-20-000052: Found target table unsuccessfully.
+2023-06-08 01:21:24,516 - ERROR - list index out of range
+2023-06-08 01:21:24,523 - INFO - Step 3: 0000320193-20-000052: Extracted table successfully.
+2023-06-08 01:21:24,531 - INFO - Step 4: 0000320193-20-000052: Cleaned table successfully.
+2023-06-08 01:21:24,532 - INFO - Step 5: 0000320193-20-000052: Stacked table successfully.
+2023-06-08 01:21:24,533 - INFO - Step 6: 0000320193-20-000052: Renamed columns successfully.
+2023-06-08 01:21:24,533 - INFO - Step 7: 0000320193-20-000052: Concatenated table successfully.
+2023-06-08 01:21:24,533 - INFO - Number of files left: 58
+2023-06-08 01:21:24,533 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-20-000062\filing-details.html
+2023-06-08 01:21:25,060 - INFO - Step 1: 0000320193-20-000062: Read html successfully.
+2023-06-08 01:21:28,596 - INFO - Step 2: 0000320193-20-000062: Found target table unsuccessfully.
+2023-06-08 01:21:28,596 - ERROR - list index out of range
+2023-06-08 01:21:28,603 - INFO - Step 3: 0000320193-20-000062: Extracted table successfully.
+2023-06-08 01:21:28,611 - INFO - Step 4: 0000320193-20-000062: Cleaned table successfully.
+2023-06-08 01:21:28,612 - INFO - Step 5: 0000320193-20-000062: Stacked table successfully.
+2023-06-08 01:21:28,612 - INFO - Step 6: 0000320193-20-000062: Renamed columns successfully.
+2023-06-08 01:21:28,612 - INFO - Step 7: 0000320193-20-000062: Concatenated table successfully.
+2023-06-08 01:21:28,613 - INFO - Number of files left: 57
+2023-06-08 01:21:28,613 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-21-000010\filing-details.html
+2023-06-08 01:21:29,009 - INFO - Step 1: 0000320193-21-000010: Read html successfully.
+2023-06-08 01:21:30,902 - INFO - Step 2: 0000320193-21-000010: Found target table unsuccessfully.
+2023-06-08 01:21:30,902 - ERROR - list index out of range
+2023-06-08 01:21:30,912 - INFO - Step 3: 0000320193-21-000010: Extracted table successfully.
+2023-06-08 01:21:30,920 - INFO - Step 4: 0000320193-21-000010: Cleaned table successfully.
+2023-06-08 01:21:30,921 - INFO - Step 5: 0000320193-21-000010: Stacked table successfully.
+2023-06-08 01:21:30,921 - INFO - Step 6: 0000320193-21-000010: Renamed columns successfully.
+2023-06-08 01:21:30,921 - INFO - Step 7: 0000320193-21-000010: Concatenated table successfully.
+2023-06-08 01:21:30,921 - INFO - Number of files left: 56
+2023-06-08 01:21:30,921 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-21-000056\filing-details.html
+2023-06-08 01:21:31,277 - INFO - Step 1: 0000320193-21-000056: Read html successfully.
+2023-06-08 01:21:34,311 - INFO - Step 2: 0000320193-21-000056: Found target table unsuccessfully.
+2023-06-08 01:21:34,311 - ERROR - list index out of range
+2023-06-08 01:21:34,318 - INFO - Step 3: 0000320193-21-000056: Extracted table successfully.
+2023-06-08 01:21:34,326 - INFO - Step 4: 0000320193-21-000056: Cleaned table successfully.
+2023-06-08 01:21:34,327 - INFO - Step 5: 0000320193-21-000056: Stacked table successfully.
+2023-06-08 01:21:34,327 - INFO - Step 6: 0000320193-21-000056: Renamed columns successfully.
+2023-06-08 01:21:34,327 - INFO - Step 7: 0000320193-21-000056: Concatenated table successfully.
+2023-06-08 01:21:34,328 - INFO - Number of files left: 55
+2023-06-08 01:21:34,328 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-21-000065\filing-details.html
+2023-06-08 01:21:34,770 - INFO - Step 1: 0000320193-21-000065: Read html successfully.
+2023-06-08 01:21:37,829 - INFO - Step 2: 0000320193-21-000065: Found target table unsuccessfully.
+2023-06-08 01:21:37,829 - ERROR - list index out of range
+2023-06-08 01:21:37,837 - INFO - Step 3: 0000320193-21-000065: Extracted table successfully.
+2023-06-08 01:21:37,845 - INFO - Step 4: 0000320193-21-000065: Cleaned table successfully.
+2023-06-08 01:21:37,846 - INFO - Step 5: 0000320193-21-000065: Stacked table successfully.
+2023-06-08 01:21:37,847 - INFO - Step 6: 0000320193-21-000065: Renamed columns successfully.
+2023-06-08 01:21:37,847 - INFO - Step 7: 0000320193-21-000065: Concatenated table successfully.
+2023-06-08 01:21:37,847 - INFO - Number of files left: 54
+2023-06-08 01:21:37,847 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-22-000007\filing-details.html
+2023-06-08 01:21:38,075 - INFO - Step 1: 0000320193-22-000007: Read html successfully.
+2023-06-08 01:21:38,637 - INFO - Step 2: 0000320193-22-000007: Found target table unsuccessfully.
+2023-06-08 01:21:38,637 - ERROR - list index out of range
+2023-06-08 01:21:38,645 - INFO - Step 3: 0000320193-22-000007: Extracted table successfully.
+2023-06-08 01:21:38,652 - INFO - Step 4: 0000320193-22-000007: Cleaned table successfully.
+2023-06-08 01:21:38,654 - INFO - Step 5: 0000320193-22-000007: Stacked table successfully.
+2023-06-08 01:21:38,654 - INFO - Step 6: 0000320193-22-000007: Renamed columns successfully.
+2023-06-08 01:21:38,654 - INFO - Step 7: 0000320193-22-000007: Concatenated table successfully.
+2023-06-08 01:21:38,654 - INFO - Number of files left: 53
+2023-06-08 01:21:38,654 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-22-000059\filing-details.html
+2023-06-08 01:21:39,012 - INFO - Step 1: 0000320193-22-000059: Read html successfully.
+2023-06-08 01:21:39,879 - INFO - Step 2: 0000320193-22-000059: Found target table unsuccessfully.
+2023-06-08 01:21:39,880 - ERROR - list index out of range
+2023-06-08 01:21:39,887 - INFO - Step 3: 0000320193-22-000059: Extracted table successfully.
+2023-06-08 01:21:39,895 - INFO - Step 4: 0000320193-22-000059: Cleaned table successfully.
+2023-06-08 01:21:39,897 - INFO - Step 5: 0000320193-22-000059: Stacked table successfully.
+2023-06-08 01:21:39,897 - INFO - Step 6: 0000320193-22-000059: Renamed columns successfully.
+2023-06-08 01:21:39,897 - INFO - Step 7: 0000320193-22-000059: Concatenated table successfully.
+2023-06-08 01:21:39,897 - INFO - Number of files left: 52
+2023-06-08 01:21:39,897 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-22-000070\filing-details.html
+2023-06-08 01:21:40,164 - INFO - Step 1: 0000320193-22-000070: Read html successfully.
+2023-06-08 01:21:40,967 - INFO - Step 2: 0000320193-22-000070: Found target table unsuccessfully.
+2023-06-08 01:21:40,967 - ERROR - list index out of range
+2023-06-08 01:21:40,975 - INFO - Step 3: 0000320193-22-000070: Extracted table successfully.
+2023-06-08 01:21:40,984 - INFO - Step 4: 0000320193-22-000070: Cleaned table successfully.
+2023-06-08 01:21:40,985 - INFO - Step 5: 0000320193-22-000070: Stacked table successfully.
+2023-06-08 01:21:40,985 - INFO - Step 6: 0000320193-22-000070: Renamed columns successfully.
+2023-06-08 01:21:40,985 - INFO - Step 7: 0000320193-22-000070: Concatenated table successfully.
+2023-06-08 01:21:40,985 - INFO - Number of files left: 51
+2023-06-08 01:21:40,985 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-23-000006\filing-details.html
+2023-06-08 01:21:41,264 - INFO - Step 1: 0000320193-23-000006: Read html successfully.
+2023-06-08 01:21:41,946 - INFO - Step 2: 0000320193-23-000006: Found target table unsuccessfully.
+2023-06-08 01:21:41,946 - ERROR - list index out of range
+2023-06-08 01:21:41,954 - INFO - Step 3: 0000320193-23-000006: Extracted table successfully.
+2023-06-08 01:21:41,962 - INFO - Step 4: 0000320193-23-000006: Cleaned table successfully.
+2023-06-08 01:21:41,964 - INFO - Step 5: 0000320193-23-000006: Stacked table successfully.
+2023-06-08 01:21:41,964 - INFO - Step 6: 0000320193-23-000006: Renamed columns successfully.
+2023-06-08 01:21:41,964 - INFO - Step 7: 0000320193-23-000006: Concatenated table successfully.
+2023-06-08 01:21:41,964 - INFO - Number of files left: 50
+2023-06-08 01:21:41,964 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000320193-23-000064\filing-details.html
+2023-06-08 01:21:42,223 - INFO - Step 1: 0000320193-23-000064: Read html successfully.
+2023-06-08 01:21:43,316 - INFO - Step 2: 0000320193-23-000064: Found target table unsuccessfully.
+2023-06-08 01:21:43,316 - ERROR - list index out of range
+2023-06-08 01:21:43,324 - INFO - Step 3: 0000320193-23-000064: Extracted table successfully.
+2023-06-08 01:21:43,332 - INFO - Step 4: 0000320193-23-000064: Cleaned table successfully.
+2023-06-08 01:21:43,334 - INFO - Step 5: 0000320193-23-000064: Stacked table successfully.
+2023-06-08 01:21:43,334 - INFO - Step 6: 0000320193-23-000064: Renamed columns successfully.
+2023-06-08 01:21:43,334 - INFO - Step 7: 0000320193-23-000064: Concatenated table successfully.
+2023-06-08 01:21:43,334 - INFO - Number of files left: 49
+2023-06-08 01:21:43,334 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000912057-01-515409\filing-details.html
+2023-06-08 01:21:43,663 - INFO - Step 1: 0000912057-01-515409: Read html successfully.
+2023-06-08 01:21:43,671 - INFO - Step 2: 0000912057-01-515409: Found target table unsuccessfully.
+2023-06-08 01:21:43,671 - ERROR - list index out of range
+2023-06-08 01:21:43,679 - INFO - Step 3: 0000912057-01-515409: Extracted table successfully.
+2023-06-08 01:21:43,689 - INFO - Step 4: 0000912057-01-515409: Cleaned table successfully.
+2023-06-08 01:21:43,691 - INFO - Step 5: 0000912057-01-515409: Stacked table successfully.
+2023-06-08 01:21:43,691 - INFO - Step 6: 0000912057-01-515409: Renamed columns successfully.
+2023-06-08 01:21:43,691 - INFO - Step 7: 0000912057-01-515409: Concatenated table successfully.
+2023-06-08 01:21:43,691 - INFO - Number of files left: 48
+2023-06-08 01:21:43,692 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000912057-01-528148\filing-details.html
+2023-06-08 01:21:43,927 - INFO - Step 1: 0000912057-01-528148: Read html successfully.
+2023-06-08 01:21:43,931 - INFO - Step 2: 0000912057-01-528148: Found target table unsuccessfully.
+2023-06-08 01:21:43,931 - ERROR - list index out of range
+2023-06-08 01:21:43,938 - INFO - Step 3: 0000912057-01-528148: Extracted table successfully.
+2023-06-08 01:21:43,946 - INFO - Step 4: 0000912057-01-528148: Cleaned table successfully.
+2023-06-08 01:21:43,948 - INFO - Step 5: 0000912057-01-528148: Stacked table successfully.
+2023-06-08 01:21:43,948 - INFO - Step 6: 0000912057-01-528148: Renamed columns successfully.
+2023-06-08 01:21:43,948 - INFO - Step 7: 0000912057-01-528148: Concatenated table successfully.
+2023-06-08 01:21:43,948 - INFO - Number of files left: 47
+2023-06-08 01:21:43,948 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000912057-02-004945\filing-details.html
+2023-06-08 01:21:44,262 - INFO - Step 1: 0000912057-02-004945: Read html successfully.
+2023-06-08 01:21:44,268 - INFO - Step 2: 0000912057-02-004945: Found target table unsuccessfully.
+2023-06-08 01:21:44,269 - ERROR - list index out of range
+2023-06-08 01:21:44,277 - INFO - Step 3: 0000912057-02-004945: Extracted table successfully.
+2023-06-08 01:21:44,284 - INFO - Step 4: 0000912057-02-004945: Cleaned table successfully.
+2023-06-08 01:21:44,286 - INFO - Step 5: 0000912057-02-004945: Stacked table successfully.
+2023-06-08 01:21:44,286 - INFO - Step 6: 0000912057-02-004945: Renamed columns successfully.
+2023-06-08 01:21:44,286 - INFO - Step 7: 0000912057-02-004945: Concatenated table successfully.
+2023-06-08 01:21:44,286 - INFO - Number of files left: 46
+2023-06-08 01:21:44,286 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000912057-02-020280\filing-details.html
+2023-06-08 01:21:44,641 - INFO - Step 1: 0000912057-02-020280: Read html successfully.
+2023-06-08 01:21:44,648 - INFO - Step 2: 0000912057-02-020280: Found target table unsuccessfully.
+2023-06-08 01:21:44,648 - ERROR - list index out of range
+2023-06-08 01:21:44,655 - INFO - Step 3: 0000912057-02-020280: Extracted table successfully.
+2023-06-08 01:21:44,663 - INFO - Step 4: 0000912057-02-020280: Cleaned table successfully.
+2023-06-08 01:21:44,664 - INFO - Step 5: 0000912057-02-020280: Stacked table successfully.
+2023-06-08 01:21:44,664 - INFO - Step 6: 0000912057-02-020280: Renamed columns successfully.
+2023-06-08 01:21:44,664 - INFO - Step 7: 0000912057-02-020280: Concatenated table successfully.
+2023-06-08 01:21:44,664 - INFO - Number of files left: 45
+2023-06-08 01:21:44,664 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0000912057-02-030796\filing-details.html
+2023-06-08 01:21:45,053 - INFO - Step 1: 0000912057-02-030796: Read html successfully.
+2023-06-08 01:21:45,061 - INFO - Step 2: 0000912057-02-030796: Found target table unsuccessfully.
+2023-06-08 01:21:45,061 - ERROR - list index out of range
+2023-06-08 01:21:45,070 - INFO - Step 3: 0000912057-02-030796: Extracted table successfully.
+2023-06-08 01:21:45,078 - INFO - Step 4: 0000912057-02-030796: Cleaned table successfully.
+2023-06-08 01:21:45,080 - INFO - Step 5: 0000912057-02-030796: Stacked table successfully.
+2023-06-08 01:21:45,080 - INFO - Step 6: 0000912057-02-030796: Renamed columns successfully.
+2023-06-08 01:21:45,080 - INFO - Step 7: 0000912057-02-030796: Concatenated table successfully.
+2023-06-08 01:21:45,080 - INFO - Number of files left: 44
+2023-06-08 01:21:45,081 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001047469-03-004566\filing-details.html
+2023-06-08 01:21:45,350 - INFO - Step 1: 0001047469-03-004566: Read html successfully.
+2023-06-08 01:21:45,357 - INFO - Step 2: 0001047469-03-004566: Found target table unsuccessfully.
+2023-06-08 01:21:45,357 - ERROR - list index out of range
+2023-06-08 01:21:45,365 - INFO - Step 3: 0001047469-03-004566: Extracted table successfully.
+2023-06-08 01:21:45,374 - INFO - Step 4: 0001047469-03-004566: Cleaned table successfully.
+2023-06-08 01:21:45,375 - INFO - Step 5: 0001047469-03-004566: Stacked table successfully.
+2023-06-08 01:21:45,376 - INFO - Step 6: 0001047469-03-004566: Renamed columns successfully.
+2023-06-08 01:21:45,376 - INFO - Step 7: 0001047469-03-004566: Concatenated table successfully.
+2023-06-08 01:21:45,376 - INFO - Number of files left: 43
+2023-06-08 01:21:45,376 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-03-009489\filing-details.html
+2023-06-08 01:21:46,016 - INFO - Step 1: 0001104659-03-009489: Read html successfully.
+2023-06-08 01:21:46,123 - INFO - Step 2: 0001104659-03-009489: Found target table unsuccessfully.
+2023-06-08 01:21:46,123 - ERROR - list index out of range
+2023-06-08 01:21:46,130 - INFO - Step 3: 0001104659-03-009489: Extracted table successfully.
+2023-06-08 01:21:46,138 - INFO - Step 4: 0001104659-03-009489: Cleaned table successfully.
+2023-06-08 01:21:46,140 - INFO - Step 5: 0001104659-03-009489: Stacked table successfully.
+2023-06-08 01:21:46,140 - INFO - Step 6: 0001104659-03-009489: Renamed columns successfully.
+2023-06-08 01:21:46,140 - INFO - Step 7: 0001104659-03-009489: Concatenated table successfully.
+2023-06-08 01:21:46,140 - INFO - Number of files left: 42
+2023-06-08 01:21:46,140 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-03-017766\filing-details.html
+2023-06-08 01:21:46,757 - INFO - Step 1: 0001104659-03-017766: Read html successfully.
+2023-06-08 01:21:46,870 - INFO - Step 2: 0001104659-03-017766: Found target table unsuccessfully.
+2023-06-08 01:21:46,870 - ERROR - list index out of range
+2023-06-08 01:21:46,877 - INFO - Step 3: 0001104659-03-017766: Extracted table successfully.
+2023-06-08 01:21:46,885 - INFO - Step 4: 0001104659-03-017766: Cleaned table successfully.
+2023-06-08 01:21:46,886 - INFO - Step 5: 0001104659-03-017766: Stacked table successfully.
+2023-06-08 01:21:46,886 - INFO - Step 6: 0001104659-03-017766: Renamed columns successfully.
+2023-06-08 01:21:46,886 - INFO - Step 7: 0001104659-03-017766: Concatenated table successfully.
+2023-06-08 01:21:46,886 - INFO - Number of files left: 41
+2023-06-08 01:21:46,886 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-04-003080\filing-details.html
+2023-06-08 01:21:47,377 - INFO - Step 1: 0001104659-04-003080: Read html successfully.
+2023-06-08 01:21:47,473 - INFO - Step 2: 0001104659-04-003080: Found target table unsuccessfully.
+2023-06-08 01:21:47,473 - ERROR - list index out of range
+2023-06-08 01:21:47,480 - INFO - Step 3: 0001104659-04-003080: Extracted table successfully.
+2023-06-08 01:21:47,489 - INFO - Step 4: 0001104659-04-003080: Cleaned table successfully.
+2023-06-08 01:21:47,490 - INFO - Step 5: 0001104659-04-003080: Stacked table successfully.
+2023-06-08 01:21:47,490 - INFO - Step 6: 0001104659-04-003080: Renamed columns successfully.
+2023-06-08 01:21:47,491 - INFO - Step 7: 0001104659-04-003080: Concatenated table successfully.
+2023-06-08 01:21:47,491 - INFO - Number of files left: 40
+2023-06-08 01:21:47,491 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-04-013021\filing-details.html
+2023-06-08 01:21:48,116 - INFO - Step 1: 0001104659-04-013021: Read html successfully.
+2023-06-08 01:21:48,238 - INFO - Step 2: 0001104659-04-013021: Found target table unsuccessfully.
+2023-06-08 01:21:48,238 - ERROR - list index out of range
+2023-06-08 01:21:48,246 - INFO - Step 3: 0001104659-04-013021: Extracted table successfully.
+2023-06-08 01:21:48,254 - INFO - Step 4: 0001104659-04-013021: Cleaned table successfully.
+2023-06-08 01:21:48,255 - INFO - Step 5: 0001104659-04-013021: Stacked table successfully.
+2023-06-08 01:21:48,255 - INFO - Step 6: 0001104659-04-013021: Renamed columns successfully.
+2023-06-08 01:21:48,256 - INFO - Step 7: 0001104659-04-013021: Concatenated table successfully.
+2023-06-08 01:21:48,256 - INFO - Number of files left: 39
+2023-06-08 01:21:48,256 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-04-022384\filing-details.html
+2023-06-08 01:21:48,970 - INFO - Step 1: 0001104659-04-022384: Read html successfully.
+2023-06-08 01:21:49,093 - INFO - Step 2: 0001104659-04-022384: Found target table unsuccessfully.
+2023-06-08 01:21:49,094 - ERROR - list index out of range
+2023-06-08 01:21:49,100 - INFO - Step 3: 0001104659-04-022384: Extracted table successfully.
+2023-06-08 01:21:49,108 - INFO - Step 4: 0001104659-04-022384: Cleaned table successfully.
+2023-06-08 01:21:49,110 - INFO - Step 5: 0001104659-04-022384: Stacked table successfully.
+2023-06-08 01:21:49,110 - INFO - Step 6: 0001104659-04-022384: Renamed columns successfully.
+2023-06-08 01:21:49,110 - INFO - Step 7: 0001104659-04-022384: Concatenated table successfully.
+2023-06-08 01:21:49,110 - INFO - Number of files left: 38
+2023-06-08 01:21:49,110 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-05-003520\filing-details.html
+2023-06-08 01:21:49,505 - INFO - Step 1: 0001104659-05-003520: Read html successfully.
+2023-06-08 01:21:49,611 - INFO - Step 2: 0001104659-05-003520: Found target table unsuccessfully.
+2023-06-08 01:21:49,611 - ERROR - list index out of range
+2023-06-08 01:21:49,618 - INFO - Step 3: 0001104659-05-003520: Extracted table successfully.
+2023-06-08 01:21:49,626 - INFO - Step 4: 0001104659-05-003520: Cleaned table successfully.
+2023-06-08 01:21:49,627 - INFO - Step 5: 0001104659-05-003520: Stacked table successfully.
+2023-06-08 01:21:49,627 - INFO - Step 6: 0001104659-05-003520: Renamed columns successfully.
+2023-06-08 01:21:49,628 - INFO - Step 7: 0001104659-05-003520: Concatenated table successfully.
+2023-06-08 01:21:49,628 - INFO - Number of files left: 37
+2023-06-08 01:21:49,628 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-05-020421\filing-details.html
+2023-06-08 01:21:50,293 - INFO - Step 1: 0001104659-05-020421: Read html successfully.
+2023-06-08 01:21:50,409 - INFO - Step 2: 0001104659-05-020421: Found target table unsuccessfully.
+2023-06-08 01:21:50,409 - ERROR - list index out of range
+2023-06-08 01:21:50,416 - INFO - Step 3: 0001104659-05-020421: Extracted table successfully.
+2023-06-08 01:21:50,424 - INFO - Step 4: 0001104659-05-020421: Cleaned table successfully.
+2023-06-08 01:21:50,426 - INFO - Step 5: 0001104659-05-020421: Stacked table successfully.
+2023-06-08 01:21:50,426 - INFO - Step 6: 0001104659-05-020421: Renamed columns successfully.
+2023-06-08 01:21:50,426 - INFO - Step 7: 0001104659-05-020421: Concatenated table successfully.
+2023-06-08 01:21:50,426 - INFO - Number of files left: 36
+2023-06-08 01:21:50,426 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-05-035792\filing-details.html
+2023-06-08 01:21:51,036 - INFO - Step 1: 0001104659-05-035792: Read html successfully.
+2023-06-08 01:21:51,148 - INFO - Step 2: 0001104659-05-035792: Found target table unsuccessfully.
+2023-06-08 01:21:51,148 - ERROR - list index out of range
+2023-06-08 01:21:51,154 - INFO - Step 3: 0001104659-05-035792: Extracted table successfully.
+2023-06-08 01:21:51,164 - INFO - Step 4: 0001104659-05-035792: Cleaned table successfully.
+2023-06-08 01:21:51,165 - INFO - Step 5: 0001104659-05-035792: Stacked table successfully.
+2023-06-08 01:21:51,165 - INFO - Step 6: 0001104659-05-035792: Renamed columns successfully.
+2023-06-08 01:21:51,165 - INFO - Step 7: 0001104659-05-035792: Concatenated table successfully.
+2023-06-08 01:21:51,165 - INFO - Number of files left: 35
+2023-06-08 01:21:51,165 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-06-005910\filing-details.html
+2023-06-08 01:21:51,650 - INFO - Step 1: 0001104659-06-005910: Read html successfully.
+2023-06-08 01:21:51,765 - INFO - Step 2: 0001104659-06-005910: Found target table unsuccessfully.
+2023-06-08 01:21:51,765 - ERROR - list index out of range
+2023-06-08 01:21:51,773 - INFO - Step 3: 0001104659-06-005910: Extracted table successfully.
+2023-06-08 01:21:51,782 - INFO - Step 4: 0001104659-06-005910: Cleaned table successfully.
+2023-06-08 01:21:51,783 - INFO - Step 5: 0001104659-06-005910: Stacked table successfully.
+2023-06-08 01:21:51,783 - INFO - Step 6: 0001104659-06-005910: Renamed columns successfully.
+2023-06-08 01:21:51,783 - INFO - Step 7: 0001104659-06-005910: Concatenated table successfully.
+2023-06-08 01:21:51,783 - INFO - Number of files left: 34
+2023-06-08 01:21:51,783 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-06-031303\filing-details.html
+2023-06-08 01:21:52,434 - INFO - Step 1: 0001104659-06-031303: Read html successfully.
+2023-06-08 01:21:52,554 - INFO - Step 2: 0001104659-06-031303: Found target table unsuccessfully.
+2023-06-08 01:21:52,555 - ERROR - list index out of range
+2023-06-08 01:21:52,561 - INFO - Step 3: 0001104659-06-031303: Extracted table successfully.
+2023-06-08 01:21:52,570 - INFO - Step 4: 0001104659-06-031303: Cleaned table successfully.
+2023-06-08 01:21:52,571 - INFO - Step 5: 0001104659-06-031303: Stacked table successfully.
+2023-06-08 01:21:52,571 - INFO - Step 6: 0001104659-06-031303: Renamed columns successfully.
+2023-06-08 01:21:52,571 - INFO - Step 7: 0001104659-06-031303: Concatenated table successfully.
+2023-06-08 01:21:52,571 - INFO - Number of files left: 33
+2023-06-08 01:21:52,571 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-06-084286\filing-details.html
+2023-06-08 01:21:53,230 - INFO - Step 1: 0001104659-06-084286: Read html successfully.
+2023-06-08 01:21:53,385 - INFO - Step 2: 0001104659-06-084286: Found target table unsuccessfully.
+2023-06-08 01:21:53,385 - ERROR - list index out of range
+2023-06-08 01:21:53,392 - INFO - Step 3: 0001104659-06-084286: Extracted table successfully.
+2023-06-08 01:21:53,400 - INFO - Step 4: 0001104659-06-084286: Cleaned table successfully.
+2023-06-08 01:21:53,402 - INFO - Step 5: 0001104659-06-084286: Stacked table successfully.
+2023-06-08 01:21:53,402 - INFO - Step 6: 0001104659-06-084286: Renamed columns successfully.
+2023-06-08 01:21:53,402 - INFO - Step 7: 0001104659-06-084286: Concatenated table successfully.
+2023-06-08 01:21:53,402 - INFO - Number of files left: 32
+2023-06-08 01:21:53,402 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-07-006648\filing-details.html
+2023-06-08 01:21:53,864 - INFO - Step 1: 0001104659-07-006648: Read html successfully.
+2023-06-08 01:21:53,972 - INFO - Step 2: 0001104659-07-006648: Found target table unsuccessfully.
+2023-06-08 01:21:53,972 - ERROR - list index out of range
+2023-06-08 01:21:53,979 - INFO - Step 3: 0001104659-07-006648: Extracted table successfully.
+2023-06-08 01:21:53,986 - INFO - Step 4: 0001104659-07-006648: Cleaned table successfully.
+2023-06-08 01:21:53,988 - INFO - Step 5: 0001104659-07-006648: Stacked table successfully.
+2023-06-08 01:21:53,988 - INFO - Step 6: 0001104659-07-006648: Renamed columns successfully.
+2023-06-08 01:21:53,988 - INFO - Step 7: 0001104659-07-006648: Concatenated table successfully.
+2023-06-08 01:21:53,988 - INFO - Number of files left: 31
+2023-06-08 01:21:53,988 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-07-037745\filing-details.html
+2023-06-08 01:21:54,529 - INFO - Step 1: 0001104659-07-037745: Read html successfully.
+2023-06-08 01:21:54,645 - INFO - Step 2: 0001104659-07-037745: Found target table unsuccessfully.
+2023-06-08 01:21:54,645 - ERROR - list index out of range
+2023-06-08 01:21:54,652 - INFO - Step 3: 0001104659-07-037745: Extracted table successfully.
+2023-06-08 01:21:54,660 - INFO - Step 4: 0001104659-07-037745: Cleaned table successfully.
+2023-06-08 01:21:54,662 - INFO - Step 5: 0001104659-07-037745: Stacked table successfully.
+2023-06-08 01:21:54,662 - INFO - Step 6: 0001104659-07-037745: Renamed columns successfully.
+2023-06-08 01:21:54,662 - INFO - Step 7: 0001104659-07-037745: Concatenated table successfully.
+2023-06-08 01:21:54,663 - INFO - Number of files left: 30
+2023-06-08 01:21:54,663 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001104659-07-059873\filing-details.html
+2023-06-08 01:21:55,188 - INFO - Step 1: 0001104659-07-059873: Read html successfully.
+2023-06-08 01:21:55,301 - INFO - Step 2: 0001104659-07-059873: Found target table unsuccessfully.
+2023-06-08 01:21:55,301 - ERROR - list index out of range
+2023-06-08 01:21:55,308 - INFO - Step 3: 0001104659-07-059873: Extracted table successfully.
+2023-06-08 01:21:55,316 - INFO - Step 4: 0001104659-07-059873: Cleaned table successfully.
+2023-06-08 01:21:55,318 - INFO - Step 5: 0001104659-07-059873: Stacked table successfully.
+2023-06-08 01:21:55,318 - INFO - Step 6: 0001104659-07-059873: Renamed columns successfully.
+2023-06-08 01:21:55,318 - INFO - Step 7: 0001104659-07-059873: Concatenated table successfully.
+2023-06-08 01:21:55,318 - INFO - Number of files left: 29
+2023-06-08 01:21:55,318 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-08-017426\filing-details.html
+2023-06-08 01:21:55,547 - INFO - Step 1: 0001193125-08-017426: Read html successfully.
+2023-06-08 01:21:55,551 - INFO - Step 2: 0001193125-08-017426: Found target table unsuccessfully.
+2023-06-08 01:21:55,551 - ERROR - list index out of range
+2023-06-08 01:21:55,558 - INFO - Step 3: 0001193125-08-017426: Extracted table successfully.
+2023-06-08 01:21:55,566 - INFO - Step 4: 0001193125-08-017426: Cleaned table successfully.
+2023-06-08 01:21:55,567 - INFO - Step 5: 0001193125-08-017426: Stacked table successfully.
+2023-06-08 01:21:55,567 - INFO - Step 6: 0001193125-08-017426: Renamed columns successfully.
+2023-06-08 01:21:55,568 - INFO - Step 7: 0001193125-08-017426: Concatenated table successfully.
+2023-06-08 01:21:55,568 - INFO - Number of files left: 28
+2023-06-08 01:21:55,568 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-08-097759\filing-details.html
+2023-06-08 01:21:55,872 - INFO - Step 1: 0001193125-08-097759: Read html successfully.
+2023-06-08 01:21:55,878 - INFO - Step 2: 0001193125-08-097759: Found target table unsuccessfully.
+2023-06-08 01:21:55,878 - ERROR - list index out of range
+2023-06-08 01:21:55,885 - INFO - Step 3: 0001193125-08-097759: Extracted table successfully.
+2023-06-08 01:21:55,895 - INFO - Step 4: 0001193125-08-097759: Cleaned table successfully.
+2023-06-08 01:21:55,896 - INFO - Step 5: 0001193125-08-097759: Stacked table successfully.
+2023-06-08 01:21:55,896 - INFO - Step 6: 0001193125-08-097759: Renamed columns successfully.
+2023-06-08 01:21:55,896 - INFO - Step 7: 0001193125-08-097759: Concatenated table successfully.
+2023-06-08 01:21:55,896 - INFO - Number of files left: 27
+2023-06-08 01:21:55,896 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-08-156421\filing-details.html
+2023-06-08 01:21:56,308 - INFO - Step 1: 0001193125-08-156421: Read html successfully.
+2023-06-08 01:21:56,314 - INFO - Step 2: 0001193125-08-156421: Found target table unsuccessfully.
+2023-06-08 01:21:56,314 - ERROR - list index out of range
+2023-06-08 01:21:56,321 - INFO - Step 3: 0001193125-08-156421: Extracted table successfully.
+2023-06-08 01:21:56,330 - INFO - Step 4: 0001193125-08-156421: Cleaned table successfully.
+2023-06-08 01:21:56,331 - INFO - Step 5: 0001193125-08-156421: Stacked table successfully.
+2023-06-08 01:21:56,332 - INFO - Step 6: 0001193125-08-156421: Renamed columns successfully.
+2023-06-08 01:21:56,332 - INFO - Step 7: 0001193125-08-156421: Concatenated table successfully.
+2023-06-08 01:21:56,332 - INFO - Number of files left: 26
+2023-06-08 01:21:56,332 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-09-009937\filing-details.html
+2023-06-08 01:21:56,718 - INFO - Step 1: 0001193125-09-009937: Read html successfully.
+2023-06-08 01:21:56,723 - INFO - Step 2: 0001193125-09-009937: Found target table unsuccessfully.
+2023-06-08 01:21:56,723 - ERROR - list index out of range
+2023-06-08 01:21:56,730 - INFO - Step 3: 0001193125-09-009937: Extracted table successfully.
+2023-06-08 01:21:56,738 - INFO - Step 4: 0001193125-09-009937: Cleaned table successfully.
+2023-06-08 01:21:56,739 - INFO - Step 5: 0001193125-09-009937: Stacked table successfully.
+2023-06-08 01:21:56,739 - INFO - Step 6: 0001193125-09-009937: Renamed columns successfully.
+2023-06-08 01:21:56,740 - INFO - Step 7: 0001193125-09-009937: Concatenated table successfully.
+2023-06-08 01:21:56,740 - INFO - Number of files left: 25
+2023-06-08 01:21:56,740 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-09-085781\filing-details.html
+2023-06-08 01:21:57,221 - INFO - Step 1: 0001193125-09-085781: Read html successfully.
+2023-06-08 01:21:57,228 - INFO - Step 2: 0001193125-09-085781: Found target table unsuccessfully.
+2023-06-08 01:21:57,228 - ERROR - list index out of range
+2023-06-08 01:21:57,235 - INFO - Step 3: 0001193125-09-085781: Extracted table successfully.
+2023-06-08 01:21:57,243 - INFO - Step 4: 0001193125-09-085781: Cleaned table successfully.
+2023-06-08 01:21:57,244 - INFO - Step 5: 0001193125-09-085781: Stacked table successfully.
+2023-06-08 01:21:57,244 - INFO - Step 6: 0001193125-09-085781: Renamed columns successfully.
+2023-06-08 01:21:57,244 - INFO - Step 7: 0001193125-09-085781: Concatenated table successfully.
+2023-06-08 01:21:57,244 - INFO - Number of files left: 24
+2023-06-08 01:21:57,244 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-09-153165\filing-details.html
+2023-06-08 01:21:57,730 - INFO - Step 1: 0001193125-09-153165: Read html successfully.
+2023-06-08 01:21:57,738 - INFO - Step 2: 0001193125-09-153165: Found target table unsuccessfully.
+2023-06-08 01:21:57,738 - ERROR - list index out of range
+2023-06-08 01:21:57,745 - INFO - Step 3: 0001193125-09-153165: Extracted table successfully.
+2023-06-08 01:21:57,755 - INFO - Step 4: 0001193125-09-153165: Cleaned table successfully.
+2023-06-08 01:21:57,756 - INFO - Step 5: 0001193125-09-153165: Stacked table successfully.
+2023-06-08 01:21:57,756 - INFO - Step 6: 0001193125-09-153165: Renamed columns successfully.
+2023-06-08 01:21:57,757 - INFO - Step 7: 0001193125-09-153165: Concatenated table successfully.
+2023-06-08 01:21:57,757 - INFO - Number of files left: 23
+2023-06-08 01:21:57,757 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-10-012085\filing-details.html
+2023-06-08 01:21:58,166 - INFO - Step 1: 0001193125-10-012085: Read html successfully.
+2023-06-08 01:21:58,173 - INFO - Step 2: 0001193125-10-012085: Found target table unsuccessfully.
+2023-06-08 01:21:58,173 - ERROR - list index out of range
+2023-06-08 01:21:58,180 - INFO - Step 3: 0001193125-10-012085: Extracted table successfully.
+2023-06-08 01:21:58,188 - INFO - Step 4: 0001193125-10-012085: Cleaned table successfully.
+2023-06-08 01:21:58,189 - INFO - Step 5: 0001193125-10-012085: Stacked table successfully.
+2023-06-08 01:21:58,189 - INFO - Step 6: 0001193125-10-012085: Renamed columns successfully.
+2023-06-08 01:21:58,190 - INFO - Step 7: 0001193125-10-012085: Concatenated table successfully.
+2023-06-08 01:21:58,190 - INFO - Number of files left: 22
+2023-06-08 01:21:58,190 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-10-088957\filing-details.html
+2023-06-08 01:21:58,750 - INFO - Step 1: 0001193125-10-088957: Read html successfully.
+2023-06-08 01:21:58,758 - INFO - Step 2: 0001193125-10-088957: Found target table unsuccessfully.
+2023-06-08 01:21:58,758 - ERROR - list index out of range
+2023-06-08 01:21:58,765 - INFO - Step 3: 0001193125-10-088957: Extracted table successfully.
+2023-06-08 01:21:58,773 - INFO - Step 4: 0001193125-10-088957: Cleaned table successfully.
+2023-06-08 01:21:58,774 - INFO - Step 5: 0001193125-10-088957: Stacked table successfully.
+2023-06-08 01:21:58,774 - INFO - Step 6: 0001193125-10-088957: Renamed columns successfully.
+2023-06-08 01:21:58,775 - INFO - Step 7: 0001193125-10-088957: Concatenated table successfully.
+2023-06-08 01:21:58,775 - INFO - Number of files left: 21
+2023-06-08 01:21:58,775 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-10-162840\filing-details.html
+2023-06-08 01:21:59,299 - INFO - Step 1: 0001193125-10-162840: Read html successfully.
+2023-06-08 01:21:59,307 - INFO - Step 2: 0001193125-10-162840: Found target table unsuccessfully.
+2023-06-08 01:21:59,307 - ERROR - list index out of range
+2023-06-08 01:21:59,315 - INFO - Step 3: 0001193125-10-162840: Extracted table successfully.
+2023-06-08 01:21:59,323 - INFO - Step 4: 0001193125-10-162840: Cleaned table successfully.
+2023-06-08 01:21:59,324 - INFO - Step 5: 0001193125-10-162840: Stacked table successfully.
+2023-06-08 01:21:59,324 - INFO - Step 6: 0001193125-10-162840: Renamed columns successfully.
+2023-06-08 01:21:59,325 - INFO - Step 7: 0001193125-10-162840: Concatenated table successfully.
+2023-06-08 01:21:59,325 - INFO - Number of files left: 20
+2023-06-08 01:21:59,325 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-11-010144\filing-details.html
+2023-06-08 01:21:59,758 - INFO - Step 1: 0001193125-11-010144: Read html successfully.
+2023-06-08 01:21:59,765 - INFO - Step 2: 0001193125-11-010144: Found target table unsuccessfully.
+2023-06-08 01:21:59,765 - ERROR - list index out of range
+2023-06-08 01:21:59,772 - INFO - Step 3: 0001193125-11-010144: Extracted table successfully.
+2023-06-08 01:21:59,780 - INFO - Step 4: 0001193125-11-010144: Cleaned table successfully.
+2023-06-08 01:21:59,781 - INFO - Step 5: 0001193125-11-010144: Stacked table successfully.
+2023-06-08 01:21:59,781 - INFO - Step 6: 0001193125-11-010144: Renamed columns successfully.
+2023-06-08 01:21:59,782 - INFO - Step 7: 0001193125-11-010144: Concatenated table successfully.
+2023-06-08 01:21:59,782 - INFO - Number of files left: 19
+2023-06-08 01:21:59,782 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-11-104388\filing-details.html
+2023-06-08 01:22:00,265 - INFO - Step 1: 0001193125-11-104388: Read html successfully.
+2023-06-08 01:22:00,271 - INFO - Step 2: 0001193125-11-104388: Found target table unsuccessfully.
+2023-06-08 01:22:00,272 - ERROR - list index out of range
+2023-06-08 01:22:00,279 - INFO - Step 3: 0001193125-11-104388: Extracted table successfully.
+2023-06-08 01:22:00,287 - INFO - Step 4: 0001193125-11-104388: Cleaned table successfully.
+2023-06-08 01:22:00,289 - INFO - Step 5: 0001193125-11-104388: Stacked table successfully.
+2023-06-08 01:22:00,289 - INFO - Step 6: 0001193125-11-104388: Renamed columns successfully.
+2023-06-08 01:22:00,289 - INFO - Step 7: 0001193125-11-104388: Concatenated table successfully.
+2023-06-08 01:22:00,289 - INFO - Number of files left: 18
+2023-06-08 01:22:00,289 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-11-192493\filing-details.html
+2023-06-08 01:22:00,826 - INFO - Step 1: 0001193125-11-192493: Read html successfully.
+2023-06-08 01:22:00,833 - INFO - Step 2: 0001193125-11-192493: Found target table unsuccessfully.
+2023-06-08 01:22:00,833 - ERROR - list index out of range
+2023-06-08 01:22:00,841 - INFO - Step 3: 0001193125-11-192493: Extracted table successfully.
+2023-06-08 01:22:00,849 - INFO - Step 4: 0001193125-11-192493: Cleaned table successfully.
+2023-06-08 01:22:00,850 - INFO - Step 5: 0001193125-11-192493: Stacked table successfully.
+2023-06-08 01:22:00,850 - INFO - Step 6: 0001193125-11-192493: Renamed columns successfully.
+2023-06-08 01:22:00,850 - INFO - Step 7: 0001193125-11-192493: Concatenated table successfully.
+2023-06-08 01:22:00,850 - INFO - Number of files left: 17
+2023-06-08 01:22:00,850 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-12-023398\filing-details.html
+2023-06-08 01:22:01,187 - INFO - Step 1: 0001193125-12-023398: Read html successfully.
+2023-06-08 01:22:01,193 - INFO - Step 2: 0001193125-12-023398: Found target table unsuccessfully.
+2023-06-08 01:22:01,193 - ERROR - list index out of range
+2023-06-08 01:22:01,200 - INFO - Step 3: 0001193125-12-023398: Extracted table successfully.
+2023-06-08 01:22:01,208 - INFO - Step 4: 0001193125-12-023398: Cleaned table successfully.
+2023-06-08 01:22:01,209 - INFO - Step 5: 0001193125-12-023398: Stacked table successfully.
+2023-06-08 01:22:01,209 - INFO - Step 6: 0001193125-12-023398: Renamed columns successfully.
+2023-06-08 01:22:01,210 - INFO - Step 7: 0001193125-12-023398: Concatenated table successfully.
+2023-06-08 01:22:01,210 - INFO - Number of files left: 16
+2023-06-08 01:22:01,210 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-12-182321\filing-details.html
+2023-06-08 01:22:01,726 - INFO - Step 1: 0001193125-12-182321: Read html successfully.
+2023-06-08 01:22:01,733 - INFO - Step 2: 0001193125-12-182321: Found target table unsuccessfully.
+2023-06-08 01:22:01,733 - ERROR - list index out of range
+2023-06-08 01:22:01,740 - INFO - Step 3: 0001193125-12-182321: Extracted table successfully.
+2023-06-08 01:22:01,748 - INFO - Step 4: 0001193125-12-182321: Cleaned table successfully.
+2023-06-08 01:22:01,749 - INFO - Step 5: 0001193125-12-182321: Stacked table successfully.
+2023-06-08 01:22:01,750 - INFO - Step 6: 0001193125-12-182321: Renamed columns successfully.
+2023-06-08 01:22:01,750 - INFO - Step 7: 0001193125-12-182321: Concatenated table successfully.
+2023-06-08 01:22:01,750 - INFO - Number of files left: 15
+2023-06-08 01:22:01,750 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-12-314552\filing-details.html
+2023-06-08 01:22:02,274 - INFO - Step 1: 0001193125-12-314552: Read html successfully.
+2023-06-08 01:22:02,282 - INFO - Step 2: 0001193125-12-314552: Found target table unsuccessfully.
+2023-06-08 01:22:02,282 - ERROR - list index out of range
+2023-06-08 01:22:02,290 - INFO - Step 3: 0001193125-12-314552: Extracted table successfully.
+2023-06-08 01:22:02,299 - INFO - Step 4: 0001193125-12-314552: Cleaned table successfully.
+2023-06-08 01:22:02,300 - INFO - Step 5: 0001193125-12-314552: Stacked table successfully.
+2023-06-08 01:22:02,300 - INFO - Step 6: 0001193125-12-314552: Renamed columns successfully.
+2023-06-08 01:22:02,300 - INFO - Step 7: 0001193125-12-314552: Concatenated table successfully.
+2023-06-08 01:22:02,300 - INFO - Number of files left: 14
+2023-06-08 01:22:02,300 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-13-022339\filing-details.html
+2023-06-08 01:22:02,750 - INFO - Step 1: 0001193125-13-022339: Read html successfully.
+2023-06-08 01:22:02,757 - INFO - Step 2: 0001193125-13-022339: Found target table unsuccessfully.
+2023-06-08 01:22:02,757 - ERROR - list index out of range
+2023-06-08 01:22:02,763 - INFO - Step 3: 0001193125-13-022339: Extracted table successfully.
+2023-06-08 01:22:02,771 - INFO - Step 4: 0001193125-13-022339: Cleaned table successfully.
+2023-06-08 01:22:02,773 - INFO - Step 5: 0001193125-13-022339: Stacked table successfully.
+2023-06-08 01:22:02,773 - INFO - Step 6: 0001193125-13-022339: Renamed columns successfully.
+2023-06-08 01:22:02,773 - INFO - Step 7: 0001193125-13-022339: Concatenated table successfully.
+2023-06-08 01:22:02,774 - INFO - Number of files left: 13
+2023-06-08 01:22:02,774 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-13-168288\filing-details.html
+2023-06-08 01:22:03,299 - INFO - Step 1: 0001193125-13-168288: Read html successfully.
+2023-06-08 01:22:03,306 - INFO - Step 2: 0001193125-13-168288: Found target table unsuccessfully.
+2023-06-08 01:22:03,306 - ERROR - list index out of range
+2023-06-08 01:22:03,314 - INFO - Step 3: 0001193125-13-168288: Extracted table successfully.
+2023-06-08 01:22:03,322 - INFO - Step 4: 0001193125-13-168288: Cleaned table successfully.
+2023-06-08 01:22:03,323 - INFO - Step 5: 0001193125-13-168288: Stacked table successfully.
+2023-06-08 01:22:03,324 - INFO - Step 6: 0001193125-13-168288: Renamed columns successfully.
+2023-06-08 01:22:03,324 - INFO - Step 7: 0001193125-13-168288: Concatenated table successfully.
+2023-06-08 01:22:03,324 - INFO - Number of files left: 12
+2023-06-08 01:22:03,324 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-13-300670\filing-details.html
+2023-06-08 01:22:03,896 - INFO - Step 1: 0001193125-13-300670: Read html successfully.
+2023-06-08 01:22:03,904 - INFO - Step 2: 0001193125-13-300670: Found target table unsuccessfully.
+2023-06-08 01:22:03,905 - ERROR - list index out of range
+2023-06-08 01:22:03,912 - INFO - Step 3: 0001193125-13-300670: Extracted table successfully.
+2023-06-08 01:22:03,920 - INFO - Step 4: 0001193125-13-300670: Cleaned table successfully.
+2023-06-08 01:22:03,921 - INFO - Step 5: 0001193125-13-300670: Stacked table successfully.
+2023-06-08 01:22:03,921 - INFO - Step 6: 0001193125-13-300670: Renamed columns successfully.
+2023-06-08 01:22:03,922 - INFO - Step 7: 0001193125-13-300670: Concatenated table successfully.
+2023-06-08 01:22:03,922 - INFO - Number of files left: 11
+2023-06-08 01:22:03,922 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-14-024487\filing-details.html
+2023-06-08 01:22:04,386 - INFO - Step 1: 0001193125-14-024487: Read html successfully.
+2023-06-08 01:22:04,394 - INFO - Step 2: 0001193125-14-024487: Found target table unsuccessfully.
+2023-06-08 01:22:04,394 - ERROR - list index out of range
+2023-06-08 01:22:04,402 - INFO - Step 3: 0001193125-14-024487: Extracted table successfully.
+2023-06-08 01:22:04,410 - INFO - Step 4: 0001193125-14-024487: Cleaned table successfully.
+2023-06-08 01:22:04,411 - INFO - Step 5: 0001193125-14-024487: Stacked table successfully.
+2023-06-08 01:22:04,411 - INFO - Step 6: 0001193125-14-024487: Renamed columns successfully.
+2023-06-08 01:22:04,412 - INFO - Step 7: 0001193125-14-024487: Concatenated table successfully.
+2023-06-08 01:22:04,412 - INFO - Number of files left: 10
+2023-06-08 01:22:04,412 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-14-157311\filing-details.html
+2023-06-08 01:22:05,245 - INFO - Step 1: 0001193125-14-157311: Read html successfully.
+2023-06-08 01:22:05,257 - INFO - Step 2: 0001193125-14-157311: Found target table unsuccessfully.
+2023-06-08 01:22:05,257 - ERROR - list index out of range
+2023-06-08 01:22:05,264 - INFO - Step 3: 0001193125-14-157311: Extracted table successfully.
+2023-06-08 01:22:05,273 - INFO - Step 4: 0001193125-14-157311: Cleaned table successfully.
+2023-06-08 01:22:05,274 - INFO - Step 5: 0001193125-14-157311: Stacked table successfully.
+2023-06-08 01:22:05,274 - INFO - Step 6: 0001193125-14-157311: Renamed columns successfully.
+2023-06-08 01:22:05,274 - INFO - Step 7: 0001193125-14-157311: Concatenated table successfully.
+2023-06-08 01:22:05,274 - INFO - Number of files left: 9
+2023-06-08 01:22:05,274 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-14-277160\filing-details.html
+2023-06-08 01:22:06,029 - INFO - Step 1: 0001193125-14-277160: Read html successfully.
+2023-06-08 01:22:06,040 - INFO - Step 2: 0001193125-14-277160: Found target table unsuccessfully.
+2023-06-08 01:22:06,040 - ERROR - list index out of range
+2023-06-08 01:22:06,047 - INFO - Step 3: 0001193125-14-277160: Extracted table successfully.
+2023-06-08 01:22:06,055 - INFO - Step 4: 0001193125-14-277160: Cleaned table successfully.
+2023-06-08 01:22:06,056 - INFO - Step 5: 0001193125-14-277160: Stacked table successfully.
+2023-06-08 01:22:06,057 - INFO - Step 6: 0001193125-14-277160: Renamed columns successfully.
+2023-06-08 01:22:06,057 - INFO - Step 7: 0001193125-14-277160: Concatenated table successfully.
+2023-06-08 01:22:06,057 - INFO - Number of files left: 8
+2023-06-08 01:22:06,057 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-15-023697\filing-details.html
+2023-06-08 01:22:06,573 - INFO - Step 1: 0001193125-15-023697: Read html successfully.
+2023-06-08 01:22:06,792 - INFO - Step 2: 0001193125-15-023697: Found target table successfully.
+2023-06-08 01:22:06,795 - INFO - Step 3: 0001193125-15-023697: Extracted table successfully.
+2023-06-08 01:22:06,803 - INFO - Step 4: 0001193125-15-023697: Cleaned table successfully.
+2023-06-08 01:22:06,804 - INFO - Step 5: 0001193125-15-023697: Stacked table successfully.
+2023-06-08 01:22:06,804 - INFO - Step 6: 0001193125-15-023697: Renamed columns successfully.
+2023-06-08 01:22:06,804 - INFO - Step 7: 0001193125-15-023697: Concatenated table successfully.
+2023-06-08 01:22:06,804 - INFO - Number of files left: 7
+2023-06-08 01:22:06,804 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-15-153166\filing-details.html
+2023-06-08 01:22:07,287 - INFO - Step 1: 0001193125-15-153166: Read html successfully.
+2023-06-08 01:22:07,508 - INFO - Step 2: 0001193125-15-153166: Found target table successfully.
+2023-06-08 01:22:07,514 - INFO - Step 3: 0001193125-15-153166: Extracted table successfully.
+2023-06-08 01:22:07,523 - INFO - Step 4: 0001193125-15-153166: Cleaned table successfully.
+2023-06-08 01:22:07,524 - INFO - Step 5: 0001193125-15-153166: Stacked table successfully.
+2023-06-08 01:22:07,524 - INFO - Step 6: 0001193125-15-153166: Renamed columns successfully.
+2023-06-08 01:22:07,524 - INFO - Step 7: 0001193125-15-153166: Concatenated table successfully.
+2023-06-08 01:22:07,524 - INFO - Number of files left: 6
+2023-06-08 01:22:07,525 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-15-259935\filing-details.html
+2023-06-08 01:22:08,216 - INFO - Step 1: 0001193125-15-259935: Read html successfully.
+2023-06-08 01:22:08,450 - INFO - Step 2: 0001193125-15-259935: Found target table successfully.
+2023-06-08 01:22:08,455 - INFO - Step 3: 0001193125-15-259935: Extracted table successfully.
+2023-06-08 01:22:08,464 - INFO - Step 4: 0001193125-15-259935: Cleaned table successfully.
+2023-06-08 01:22:08,465 - INFO - Step 5: 0001193125-15-259935: Stacked table successfully.
+2023-06-08 01:22:08,466 - INFO - Step 6: 0001193125-15-259935: Renamed columns successfully.
+2023-06-08 01:22:08,466 - INFO - Step 7: 0001193125-15-259935: Concatenated table successfully.
+2023-06-08 01:22:08,466 - INFO - Number of files left: 5
+2023-06-08 01:22:08,466 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-16-439878\filing-details.html
+2023-06-08 01:22:08,832 - INFO - Step 1: 0001193125-16-439878: Read html successfully.
+2023-06-08 01:22:08,840 - INFO - Step 2: 0001193125-16-439878: Found target table unsuccessfully.
+2023-06-08 01:22:08,840 - ERROR - list index out of range
+2023-06-08 01:22:08,845 - INFO - Step 3: 0001193125-16-439878: Extracted table successfully.
+2023-06-08 01:22:08,854 - INFO - Step 4: 0001193125-16-439878: Cleaned table successfully.
+2023-06-08 01:22:08,855 - INFO - Step 5: 0001193125-16-439878: Stacked table successfully.
+2023-06-08 01:22:08,855 - INFO - Step 6: 0001193125-16-439878: Renamed columns successfully.
+2023-06-08 01:22:08,855 - INFO - Step 7: 0001193125-16-439878: Concatenated table successfully.
+2023-06-08 01:22:08,855 - INFO - Number of files left: 4
+2023-06-08 01:22:08,855 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001193125-16-559625\filing-details.html
+2023-06-08 01:22:09,506 - INFO - Step 1: 0001193125-16-559625: Read html successfully.
+2023-06-08 01:22:09,515 - INFO - Step 2: 0001193125-16-559625: Found target table unsuccessfully.
+2023-06-08 01:22:09,516 - ERROR - list index out of range
+2023-06-08 01:22:09,521 - INFO - Step 3: 0001193125-16-559625: Extracted table successfully.
+2023-06-08 01:22:09,529 - INFO - Step 4: 0001193125-16-559625: Cleaned table successfully.
+2023-06-08 01:22:09,531 - INFO - Step 5: 0001193125-16-559625: Stacked table successfully.
+2023-06-08 01:22:09,531 - INFO - Step 6: 0001193125-16-559625: Renamed columns successfully.
+2023-06-08 01:22:09,531 - INFO - Step 7: 0001193125-16-559625: Concatenated table successfully.
+2023-06-08 01:22:09,531 - INFO - Number of files left: 3
+2023-06-08 01:22:09,531 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001628280-16-017809\filing-details.html
+2023-06-08 01:22:10,035 - INFO - Step 1: 0001628280-16-017809: Read html successfully.
+2023-06-08 01:22:10,957 - INFO - Step 2: 0001628280-16-017809: Found target table successfully.
+2023-06-08 01:22:10,965 - INFO - Step 3: 0001628280-16-017809: Extracted table successfully.
+2023-06-08 01:22:10,973 - INFO - Step 4: 0001628280-16-017809: Cleaned table successfully.
+2023-06-08 01:22:10,974 - INFO - Step 5: 0001628280-16-017809: Stacked table successfully.
+2023-06-08 01:22:10,974 - INFO - Step 6: 0001628280-16-017809: Renamed columns successfully.
+2023-06-08 01:22:10,975 - INFO - Step 7: 0001628280-16-017809: Concatenated table successfully.
+2023-06-08 01:22:10,975 - INFO - Number of files left: 2
+2023-06-08 01:22:10,975 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001628280-17-000717\filing-details.html
+2023-06-08 01:22:11,523 - INFO - Step 1: 0001628280-17-000717: Read html successfully.
+2023-06-08 01:22:12,402 - INFO - Step 2: 0001628280-17-000717: Found target table successfully.
+2023-06-08 01:22:12,406 - INFO - Step 3: 0001628280-17-000717: Extracted table successfully.
+2023-06-08 01:22:12,413 - INFO - Step 4: 0001628280-17-000717: Cleaned table successfully.
+2023-06-08 01:22:12,414 - INFO - Step 5: 0001628280-17-000717: Stacked table successfully.
+2023-06-08 01:22:12,414 - INFO - Step 6: 0001628280-17-000717: Renamed columns successfully.
+2023-06-08 01:22:12,415 - INFO - Step 7: 0001628280-17-000717: Concatenated table successfully.
+2023-06-08 01:22:12,415 - INFO - Number of files left: 1
+2023-06-08 01:22:12,415 - INFO - D:\lianz\Desktop\Python\personal_projects\sec_data\sec-edgar-filings\0000320193\10-Q\0001628280-17-004790\filing-details.html
+2023-06-08 01:22:13,055 - INFO - Step 1: 0001628280-17-004790: Read html successfully.
+2023-06-08 01:22:14,018 - INFO - Step 2: 0001628280-17-004790: Found target table successfully.
+2023-06-08 01:22:14,025 - INFO - Step 3: 0001628280-17-004790: Extracted table successfully.
+2023-06-08 01:22:14,033 - INFO - Step 4: 0001628280-17-004790: Cleaned table successfully.
+2023-06-08 01:22:14,034 - INFO - Step 5: 0001628280-17-004790: Stacked table successfully.
+2023-06-08 01:22:14,034 - INFO - Step 6: 0001628280-17-004790: Renamed columns successfully.
+2023-06-08 01:22:14,035 - INFO - Step 7: 0001628280-17-004790: Concatenated table successfully.
+2023-06-08 01:22:14,035 - INFO - Number of files left: 0
