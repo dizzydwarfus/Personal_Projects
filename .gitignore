@@ -18,12 +18,10 @@ finance_dashboard/investment_dashboard.ipynb
 airflow_settings.yaml
 __pycache__/
 astro
-*.html
-!index.html
+sec_data/sec-edgar-filings
 !README.md
 !LICENSE
 !requirements.txt
-!login.html
-!login.css
-!register.html
-!register.css
+personal_finance/certs
+*.csv
+*.xlsx
