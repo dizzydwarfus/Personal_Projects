@@ -12,6 +12,7 @@ grocery_list/
 data_discovery/
 supply_chain/
 finance_dashboard/investment_dashboard.ipynb
+finance_dashboard/researcher_agent_mockup.ipynb
 .git
 .env
 .DS_Store # macOS specific ignore

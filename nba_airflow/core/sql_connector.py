@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
 import os
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 from functools import partial
 
-load_dotenv()
+secrets = dotenv_values('.env')
 
 
 def create_connection_url(server, database, username, password, port, driver):
@@ -37,11 +37,11 @@ def test_connection(connection_string):
         assert False, f'Connection test failed: {e}'
 
 
-server = os.environ.get('server')
+server = secrets('server')
 database = 'NBA'
-username = os.getenv('DB_username')
-password = os.getenv('DB_password')
-port = os.getenv('port')
+username = secrets('DB_username')
+password = secrets('DB_password')
+port = secrets('port')
 driver = 'ODBC Driver 17 for SQL Server'
 
 CreateURL = partial(create_connection_url, server=server,

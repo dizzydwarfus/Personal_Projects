@@ -2,14 +2,6 @@ import pandas as pd
 import streamlit as st
 import re
 
-# # NLTK sub-libraries
-# import nltk as lp
-# from nltk.tokenize import word_tokenize
-# from nltk.corpus import stopwords
-# from nltk.stem.wordnet import WordNetLemmatizer
-# from nltk.stem.porter import PorterStemmer
-
-
 #####################################################
 
 # Sentiment Analysis
@@ -23,6 +15,7 @@ import re
 # TODO: show extra tab with historical stock price using yfinance
 # TODO: show technical indicators, and perform backtest
 # TODO: use ML model to predict stock price
+# TODO: Use LangChain+Open AI API to build researcher agent to research based on user prompt
 
 #####################################################
 
