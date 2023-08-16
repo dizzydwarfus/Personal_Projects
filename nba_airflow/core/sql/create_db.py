@@ -4,9 +4,19 @@ from sqlalchemy.engine import URL
 from sqlalchemy import text
 from sql_connector import *
 
-engine = create_engine(url=nba_connection, echo=True)
+nba = DB(db_name='NBA')
+nba.test_connection()
 
-# Create Tables
+
+def create_table_from_df(df, table_name):
+    df.to_sql(table_name, nba.engine, if_exists='replace', index=False)
+
+
+def drop_table(table_list: list):
+    for table in table_list:
+        with nba.engine.begin() as conn:
+            conn.execute(text(f"DROP TABLE IF EXISTS {table}"))
+
 
 create_team_table = text("""
 CREATE TABLE teams(
@@ -56,9 +66,9 @@ arena_id INT
 )
 """)
 
-with nba.engine.begin() as conn:
-    conn.execute(create_team_table)
-    conn.execute(create_player_table)
-    conn.execute(create_team_arena)
-    conn.execute(create_player_team_table)
-    conn.execute(create_games_played)
+# with nba.engine.begin() as conn:
+#     conn.execute(create_team_table)
+#     conn.execute(create_player_table)
+#     conn.execute(create_team_arena)
+#     conn.execute(create_player_team_table)
+#     conn.execute(create_games_played)
