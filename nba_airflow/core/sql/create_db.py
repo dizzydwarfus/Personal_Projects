@@ -1,74 +1,100 @@
-import sqlalchemy
-from sqlalchemy import create_engine
-from sqlalchemy.engine import URL
-from sqlalchemy import text
-from sql_connector import *
+import os
+from dataclasses import dataclass
+from sqlalchemy import create_engine, text, Column, Integer, String, ForeignKey, DateTime, Table, MetaData
+from sqlalchemy.orm import relationship, declarative_base
+from sql_connector import DB
 
-nba = DB(db_name='NBA')
-nba.test_connection()
-
-
-def create_table_from_df(df, table_name):
-    df.to_sql(table_name, nba.engine, if_exists='replace', index=False)
+Base = declarative_base()
 
 
-def drop_table(table_list: list):
-    for table in table_list:
-        with nba.engine.begin() as conn:
-            conn.execute(text(f"DROP TABLE IF EXISTS {table}"))
+class Team(Base):
+    __tablename__ = 'Team'
+    TeamID = Column(Integer, primary_key=True, autoincrement=True)
+    TeamName = Column(String, nullable=False)
+    TeamShort = Column(String, nullable=False)
+
+    # Relationships
+    home_games = relationship(
+        'GamesPlayed', backref='home_team', foreign_keys='GamesPlayed.HomeTeamID')
+    visitor_games = relationship(
+        'GamesPlayed', backref='visitor_team', foreign_keys='GamesPlayed.VisitorTeamID')
+    shots = relationship('ShotsTaken', backref='team')
 
 
-create_team_table = text("""
-CREATE TABLE teams(
-team_id INT PRIMARY KEY NOT NULL,
-team_name VARCHAR(20),
-team_abbreviation CHAR(3)
-)
-""")
+class Arena(Base):
+    __tablename__ = 'Arena'
+    ArenaID = Column(Integer, primary_key=True, autoincrement=True)
+    ArenaName = Column(String, nullable=False)
+    Capacity = Column(Integer)
+    BuiltYear = Column(Integer)
 
-create_player_table = text("""
-CREATE TABLE players(
-player_id INT PRIMARY KEY,
-player_name VARCHAR(30)
-) 
-""")
+    # Relationships
+    games = relationship('GamesPlayed', backref='arena')
 
-create_team_arena = text("""
-CREATE TABLE arena_history(
-arena_id INT PRIMARY KEY,
-arena_name VARCHAR(30),
-team_year INT,
-team_id INT FOREIGN KEY REFERENCES teams(team_id)
-)
-""")
 
-create_player_team_table = text("""
-CREATE TABLE player_team_history(
-id INT NOT NULL IDENTITY(1,1),
-player_id INT FOREIGN KEY REFERENCES players(player_id),
-player_age INT,
-team_id INT FOREIGN KEY REFERENCES teams(team_id),
-year VARCHAR(10)
-)
-""")
+class Player(Base):
+    __tablename__ = 'Player'
+    PlayerID = Column(Integer, primary_key=True, autoincrement=True)
+    PlayerName = Column(String, nullable=False)
+    FromYear = Column(Integer)
+    ToYear = Column(Integer)
+    PositionID = Column(Integer, ForeignKey('Position.PositionID'))
+    Height = Column(String)
+    Weight = Column(Integer)
+    BirthDate = Column(DateTime)
+    College = Column(String)
 
-create_games_played = text("""
-CREATE TABLE games_played(
-game_id CHAR(18) PRIMARY KEY,
-game_date datetime,
-visitor_team_id INT FOREIGN KEY REFERENCES teams(team_id), 
-visitor_pts INT NOT NULL,
-home_team_id INT FOREIGN KEY REFERENCES teams(team_id),
-home_pts INT NOT NULL,
-overtime VARCHAR(5),
-attendance INT,
-arena_id INT
-)
-""")
+    # Relationships
+    shots = relationship('ShotsTaken', backref='player')
 
-# with nba.engine.begin() as conn:
-#     conn.execute(create_team_table)
-#     conn.execute(create_player_table)
-#     conn.execute(create_team_arena)
-#     conn.execute(create_player_team_table)
-#     conn.execute(create_games_played)
+
+class Position(Base):
+    __tablename__ = 'Position'
+    PositionID = Column(Integer, primary_key=True, autoincrement=True)
+    PositionName = Column(String, )
+    Description = Column(String)
+
+    # Relationships
+    players = relationship('Player', backref='position')
+
+
+class GamesPlayed(Base):
+    __tablename__ = 'GamesPlayed'
+    GameID = Column(String(30), primary_key=True)
+    DateTime = Column(DateTime)
+    VisitorTeamID = Column(Integer, ForeignKey('Team.TeamID'))
+    HomeTeamID = Column(Integer, ForeignKey('Team.TeamID'))
+    VisitorPTS = Column(Integer)
+    HomePTS = Column(Integer)
+    OT = Column(Integer)
+    Attendance = Column(Integer)
+    ArenaID = Column(Integer, ForeignKey('Arena.ArenaID'))
+
+    # Relationships
+    shots = relationship('ShotsTaken', backref='game')
+
+
+class ShotsTaken(Base):
+    __tablename__ = 'ShotsTaken'
+    ShotID = Column(Integer, primary_key=True, autoincrement=True)
+    PlayerID = Column(Integer, ForeignKey('Player.PlayerID'))
+    TimeLeft = Column(String)
+    TeamID = Column(Integer, ForeignKey('Team.TeamID'))
+    ScoreStatus = Column(String)
+    X_Shot_Pos = Column(Integer)
+    Y_Shot_Pos = Column(Integer)
+    Quarter = Column(String)
+    ShotStatus = Column(String)
+    FullText = Column(String)
+    GameDate = Column(DateTime)
+    GameID = Column(String(30), ForeignKey('GamesPlayed.GameID'))
+
+
+if __name__ == "__main__":
+    db = DB(db_name="NBA")
+    if db.test_connection():
+        Base.metadata.drop_all(db.engine)
+        Base.metadata.create_all(db.engine)
+        print("Tables created successfully!")
+    else:
+        print("Failed to connect to the database.")

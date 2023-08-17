@@ -52,3 +52,6 @@ class DB:
             return True
         except Exception as e:
             return False, f'Connection test failed: {e}'
+
+
+DB(db_name='NBA').test_connection()
