@@ -52,46 +52,46 @@ def draw_plotly_court(fig, fig_width=800, margins=0, x_cal=0, y_cal=0):
             fixedrange=True,
         ),
         shapes=[
-            dict(
+            dict(  # 1st shape
                 type="rect", x0=-250 + x_cal, y0=-52.5 + y_cal, x1=250 + x_cal, y1=417.5 + y_cal,
                 line=dict(color=main_line_col, width=1),
                 # fillcolor='#333333',
                 layer='below'
             ),
-            dict(
+            dict(  # 2nd shape
                 type="rect", x0=-80 + x_cal, y0=-52.5 + y_cal, x1=80 + x_cal, y1=137.5 + y_cal,
                 line=dict(color=main_line_col, width=1),
                 # fillcolor='#333333',
                 layer='below'
             ),
-            dict(
+            dict(  # 3rd shape
                 type="rect", x0=-60 + x_cal, y0=-52.5 + y_cal, x1=60 + x_cal, y1=137.5 + y_cal,
                 line=dict(color=main_line_col, width=1),
                 # fillcolor='#333333',
                 layer='below'
             ),
-            dict(
+            dict(  # 4th shape
                 type="circle", x0=-60 + x_cal, y0=77.5 + y_cal, x1=60 + x_cal, y1=197.5 + y_cal, xref="x", yref="y",
                 line=dict(color=main_line_col, width=1),
                 # fillcolor='#dddddd',
                 layer='below'
             ),
-            dict(
+            dict(  # 5th shape
                 type="line", x0=-60 + x_cal, y0=137.5 + y_cal, x1=60 + x_cal, y1=137.5 + y_cal,
                 line=dict(color=main_line_col, width=1),
                 layer='below'
             ),
 
-            dict(
+            dict(  # 6th shape
                 type="rect", x0=-2 + x_cal, y0=-7.25 + y_cal, x1=2 + x_cal, y1=-12.5 + y_cal,
                 line=dict(color=basket, width=2),
                 fillcolor=basket,
             ),
-            dict(
+            dict(  # 7th shape
                 type="circle", x0=-7.5 + x_cal, y0=-7.5 + y_cal, x1=7.5 + x_cal, y1=7.5 + y_cal, xref="x", yref="y",
                 line=dict(color=basket, width=3),
             ),
-            dict(
+            dict(  # 8th shape
                 type="line", x0=-30 + x_cal, y0=-12.5 + y_cal, x1=30 + x_cal, y1=-12.5 + y_cal,
                 line=dict(color=basket, width=5),
             ),
