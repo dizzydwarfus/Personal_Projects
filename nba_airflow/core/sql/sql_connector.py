@@ -40,7 +40,7 @@ class DB:
         return self.connection_url
 
     def create_db_engine(self):
-        self.engine = create_engine(url=self.connection_url, echo=True)
+        self.engine = create_engine(url=self.connection_url, echo=False)
         return self.engine
 
     def test_connection(self):

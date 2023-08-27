@@ -1,3 +1,5 @@
+import hashlib
+from sqlalchemy.ext.hybrid import hybrid_property
 import os
 from dataclasses import dataclass
 from sqlalchemy import create_engine, text, Column, Integer, String, ForeignKey, DateTime, Table, MetaData
@@ -66,7 +68,7 @@ class GamesPlayed(Base):
     HomeTeamID = Column(Integer, ForeignKey('Team.TeamID'))
     VisitorPTS = Column(Integer)
     HomePTS = Column(Integer)
-    OT = Column(Integer)
+    OT = Column(String(10))
     Attendance = Column(Integer)
     ArenaID = Column(Integer, ForeignKey('Arena.ArenaID'))
 
@@ -80,7 +82,7 @@ class ShotsTaken(Base):
     PlayerID = Column(Integer, ForeignKey('Player.PlayerID'))
     TimeLeft = Column(String)
     TeamID = Column(Integer, ForeignKey('Team.TeamID'))
-    ScoreStatus = Column(String)
+    ScoreStatus = Column(String(4))
     X_Shot_Pos = Column(Integer)
     Y_Shot_Pos = Column(Integer)
     Quarter = Column(String)
@@ -88,6 +90,36 @@ class ShotsTaken(Base):
     FullText = Column(String)
     GameDate = Column(DateTime)
     GameID = Column(String(30), ForeignKey('GamesPlayed.GameID'))
+
+    @hybrid_property
+    def ShotsHashID(self):
+        # Concatenate the relevant fields to form a unique string
+        unique_string = f"{self.ShotID}{self.PlayerID}{self.TimeLeft}{self.TeamID}{self.ScoreStatus}{self.X_Shot_Pos}{self.Y_Shot_Pos}{self.Quarter}{self.ShotStatus}{self.FullText}{self.GameDate}{self.GameID}"
+
+        # Compute the SHA1 hash of the unique string
+        return hashlib.sha1(unique_string.encode()).hexdigest()
+
+    # Include this sql expression to add the ShotsHashID column to the database
+    # ALTER TABLE ShotsTaken
+    # ADD ShotsHashID AS
+    #     CONVERT(NVARCHAR(40), HASHBYTES('SHA1',
+    #         CONCAT(
+    #             CAST(PlayerID AS NVARCHAR(255)),
+    #             TimeLeft,
+    #             CAST(TeamID AS NVARCHAR(255)),
+    #             ScoreStatus,
+    #             CAST(X_Shot_Pos AS NVARCHAR(255)),
+    #             CAST(Y_Shot_Pos AS NVARCHAR(255)),
+    #             Quarter,
+    #             ShotStatus,
+    #             FullText,
+    #             CONVERT(NVARCHAR(255), GameDate, 121),
+    #             GameID
+    #         )
+    #     ), 2)
+
+    # ALTER TABLE ShotsTaken
+    # ADD CONSTRAINT UC_ShotsHashID UNIQUE (ShotsHashID);
 
 
 if __name__ == "__main__":
