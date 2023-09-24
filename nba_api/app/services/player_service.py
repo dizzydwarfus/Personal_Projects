@@ -22,8 +22,8 @@ def get_players(db, player_name: str = None, player_id: int = None, limit=100):
     params = {"limit": limit}
 
     if player_id is not None:
-        query += " WHERE P.PlayerID = :player_id"
-        params["player_id"] = player_id
+        query += " WHERE CAST(P.PlayerID AS VARCHAR(255)) LIKE :player_id"
+        params["player_id"] = f"{player_id}%"
 
     elif player_name:
         query += " WHERE P.PlayerName LIKE :player_name"

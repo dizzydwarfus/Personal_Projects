@@ -4,7 +4,7 @@ from typing import Union, List
 
 
 class PlayerBase(BaseModel):
-    # PlayerID: Union[int, None]
+    PlayerID: Union[int, None]
     PlayerName: Union[str, None]
     FromYear: Union[int, None] = None
     ToYear: Union[int, None] = None

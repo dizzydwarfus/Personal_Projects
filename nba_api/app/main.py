@@ -1,13 +1,12 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-
 from .database.sql_connector import DB
 from .database.db import get_db
-
 from .api.endpoints import players, shots_taken, tables, positions
-
 from .utils import utils
+from .utils.logger import get_logger
 
+logger = get_logger(__name__)
 app = FastAPI()
 
 app.add_middleware(
@@ -21,30 +20,35 @@ app.add_middleware(
 
 @app.get("/")
 async def root(db: DB = Depends(get_db)):
-    connection_status = "Connected" if db.test_connection(
-    ) else "Failed to connect to the database."
+    try:
+        connection_status = "Connected" if db.test_connection(
+        ) else "Failed to connect to the database."
 
-    endpoints = {
-        route.path: route.name for route in app.routes
-    }
+        endpoints = {
+            route.path: route.name for route in app.routes
+        }
 
-    usage_examples = {
-        "/v1/api/players": "/v1/api/players?player_id=5",
-        "/v1/api/shots": "/v1/api/shots?player_id=5",
-        "/v1/api/tables": "/v1/api/tables",
-        "/v1/api/positions": "/v1/api/positions",
-        # ... Add usage examples for other endpoints here
-    }
+        usage_examples = {
+            "/v1/api/players": "/v1/api/players?player_id=5",
+            "/v1/api/shots": "/v1/api/shots?player_id=5",
+            "/v1/api/tables": "/v1/api/tables",
+            "/v1/api/positions": "/v1/api/positions",
+            # ... Add usage examples for other endpoints here
+        }
 
-    return {
-        "message": "Welcome to the NBA Data API!",
-        "description": "This API provides information about NBA players, shots, positions, and more.",
-        "database_status": connection_status,
-        "available_endpoints": endpoints,
-        "usage_examples": usage_examples,
-        "note": "Visit each endpoint or refer to the documentation at /docs for more details."
-    }
+        return {
+            "message": "Welcome to the NBA Data API!",
+            "description": "This API provides information about NBA players, shots, positions, and more.",
+            "database_status": connection_status,
+            "available_endpoints": endpoints,
+            "usage_examples": usage_examples,
+            "note": "Visit each endpoint or refer to the documentation at /docs for more details."
+        }
 
+    except Exception as e:
+        logger.error(f"Error in root endpoint: {e}")
+        raise HTTPException(
+            status_code=500, detail=str(e))
 
 app.include_router(players.router, prefix="/v1/api/players", tags=['players'])
 app.include_router(shots_taken.router, prefix="/v1/api/shots", tags=['shots'])

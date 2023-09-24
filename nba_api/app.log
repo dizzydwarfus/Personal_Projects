@@ -1,0 +1,328 @@
+2023-09-23 12:18:28,487 - app.utils.logger - ERROR - Error in get_players endpoint: module 'app.services.player_service' has no attribute 'gewt_players'
+2023-09-23 12:18:30,440 - app.utils.logger - ERROR - Error in get_players endpoint: module 'app.services.player_service' has no attribute 'gewt_players'
+2023-09-23 12:18:37,227 - app.utils.logger - ERROR - Error in get_players endpoint: module 'app.services.player_service' has no attribute 'gewt_players'
+2023-09-23 12:18:39,304 - app.utils.logger - ERROR - Error in get_players endpoint: module 'app.services.player_service' has no attribute 'gewt_players'
+2023-09-23 12:18:40,331 - app.utils.logger - ERROR - Error in get_players endpoint: module 'app.services.player_service' has no attribute 'gewt_players'
+2023-09-23 12:23:05,005 - app.utils.logger - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:38:36,502 - app.utils.logger - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:38:42,023 - app.utils.logger - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:38:42,715 - app.utils.logger - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:38:47,966 - app.utils.logger - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:38:48,701 - app.utils.logger - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:40:40,391 - app.utils.logger - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:24,590 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:38,359 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:38,516 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:38,626 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:38,759 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:38,884 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:39,029 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:39,164 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: None, limit: 10
+2023-09-23 12:51:42,101 - app.api.endpoints.players - INFO - Fetching players with player_name: wa, player_id: None, limit: 10
+2023-09-23 12:51:46,718 - app.api.endpoints.players - INFO - Fetching players with player_name: waw, player_id: None, limit: 10
+2023-09-23 12:52:46,581 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 1, limit: 10
+2023-09-23 12:52:46,589 - app.api.endpoints.players - ERROR - Error in get_players endpoint: (pyodbc.DataError) ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '1%' to data type int. (245) (SQLExecDirectW)")
+[SQL: 
+        SELECT TOP (?)
+            P.PlayerID, 
+            P.PlayerName, 
+            P.FromYear, 
+            P.ToYear, 
+            Pos.PositionName,
+            P.Height,
+            P.Weight,
+            P.BirthDate,
+            P.College
+        FROM 
+            Player AS P
+        INNER JOIN 
+            Position AS Pos ON P.PositionID = Pos.PositionID
+     WHERE P.PlayerID = ?]
+[parameters: (10, '1%')]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2023-09-23 12:55:40,802 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 1, limit: 10
+2023-09-23 12:55:40,806 - app.api.endpoints.players - ERROR - Error in get_players endpoint: (pyodbc.DataError) ('22018', '[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Explicit conversion from data type int to text is not allowed. (529) (SQLExecDirectW); [22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)')
+[SQL: 
+        SELECT TOP (?)
+            P.PlayerID, 
+            P.PlayerName, 
+            P.FromYear, 
+            P.ToYear, 
+            Pos.PositionName,
+            P.Height,
+            P.Weight,
+            P.BirthDate,
+            P.College
+        FROM 
+            Player AS P
+        INNER JOIN 
+            Position AS Pos ON P.PositionID = Pos.PositionID
+     WHERE CAST(P.PlayerID AS TEXT) LIKE ?]
+[parameters: (10, '1%')]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2023-09-23 12:56:38,059 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 1, limit: 10
+2023-09-23 12:56:46,832 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 20, limit: 10
+2023-09-23 12:57:04,919 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 20, limit: 10
+2023-09-23 12:57:34,439 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 20000, limit: 10
+2023-09-23 12:57:34,452 - app.api.endpoints.players - ERROR - Error in get_players endpoint: 1 validation error for PlayersResponse
+players
+  Input should be a valid list [type=list_type, input_value='No players found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 13:02:01,675 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 20000, limit: 10
+2023-09-23 13:02:01,681 - app.api.endpoints.players - ERROR - Error in get_players endpoint: 1 validation error for PlayersResponse
+players
+  Input should be a valid list [type=list_type, input_value='No players found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 13:02:22,906 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 12, limit: 10
+2023-09-23 13:02:25,135 - app.api.endpoints.players - INFO - Fetching players with player_name: None, player_id: 12213131, limit: 10
+2023-09-23 13:02:25,142 - app.api.endpoints.players - ERROR - Error in get_players endpoint: 1 validation error for PlayersResponse
+players
+  Input should be a valid list [type=list_type, input_value='No players found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 13:02:28,321 - app.api.endpoints.players - INFO - Fetching players with player_name: wawe, player_id: 12213131, limit: 10
+2023-09-23 13:02:28,327 - app.api.endpoints.players - ERROR - Error in get_players endpoint: 1 validation error for PlayersResponse
+players
+  Input should be a valid list [type=list_type, input_value='No players found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 13:02:32,329 - app.api.endpoints.players - INFO - Fetching players with player_name: wawe, player_id: None, limit: 10
+2023-09-23 13:02:32,342 - app.api.endpoints.players - ERROR - Error in get_players endpoint: 1 validation error for PlayersResponse
+players
+  Input should be a valid list [type=list_type, input_value='No players found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 13:02:37,374 - app.api.endpoints.players - INFO - Fetching players with player_name: 92919, player_id: None, limit: 10
+2023-09-23 13:02:37,389 - app.api.endpoints.players - ERROR - Error in get_players endpoint: 1 validation error for PlayersResponse
+players
+  Input should be a valid list [type=list_type, input_value='No players found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:16:47,500 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: None, player_name: None, player_id: None, game_info: False, limit: 100
+2023-09-23 22:17:18,768 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: None, player_name: None, player_id: None, game_info: False, limit: 100
+2023-09-23 22:17:18,791 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The multi-part identifier "GameInfo.VisitorTeamName" could not be bound. (4104) (SQLExecDirectW); [42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)')
+[SQL: 
+                    SELECT TOP (?)
+                    *
+                    FROM
+                    ShotsTaken 
+                    JOIN 
+                    (SELECT 
+                        Player.PlayerID, Player.PlayerName, Position.PositionName, Player.Height, Player.Weight, Player.BirthDate, Player.College
+                    FROM
+                        Player
+                    JOIN
+                        Position
+                    ON
+                        Player.PositionID = Position.PositionID
+                        ) as Player
+                    ON 
+                    ShotsTaken.PlayerID = Player.PlayerID
+                    JOIN
+                    (SELECT
+                        Team.TeamID, Team.TeamName
+                    FROM
+                        Team
+                        ) as Team
+                    ON
+                    ShotsTaken.TeamID = Team.TeamID
+
+                     WHERE Player.PlayerName LIKE ? AND GameInfo.VisitorTeamName = ?]
+[parameters: (100, '%100%', False)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2023-09-23 22:17:28,097 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:17:28,100 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The multi-part identifier "GameInfo.VisitorTeamName" could not be bound. (4104) (SQLExecDirectW); [42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)')
+[SQL: 
+                    SELECT TOP (?)
+                    *
+                    FROM
+                    ShotsTaken 
+                    JOIN 
+                    (SELECT 
+                        Player.PlayerID, Player.PlayerName, Position.PositionName, Player.Height, Player.Weight, Player.BirthDate, Player.College
+                    FROM
+                        Player
+                    JOIN
+                        Position
+                    ON
+                        Player.PositionID = Position.PositionID
+                        ) as Player
+                    ON 
+                    ShotsTaken.PlayerID = Player.PlayerID
+                    JOIN
+                    (SELECT
+                        Team.TeamID, Team.TeamName
+                    FROM
+                        Team
+                        ) as Team
+                    ON
+                    ShotsTaken.TeamID = Team.TeamID
+
+                     WHERE Player.PlayerName LIKE ? AND GameInfo.VisitorTeamName = ?]
+[parameters: (100, '%100%', True)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2023-09-23 22:18:50,319 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:18:50,349 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: (pyodbc.DataError) ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the varchar value 'Atlanta Hawks' to data type bit. (245) (SQLExecDirectW)")
+[SQL: 
+                    SELECT TOP (?)
+                    *
+                    FROM
+                    ShotsTaken 
+                    JOIN 
+                    (SELECT 
+                        Player.PlayerID, Player.PlayerName, Position.PositionName, Player.Height, Player.Weight, Player.BirthDate, Player.College
+                    FROM
+                        Player
+                    JOIN
+                        Position
+                    ON
+                        Player.PositionID = Position.PositionID
+                        ) as Player
+                    ON 
+                    ShotsTaken.PlayerID = Player.PlayerID
+                    JOIN
+                    (SELECT
+                        Team.TeamID, Team.TeamName
+                    FROM
+                        Team
+                        ) as Team
+                    ON
+                    ShotsTaken.TeamID = Team.TeamID
+
+                     JOIN
+                    (SELECT
+                        Arena.ArenaName, GamesPlayed.Attendance, GamesPlayed.VisitorPTS, GamesPlayed.HomePTS, GamesPlayed.GameID, GamesPlayed.HomeTeamID, GamesPlayed.VisitorTeamID, HomeTeam.TeamName as HomeTeamName, VisitorTeam.TeamName as VisitorTeamName
+                    FROM
+                        GamesPlayed
+                    JOIN
+                        Arena
+                    ON
+                        GamesPlayed.ArenaID = Arena.ArenaID
+                    JOIN
+                        (SELECT
+                            Team.TeamID, Team.TeamName
+                        FROM
+                            Team
+                        ) as HomeTeam
+                    ON
+                        GamesPlayed.HomeTeamID = HomeTeam.TeamID
+                    JOIN
+                        (SELECT
+                            Team.TeamID, Team.TeamName
+                        FROM
+                            Team
+                        ) as VisitorTeam
+                    ON
+                        GamesPlayed.VisitorTeamID = VisitorTeam.TeamID
+                    ) as GameInfo
+                ON
+                    ShotsTaken.GameID = GameInfo.GameID
+                 WHERE Player.PlayerName LIKE ? AND GameInfo.VisitorTeamName = ?]
+[parameters: (100, '%100%', True)]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2023-09-23 22:20:21,332 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:20:21,367 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:20:57,279 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 10
+2023-09-23 22:20:57,318 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:21:02,147 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: laker, player_name: None, player_id: None, game_info: True, limit: 10
+2023-09-23 22:21:02,150 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:21:08,233 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: laker, player_name: None, player_id: None, game_info: True, limit: 10
+2023-09-23 22:21:08,237 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:21:08,776 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: laker, player_name: None, player_id: None, game_info: True, limit: 10
+2023-09-23 22:21:08,780 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:21:09,318 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: laker, player_name: None, player_id: None, game_info: True, limit: 10
+2023-09-23 22:21:09,321 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:27:35,015 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 10
+2023-09-23 22:27:35,038 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:30:13,870 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 10
+2023-09-23 22:30:13,875 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:36:23,219 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: False, limit: 100
+2023-09-23 22:36:34,671 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:38:19,584 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: charlotte, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:38:19,601 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:38:26,324 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: hornets, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:38:26,340 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:38:28,933 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:38:42,649 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: Charlotte, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:38:42,653 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:38:47,174 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:39:59,059 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:40:24,435 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:41:12,649 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: None, player_id: None, game_info: False, limit: 100
+2023-09-23 22:41:22,164 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: charlotte, away_team: None, player_name: None, player_id: None, game_info: False, limit: 100
+2023-09-23 22:41:22,167 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The multi-part identifier "GameInfo.HomeTeamName" could not be bound. (4104) (SQLExecDirectW); [42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)')
+[SQL: 
+                    SELECT TOP (?)
+                    *
+                    FROM
+                    ShotsTaken 
+
+                    JOIN 
+                        (SELECT 
+                            Player.PlayerID, Player.PlayerName, Position.PositionName, Player.Height, Player.Weight, Player.BirthDate, Player.College
+                        FROM
+                            Player
+                        JOIN
+                            Position
+                        ON
+                            Player.PositionID = Position.PositionID
+                        ) as Player
+                    ON 
+                        ShotsTaken.PlayerID = Player.PlayerID
+                    JOIN
+                        (SELECT
+                            Team.TeamID, Team.TeamName
+                        FROM
+                            Team
+                        ) as Team
+                    ON
+                        ShotsTaken.TeamID = Team.TeamID
+
+                     AND GameInfo.HomeTeamName LIKE ?]
+[parameters: (100, '%charlotte%')]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2023-09-23 22:41:26,938 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: charlotte, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:41:36,538 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: None, player_name: None, player_id: None, game_info: True, limit: 100
+2023-09-23 22:42:05,912 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: None, player_name: lebron, player_id: None, game_info: True, limit: 100
+2023-09-23 22:42:24,159 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: lakers, away_team: None, player_name: lebron, player_id: None, game_info: True, limit: 100
+2023-09-23 22:42:36,011 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: lakers, player_name: lebron, player_id: None, game_info: True, limit: 100
+2023-09-23 22:43:00,751 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: None, player_name: lebron, player_id: None, game_info: True, limit: 100
+2023-09-23 22:56:07,085 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: lakers, home_team: None, away_team: None, player_name: jokic, player_id: None, game_info: True, limit: 100
+2023-09-23 22:56:09,782 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type
+2023-09-23 22:56:11,915 - app.api.endpoints.shots_taken - INFO - Fetching shots with team_name: None, home_team: None, away_team: None, player_name: jokic, player_id: None, game_info: True, limit: 100
+2023-09-23 22:56:23,280 - app.api.endpoints.shots_taken - ERROR - Error in get_shots endpoint: 1 validation error for ShotsResponse
+shots
+  Input should be a valid list [type=list_type, input_value='No shots found.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.3/v/list_type

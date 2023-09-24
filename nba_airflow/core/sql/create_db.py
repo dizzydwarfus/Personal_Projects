@@ -99,28 +99,6 @@ class ShotsTaken(Base):
         # Compute the SHA1 hash of the unique string
         return hashlib.sha1(unique_string.encode()).hexdigest()
 
-    # Include this sql expression to add the ShotsHashID column to the database
-    # ALTER TABLE ShotsTaken
-    # ADD ShotsHashID AS
-    #     CONVERT(NVARCHAR(40), HASHBYTES('SHA1',
-    #         CONCAT(
-    #             CAST(PlayerID AS NVARCHAR(255)),
-    #             TimeLeft,
-    #             CAST(TeamID AS NVARCHAR(255)),
-    #             ScoreStatus,
-    #             CAST(X_Shot_Pos AS NVARCHAR(255)),
-    #             CAST(Y_Shot_Pos AS NVARCHAR(255)),
-    #             Quarter,
-    #             ShotStatus,
-    #             FullText,
-    #             CONVERT(NVARCHAR(255), GameDate, 121),
-    #             GameID
-    #         )
-    #     ), 2)
-
-    # ALTER TABLE ShotsTaken
-    # ADD CONSTRAINT UC_ShotsHashID UNIQUE (ShotsHashID);
-
 
 if __name__ == "__main__":
     db = DB(db_name="NBA")
