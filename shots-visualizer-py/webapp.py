@@ -8,7 +8,8 @@ from dataclasses import dataclass
 import streamlit as st
 import pandas as pd
 import numpy as np
-from draw_baskbetball_court import *
+from draw_baskbetball_court import draw_plotly_court
+
 load_dotenv()
 
 st.set_page_config(page_title="NBA Exploratory Data",
