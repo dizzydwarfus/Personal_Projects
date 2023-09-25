@@ -8,7 +8,7 @@ Data science exploration using python (pandas, numpy, sklearn, scipy, matplotlib
 2. Developing numerical simulations for engineering problems 
       - Finite Difference Analysis on 1D and 2D Heat Transfer `(wip)`
       
-3. Building a web app for analysing investments decision through: https://dizzydwarfus-investments-dashb-v1.streamlit.app/
+3. Building a web app for analysing investments decision through: [Investment Dashboard](https://finance-webapp.streamlit.app/Financial_Statements)
       - aggregating financial statements of companies in a single database,
       - displaying relevant metrics compactly,
       - perform DCF based on manual input parameters,
