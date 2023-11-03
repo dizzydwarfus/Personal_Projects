@@ -1,0 +1,194 @@
+2023-10-29 13:59:22,186 - test_ah - INFO - Sleeping for 3 seconds
+2023-10-29 13:59:25,192 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 13:59:25,362 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 13:59:25,362 - test_ah - ERROR - Product ID mismatch: 533083 != 533083
+2023-10-29 13:59:25,362 - test_ah - INFO - Sleeping for 3 seconds
+2023-10-29 13:59:28,372 - test_ah - INFO - Getting details for product: AH Scharrel kipfiletblokjes
+2023-10-29 13:59:28,509 - test_ah - INFO - Got details for product: AH Scharrel kipfiletblokjes
+2023-10-29 13:59:28,509 - test_ah - ERROR - Product ID mismatch: 451141 != 451141
+2023-10-29 14:00:42,589 - test_ah - INFO - Sleeping for 2 seconds
+2023-10-29 14:00:44,599 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:00:44,947 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:00:44,947 - test_ah - ERROR - Product ID mismatch: 533083 != 533083
+2023-10-29 14:00:44,947 - test_ah - INFO - Sleeping for 4 seconds
+2023-10-29 14:00:48,949 - test_ah - INFO - Getting details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:00:49,169 - test_ah - INFO - Got details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:00:49,169 - test_ah - ERROR - Product ID mismatch: 451141 != 451141
+2023-10-29 14:01:29,710 - test_ah - INFO - Sleeping for 3 seconds
+2023-10-29 14:01:32,711 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:01:32,885 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:01:32,885 - test_ah - ERROR - Product ID mismatch: 533083 != 533083
+2023-10-29 14:01:32,885 - test_ah - INFO - Sleeping for 2 seconds
+2023-10-29 14:01:34,896 - test_ah - INFO - Getting details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:01:35,013 - test_ah - INFO - Got details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:01:35,013 - test_ah - ERROR - Product ID mismatch: 451141 != 451141
+2023-10-29 14:01:52,079 - test_ah - INFO - Sleeping for 4 seconds
+2023-10-29 14:01:56,091 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:01:56,237 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:01:56,237 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:01:56,237 - test_ah - INFO - Sleeping for 2 seconds
+2023-10-29 14:01:58,241 - test_ah - INFO - Getting details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:01:58,399 - test_ah - INFO - Got details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:01:58,399 - test_ah - INFO - Product ID: 451141
+2023-10-29 14:02:14,126 - test_ah - INFO - Sleeping for 2 seconds
+2023-10-29 14:02:16,137 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:02:16,287 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:02:16,287 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:02:16,289 - test_ah - ERROR - Failed to validate product info for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:02:16,289 - test_ah - ERROR - 20 validation errors for Products
+hqId
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+title
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+salesUnitSize
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+unitPriceDescription
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+priceId
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+orderAvailabilityStatus
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+mainCategory
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+subCategory
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+brand
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+shopType
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+availableOnline
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+nutriscore
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+nix18
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isStapelBonus
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isBonus
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isSample
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isOrderable
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isSponsored
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isVirtualBundle
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isInfiniteBonus
+  Field required [type=missing, input_value={'productId': 533083, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+2023-10-29 14:02:16,296 - test_ah - INFO - Sleeping for 2 seconds
+2023-10-29 14:02:18,305 - test_ah - INFO - Getting details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:02:18,443 - test_ah - INFO - Got details for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:02:18,443 - test_ah - INFO - Product ID: 451141
+2023-10-29 14:02:18,443 - test_ah - ERROR - Failed to validate product info for product: AH Scharrel kipfiletblokjes
+2023-10-29 14:02:18,443 - test_ah - ERROR - 20 validation errors for Products
+hqId
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+title
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+salesUnitSize
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+unitPriceDescription
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+priceId
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+orderAvailabilityStatus
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+mainCategory
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+subCategory
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+brand
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+shopType
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+availableOnline
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+nutriscore
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+nix18
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isStapelBonus
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isBonus
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isSample
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isOrderable
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isSponsored
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isVirtualBundle
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+isInfiniteBonus
+  Field required [type=missing, input_value={'productId': 451141, 'pr...t onze klantenservice.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.4/v/missing
+2023-10-29 14:03:16,444 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:03:16,621 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:03:16,621 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:04:06,103 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:04:06,319 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:04:06,319 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:04:47,769 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:04:47,924 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:04:47,924 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:05:32,874 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:05:33,017 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:05:33,018 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:05:40,733 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:05:40,905 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:05:40,905 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:08:33,314 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:08:33,570 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:08:33,571 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:19:16,470 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:19:16,717 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:19:16,717 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:20:05,744 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:20:05,982 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:20:05,982 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:25:22,117 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:25:22,397 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:25:22,397 - test_ah - INFO - Product ID: 533083
+2023-10-29 14:26:49,498 - test_ah - INFO - Getting details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:26:49,761 - test_ah - INFO - Got details for product: AH Scharrel kipfilet 2 stuks
+2023-10-29 14:26:49,761 - test_ah - INFO - Product ID: 533083
